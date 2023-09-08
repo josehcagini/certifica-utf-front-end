@@ -1,0 +1,122 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content {
+    width: 80%;
+    height: 85vh;
+    background-color: #FFFFFF;
+    border-radius: var( --border-radius-default );
+    display: flex;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); 
+}
+
+.leftContent{
+    width: 50%;
+    height: inherit;
+    background-color: #FFFFFF;
+    border-top-left-radius: var( --border-radius-default );
+    border-bottom-left-radius: var( --border-radius-default ); 
+}
+
+.rightContent {
+    width: 50%;
+    height: inherit;
+    background-color: var(--primary-color);
+    border-top-right-radius: var( --border-radius-default );
+    border-bottom-right-radius: var( --border-radius-default );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    color: var( --primary-color );
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.5em;
+}
+
+.informations{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    text-align: center;
+}
+
+.subContent {
+    width: 60%;
+    height: 70%;
+    background-color: #FFFFFF;
+    border-radius: var( --border-radius-default );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2em;
+    justify-content: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); 
+}
+
+.logoContent{
+    height: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nameCompany {
+    font-size: 1.3em;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #0073bb;
+}
+
+.loginTitle {
+    font-size: 1.5em;
+    color: var( --text-color );
+}
+
+.imageInformations {
+    width: 30vw;
+}
+
+@media screen and ( max-width: 850px ) {
+
+    .content {
+        display: block;
+        --width-content: 100vw;
+        --height-content: 100vh;
+        width: var( --width-content );
+        height: var( --height-content );
+    }
+
+    .leftContent {
+        display: none;
+    }
+
+    .rightContent {
+        border-radius: 0px;
+        width: var( --width-content );
+        height: var( --height-content );
+    }
+
+    .subContent {
+        width: 75vw;
+        height: 50vh;
+    }
+
+    .title {
+        font-size: 0.6em;
+    }
+
+    .nameCompany {
+        font-size: 1.0em;
+    }
+
+}
