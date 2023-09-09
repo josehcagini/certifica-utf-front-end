@@ -18,7 +18,7 @@ export default function Login() {
               </div>
             </div>
             <div className={styles.rightContent}>
-              <div className={styles.subContent}>
+              <div className={styles.subRightContent}>
                   <div className={styles.logoContent}>
                     <img src='/images/logo.png' width={50} height={50}/>
                     <div className={styles.nameCompany}>UTFCertificado</div>
