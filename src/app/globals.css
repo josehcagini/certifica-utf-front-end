@@ -1,7 +1,17 @@
+/* Alterar para usar através do next/font/google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital@1&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+:root {
+
+  --primary-color: #3498db;
+  --text-color: rgb(70, 68, 68);
+  --border-radius-default: 6px;
 }
 
 html,

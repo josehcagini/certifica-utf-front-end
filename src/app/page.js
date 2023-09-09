@@ -1,62 +1,23 @@
+'use client';
+
 import styles from './page.module.css'
+import { signOut, useSession } from 'next-auth/react';
 
 export default function Home() {
+
+  const session = useSession();
+
+  // TODO chamar backend para cadastrar o usuario, analisar melhor como vai funcionar o esquema de autenticação
+  
   return (
-    <main className={styles.main}>
-      <a style={{textDecoration:'underline'}} href="/login" target="_blank" >Login</a>
-      <p>Edite src/app/page.js para alterar esta página</p>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <>
+      <div>
+          {session?.data?.user?.name}
+          <img src={session?.data?.user?.image}></img>
       </div>
-    </main>
+      <button onClick={ () => signOut() }>
+        Logout
+      </button>
+    </>
   )
 }
