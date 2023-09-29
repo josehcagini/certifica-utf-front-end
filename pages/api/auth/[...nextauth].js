@@ -30,6 +30,7 @@ export const authOptions = {
         account.access_token_api = acessTokenApi;
         return true;
       } catch (error) {
+        console.log( error )
         return false;
       }
     },
