@@ -8,7 +8,7 @@ export async function getAcessTokenAPI( account ) {
     const dsProvider = account.provider.toUpperCase();
 
     var request = {
-        token: idToken,
+        idToken: idToken,
         typeProvider: dsProvider,
     }
 
@@ -21,6 +21,6 @@ export async function getAcessTokenAPI( account ) {
 
     const result = await response.json();
 
-    return result.token;
+    return result.accessToken;
 
 }
