@@ -6,8 +6,8 @@ import { signOut, useSession } from 'next-auth/react';
 export default function Navbar() {
     const session = useSession();
     const user = session?.user;
-
-    const userType = 0;
+    const userType = 0; //obter tipo de usuário do bd
+    
     const handleSignOut = (e) => {
         e.preventDefault();
         signOut();
@@ -21,8 +21,8 @@ export default function Navbar() {
     const Dropdown = () => {
         return (
             <div className={styles.dropdown}>
-                <p className={styles.dropdownItem}>Nome: {user?.name || 'User Name'}</p>
-                <p className={styles.dropdownItem}>E-mail: {user?.email || 'useremail@gmail.com'}</p>
+                <p className={styles.dropdownItem}>Nome: {user?.name}</p>
+                <p className={styles.dropdownItem}>E-mail: {user?.email}</p>
                 <hr className={styles.hr} />
                 {userType == 0 ?
                     <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link> :
@@ -33,7 +33,6 @@ export default function Navbar() {
         )
     }
 
-
     return (
         <nav className={styles.navbar}>
             {
@@ -43,11 +42,7 @@ export default function Navbar() {
             }
             <Link className={styles.navItem} href="/">Home</Link>    
             <img className={styles.profileImage} src={'images/avatar.png'} onClick={toggleDropdown} alt="Profile Image" width={50} height={50} />
-            
             <Dropdown />
-
-
-
         </nav>
     )
 }
