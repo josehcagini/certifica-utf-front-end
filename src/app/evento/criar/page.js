@@ -2,11 +2,11 @@
 
 import StepNavigation from '../../../components/stepNavigation' // TODO Trocar para o valor absuluto no lugar do ../
 import styles from './page.module.css'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-export default function Login() {
+export default function CriarEvento() {
 
-    const labelArray = ['Dados Evento', 'Criar Certificado', 'Finalizar']
+    const steps = ['Dados Evento', 'Criar Certificado', 'Finalizar']
     const [ currentStep, setCurrentStep ] = useState(1);
 
     function updateStep( step ){
@@ -17,7 +17,7 @@ export default function Login() {
         <div className={styles.content}>
             <div className={styles.stepAlign}>
                 <StepNavigation 
-                labelArray={labelArray}
+                labelArray={steps}
                 currentStep={currentStep}
                 updateStep={updateStep}>
                 </StepNavigation>
