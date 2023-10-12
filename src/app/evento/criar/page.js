@@ -1,6 +1,6 @@
 'use client';
 
-import StepNavigation from '../../../components/stepNavigation'
+import StepNavigation from '../../../components/stepNavigation' // TODO Trocar para o valor absuluto no lugar do ../
 import styles from './page.module.css'
 import React, { useState } from 'react'
 
