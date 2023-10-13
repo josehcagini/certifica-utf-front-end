@@ -1,0 +1,13 @@
+.content {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color:#F1F1F1;
+}
+
+.stepAlign {
+    width: inherit;
+    display: flex;
+    justify-content:center;
+    margin-top: 20px;;
+}
