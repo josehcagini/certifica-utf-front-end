@@ -1,4 +1,4 @@
-import RoleEnum from "../../objects/RoleEnum";
+import RoleEnum from "../../objects/roleEnum";
 
 export function isAdmin( roles ){
     return roles.includes( RoleEnum.ADMIN );
