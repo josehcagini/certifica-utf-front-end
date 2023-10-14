@@ -1,5 +1,6 @@
 'use client';
 
+import Conteudo from '@/components/criarEvento/conteudo';
 import StepNavigation from '../../../components/stepNavigation' // TODO Trocar para o valor absuluto no lugar do ../
 import styles from './page.module.css'
 import { useState } from 'react'
@@ -22,6 +23,7 @@ export default function CriarEvento() {
                 updateStep={updateStep}>
                 </StepNavigation>
             </div>
+            <Conteudo stepContent={currentStep} />
         </div>
     )
 }
