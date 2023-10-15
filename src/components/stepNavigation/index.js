@@ -9,7 +9,6 @@ export default function StepNavigation( props ){
                 key={index} 
                 index={index} 
                 label={item} 
-                updateStep={props.updateStep} 
                 selected={props.currentStep === index + 1} 
                 completed = {props.currentStep > index + 1} >
                 </Step>

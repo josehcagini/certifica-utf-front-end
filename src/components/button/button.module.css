@@ -1,0 +1,38 @@
+.content {
+    width: 150px;
+    height: 40px;
+    gap: 10px;
+    display: flex;
+    border: solid 1px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-out;
+}
+
+.default {
+    background-color: var(--primary-color);
+    border-color: transparent;
+    color: var(--text-color-secundary);
+}
+
+.default:hover{
+    background-color: #63acdd;
+}
+
+.outline {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.outline:hover {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
+.disabled {
+    background-color: var( --default-disabled-color );
+    color: #000000;
+    border-color: transparent;
+}

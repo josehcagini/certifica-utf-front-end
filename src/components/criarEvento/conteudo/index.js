@@ -1,20 +1,8 @@
 //Renderizar a página certa de acordo com o stepContent
-
-
-function DadosEvento(){
-    return(
-        <div className="">
-            <div className='inputGroup'>
-                <label htmlFor='nomeDoEvento'>Nome do Evento</label>
-                <Input
-                  id='nomeDoEvento'
-                  name='nomeDoEvento'
-                  placeholder='Nome do Evento'
-                  type='text'/>
-              </div>
-        </div>
-    )
-}
+import { useState } from 'react'
+import styles from './conteudo.module.css'
+import DadosEvento from './dadosEvento'
+import Button from '@/components/button'
 
 function CriarCertificado(){
     return(
@@ -32,22 +20,55 @@ function Finalizar(){
     )
 }
 
-function Conteudo({stepContent}){
+const StepsEnum = {
+    DADOS_EVENTO: 1,
+    CRIAR_CERTIFICADO: 2,
+    FINALIZAR: 3,
+};
+
+function Conteudo({stepContent, updateStep }){
+
+    const [ isValidData, setIsValidData ] = useState( false );
+
     function renderContent(){
         switch(stepContent){
-            case 1:
-                return <DadosEvento />
-            case 2:
+            case StepsEnum.DADOS_EVENTO:
+                return <DadosEvento setIsValidData={setIsValidData} />
+            case StepsEnum.CRIAR_CERTIFICADO:
                 return <CriarCertificado />
-            case 3:
+            case StepsEnum.FINALIZAR:
                 return <Finalizar />
             default:
                 return <DadosEvento />
         }
     }
+
+    function onNext(){
+
+        if( stepContent == StepsEnum.FINALIZAR ){
+            // TODO enviar para o backend
+            return;
+        }
+
+        if( isValidData ){
+            updateStep( ++stepContent );
+            return;
+        } 
+
+        // TODO Apresentar erro 
+
+    }
+
+    function onPrevius() {
+        // TODO implementar
+    }
+
     return(
-        <div className="conteudo">
+        <div className={styles.content}>
             {renderContent()}
+            <div className={styles.buttonContent}>
+                <Button isEnabled={isValidData} onClick={ () => onNext() }>Proximo</Button>
+           </div>
         </div>
     )
 }

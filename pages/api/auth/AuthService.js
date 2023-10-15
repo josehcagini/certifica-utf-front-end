@@ -1,4 +1,4 @@
-import { toRoleEnum } from '../../../src/services/user/UserService' // TODO Trocar para o valor absuluto no lugar do ../
+import { toRoleEnum } from '@/services/user/userService'
 
 export async function getAcessTokenAPI( account ) {
 

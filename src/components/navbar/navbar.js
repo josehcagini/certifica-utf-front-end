@@ -21,8 +21,8 @@ export default function Navbar() {
     const Dropdown = () => {
         return (
             <div className={styles.dropdown}>
-                <p className={styles.dropdownItem}>Nome: {user?.name}</p>
-                <p className={styles.dropdownItem}>E-mail: {user?.email}</p>
+                <p className={styles.dropdownItem}>Nome: {session?.data?.user?.name}</p>
+                <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
                 {userType == 0 ?
                     <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link> :
@@ -41,7 +41,7 @@ export default function Navbar() {
                     <Link className={styles.navItem} href="/certificados">Certificados</Link>
             }
             <Link className={styles.navItem} href="/">Home</Link>    
-            <img className={styles.profileImage} src={'images/avatar.png'} onClick={toggleDropdown} alt="Profile Image" width={50} height={50} />
+            <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt="Profile Image" width={50} height={50} />
             <Dropdown />
         </nav>
     )
