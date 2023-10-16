@@ -1,3 +1,4 @@
+import { toRoleEnum } from '@/services/user/userService'
 
 export async function getAcessTokenAPI( account ) {
 
@@ -19,8 +20,14 @@ export async function getAcessTokenAPI( account ) {
         }
     )
 
-    const result = await response.json();
+    return await response.json();
 
-    return result.accessToken;
+}
 
+export function toAccount( account, response ) {
+
+    account.access_token_api = response.accessToken;
+    account.roles = toRoleEnum( response.roles );
+
+    return account;
 }

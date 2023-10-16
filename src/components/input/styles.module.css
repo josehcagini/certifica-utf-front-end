@@ -1,0 +1,24 @@
+.input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid var(--default-disabled-color);
+    border-radius: 5px;
+    padding: 0 10px;
+    background: hsl(0, 0%, 100%);
+    outline: none;
+    font-family: var(--font-default)
+}
+
+.input:focus{
+    border-color: var(--primary-color);
+}
+
+.label {
+    font-family: var(--font-default)
+}
+
+@media (max-width: 768px){
+    .input{
+        width: 100%;
+    }
+}

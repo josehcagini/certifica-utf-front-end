@@ -11,16 +11,37 @@
 
   --primary-color: #3498db;
   --text-color: rgb(70, 68, 68);
+  --text-color-secundary: #FFFFFF;
   --border-radius-default: 6px;
+  --default-disabled-color: #d3d3d3;
+  --primary-background-color: #F1F1F1;
+  --font-default: 'Poppins', sans-serif;
 }
 
 html,
 body {
   max-width: 100vw;
+  min-height: 100vh;
   overflow-x: hidden;
+}
+
+.container{
+  width: 100%;
+  height: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.inputGroup{
+  margin-bottom: 1rem;
+}
+
+label{
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  display: block;
 }

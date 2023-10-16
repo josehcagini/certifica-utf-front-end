@@ -10,7 +10,7 @@ export default function Home() {
   // TODO chamar backend para cadastrar o usuario, analisar melhor como vai funcionar o esquema de autenticação
   
   return (
-    <>
+    <div className={styles.content}>
       <div>
           {session?.data?.user?.name}
           <img src={session?.data?.user?.image}></img>
@@ -18,6 +18,6 @@ export default function Home() {
       <button onClick={ () => signOut() }>
         Logout
       </button>
-    </>
+    </div>
   )
 }
