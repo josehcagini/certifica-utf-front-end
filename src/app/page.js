@@ -12,12 +12,8 @@ export default function Home() {
   return (
     <div className={styles.content}>
       <div>
-          {session?.data?.user?.name}
-          <img src={session?.data?.user?.image}></img>
+        <h1>Home</h1>
       </div>
-      <button onClick={ () => signOut() }>
-        Logout
-      </button>
     </div>
   )
 }

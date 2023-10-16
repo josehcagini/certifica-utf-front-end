@@ -19,7 +19,7 @@ export default function Navbar() {
 
     const Dropdown = () => {
         return (
-            <div className={styles.dropdown}>
+            <div className={styles.dropdown} onMouseLeave={toggleDropdown}>
                 <p className={styles.dropdownItem}>Nome: {session?.data?.user?.name}</p>
                 <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
@@ -42,7 +42,7 @@ export default function Navbar() {
                     <Link className={styles.navItem} href="/certificados">Certificados</Link>
             }
             <Link className={styles.navItem} href="/">Home</Link>    
-            <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt="Profile Image" width={50} height={50} />
+            <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt={`${session?.data?.user?.name || 'Perfil'}`} width={50} height={50} />
             <Dropdown />
         </nav>
     )

@@ -1,10 +1,9 @@
 
 .navbar{
-    background-color: transparent;
+    background-color: #f1f1f1;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    position: relative;
     padding: 10px 0;
     position: sticky;
     top: 0;

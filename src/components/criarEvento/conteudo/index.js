@@ -12,12 +12,12 @@ const StepsEnum = {
     FINALIZAR: 3,
 };
 
-function Conteudo({stepContent, updateStep }){
+function Conteudo({ stepContent, updateStep }) {
 
-    const [ isValidData, setIsValidData ] = useState( true );
+    const [isValidData, setIsValidData] = useState(1);
 
-    function renderContent(){
-        switch(stepContent){
+    function renderContent() {
+        switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
                 return <DadosEvento setIsValidData={setIsValidData} />
             case StepsEnum.CRIAR_CERTIFICADO:
@@ -29,19 +29,19 @@ function Conteudo({stepContent, updateStep }){
         }
     }
 
-    function onNext(){
+    function onNext() {
 
-        if( stepContent == StepsEnum.FINALIZAR ){
+        if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
             location.href = '/';
             // TODO enviar para o backend
             return;
         }
 
-        if( isValidData ){
-            updateStep( ++stepContent );
+        if (isValidData) {
+            updateStep(++stepContent);
             return;
-        } 
+        }
 
         // TODO Apresentar erro 
 
@@ -51,15 +51,14 @@ function Conteudo({stepContent, updateStep }){
         // TODO implementar
     }
 
-    return(
+    return (
         <div className={styles.content}>
             {renderContent()}
             <div className={styles.buttonContent}>
-                {/* stepContent != StepsEnum.DADOS_EVENTO && <Button onClick={ () => onPrevius() }>Anterior</Button> */}
-                <Button isEnabled={isValidData} onClick={ () => onNext() }>
+                <Button isEnabled={isValidData} onClick={() => onNext()}>
                     {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
-                    </Button>
-           </div>
+                </Button>
+            </div>
         </div>
     )
 }
