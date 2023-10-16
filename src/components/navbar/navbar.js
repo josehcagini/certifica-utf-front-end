@@ -24,8 +24,10 @@ export default function Navbar() {
                 <p className={styles.dropdownItem}>Nome: {session?.data?.user?.name}</p>
                 <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
-                {userType == 0 ?
-                    <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link> :
+                {userType == 0 ?<>
+                    <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link>
+                    <Link href="/evento/criar" className={styles.dropdownLink}>Criar Evento</Link>
+                    </> :
                     <Link href="/certificados" className={styles.dropdownLink}>Meus Certificados</Link>
                 }
                 <Link href='#' className={styles.sair} onClick={handleSignOut}>Sair</Link>
