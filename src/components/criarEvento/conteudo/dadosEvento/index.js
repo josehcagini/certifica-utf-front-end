@@ -10,7 +10,6 @@ import { useState } from 'react'
 import HorarioEvento from './components/horarioEvento';
 
 export default function DadosEvento( { setIsValidData }){
-
     const dtMinInput = "2023-01-07T00:00";
     const dtMaxInput = "2025-01-07T00:00";
 
@@ -71,7 +70,7 @@ export default function DadosEvento( { setIsValidData }){
                     id='cargaHoraria'
                     name='cargaHoraria'
                     title='Carga Horária'
-                    placeholder='xx'
+                    placeholder='hh'
                     type='text'/>
                 </div>
                 <div className={styles.inputGroupRight}>

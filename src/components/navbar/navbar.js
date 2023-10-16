@@ -5,7 +5,6 @@ import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
     const session = useSession();
-    const user = session?.user;
     const userType = 0; //obter tipo de usuário do bd
     
     const handleSignOut = (e) => {
