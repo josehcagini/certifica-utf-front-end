@@ -3,22 +3,8 @@ import { useState } from 'react'
 import styles from './conteudo.module.css'
 import DadosEvento from './dadosEvento'
 import Button from '@/components/button'
-
-function CriarCertificado(){
-    return(
-        <div className="">
-
-        </div>
-    )
-}
-
-function Finalizar(){
-    return(
-        <div className="">
-
-        </div>
-    )
-}
+import CriarCertificado from './criarCertificado'
+import Finalizar from './finalizar'
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -26,16 +12,16 @@ const StepsEnum = {
     FINALIZAR: 3,
 };
 
-function Conteudo({stepContent, updateStep }){
+function Conteudo({ stepContent, updateStep }) {
 
-    const [ isValidData, setIsValidData ] = useState( false );
+    const [isValidData, setIsValidData] = useState(1);
 
-    function renderContent(){
-        switch(stepContent){
+    function renderContent() {
+        switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
                 return <DadosEvento setIsValidData={setIsValidData} />
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado />
+                return <CriarCertificado setIsValidData={setIsValidData} />
             case StepsEnum.FINALIZAR:
                 return <Finalizar />
             default:
@@ -43,17 +29,19 @@ function Conteudo({stepContent, updateStep }){
         }
     }
 
-    function onNext(){
+    function onNext() {
 
-        if( stepContent == StepsEnum.FINALIZAR ){
+        if (stepContent == StepsEnum.FINALIZAR) {
+            console.log('enviar para o backend');
+            location.href = '/';
             // TODO enviar para o backend
             return;
         }
 
-        if( isValidData ){
-            updateStep( ++stepContent );
+        if (isValidData) {
+            updateStep(++stepContent);
             return;
-        } 
+        }
 
         // TODO Apresentar erro 
 
@@ -63,12 +51,14 @@ function Conteudo({stepContent, updateStep }){
         // TODO implementar
     }
 
-    return(
+    return (
         <div className={styles.content}>
             {renderContent()}
             <div className={styles.buttonContent}>
-                <Button isEnabled={isValidData} onClick={ () => onNext() }>Proximo</Button>
-           </div>
+                <Button isEnabled={isValidData} onClick={() => onNext()}>
+                    {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
+                </Button>
+            </div>
         </div>
     )
 }

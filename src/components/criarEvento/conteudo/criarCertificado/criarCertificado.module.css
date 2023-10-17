@@ -1,0 +1,49 @@
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.inputGroup{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.label{
+    font-family: var(--font-default);
+    margin: 0 0 0 0.5rem;
+}
+
+.radio:checked{
+    accent-color: #3498db;
+}
+
+
+.leftContent{
+    width: 40%;
+}
+
+.rightContent{
+    width: 50%;
+}
+
+@media (max-width: 768px){
+    .content{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .leftContent{
+        width: 100%;
+    }
+
+    .rightContent{
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
