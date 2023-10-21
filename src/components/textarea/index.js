@@ -13,7 +13,7 @@ export default function TextArea( props ) {
             <label className={styles.label}>{props.title}</label>
             <textarea 
             className={styles.textarea}
-            onChange={props.onChange ?? null}
+            onChange={props.onChange}
             {...props} />
         </div>
     );
