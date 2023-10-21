@@ -4,23 +4,23 @@ import Input from '@/components/input'
 import TextArea from '@/components/textarea';
 import Button, { ButtonType } from '@/components/button';
 
+import EventTime from '@/objects/event/eventTime';
+
 import { BiPlus } from 'react-icons/bi' ;   
 import { useState } from 'react'
 
 import HorarioEvento from './components/horarioEvento';
 
-export default function DadosEvento( { setIsValidData }){
+export default function DadosEvento( { setIsValidData, eventObject } ){
 
     const dtMinInput = "2023-01-07T00:00";
     const dtMaxInput = "2025-01-07T00:00";
 
     const [ eventsTime, setEventsTime ] = useState( [] );
 
-    const eventTimeObject = {
-        date: null,
-        startTime: null,
-        endTime: null,
-    };
+    eventObject.dates = eventsTime;
+
+    setIsValidData( true ) // TODO Alterar para validar se os inputs são validos 
 
     function addDateEvent(){
 
@@ -30,7 +30,7 @@ export default function DadosEvento( { setIsValidData }){
         }
 
         const events = [...eventsTime]
-        events.push( eventTimeObject );
+        events.push( Object.assign( {}, EventTime ) );
         setEventsTime( events );
     }
 
@@ -44,6 +44,7 @@ export default function DadosEvento( { setIsValidData }){
                     name='nomeDoEvento'
                     title='Nome'
                     placeholder='Nome do Evento'
+                    onChange={ ( event ) => eventObject.name = event.target.value }
                     type='text'/>
                     <div className={styles.contentDate}>
                         <Input
@@ -52,6 +53,7 @@ export default function DadosEvento( { setIsValidData }){
                         title='Data de inicio'
                         min={dtMinInput}
                         max={dtMaxInput}
+                        onChange={ ( event ) => eventObject.dateStart = event.target.value }
                         type='datetime-local'/>
                         <Input
                         id='dataDeEncerramento'
@@ -59,6 +61,7 @@ export default function DadosEvento( { setIsValidData }){
                         title='Data de Encerramento'
                         min={dtMinInput}
                         max={dtMaxInput}
+                        onChange={ ( event ) => eventObject.dateEnd = event.target.value }
                         type='datetime-local'/>
                     </div>
                     <div className={styles.eventTimes}>
@@ -72,12 +75,14 @@ export default function DadosEvento( { setIsValidData }){
                     name='cargaHoraria'
                     title='Carga Horária'
                     placeholder='xx'
+                    onChange={ ( event ) => eventObject.workload = event.target.value }
                     type='text'/>
                 </div>
                 <div className={styles.inputGroupRight}>
                     <TextArea 
                     placeholder='Informações do evento'
                     title='Informações'
+                    onChange={ ( event ) => eventObject.informations = event.target.value }
                     />
                 </div>
             </div>
