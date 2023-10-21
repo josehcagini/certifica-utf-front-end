@@ -11,7 +11,10 @@ export default function TextArea( props ) {
     return (
         <div className={content}>
             <label className={styles.label}>{props.title}</label>
-            <textarea className={styles.textarea} {...props} />
+            <textarea 
+            className={styles.textarea}
+            onChange={props.onChange}
+            {...props} />
         </div>
     );
 }

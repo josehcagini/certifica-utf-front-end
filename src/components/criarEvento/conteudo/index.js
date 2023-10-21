@@ -12,20 +12,21 @@ const StepsEnum = {
     FINALIZAR: 3,
 };
 
-function Conteudo({ stepContent, updateStep }) {
+function Conteudo( {stepContent, updateStep } ){
 
-    const [isValidData, setIsValidData] = useState(1);
+    const [ isValidData, setIsValidData ] = useState( 1 );
+    const [ eventObject, setEventObject ] = useState( Object.assign( {}, Event ) );
 
     function renderContent() {
         switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
-                return <DadosEvento setIsValidData={setIsValidData} />
+                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject} />
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado setIsValidData={setIsValidData} />
+                return <CriarCertificado setIsValidData={setIsValidData} eventObject={eventObject} />
             case StepsEnum.FINALIZAR:
-                return <Finalizar />
+                return <Finalizar eventObject={eventObject} />
             default:
-                return <DadosEvento />
+                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject}/>
         }
     }
 
