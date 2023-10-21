@@ -5,7 +5,6 @@ import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
     const session = useSession();
-    const user = session?.user;
     const userType = 0; //obter tipo de usuário do bd
     
     const handleSignOut = (e) => {
@@ -20,12 +19,14 @@ export default function Navbar() {
 
     const Dropdown = () => {
         return (
-            <div className={styles.dropdown}>
+            <div className={styles.dropdown} onMouseLeave={toggleDropdown}>
                 <p className={styles.dropdownItem}>Nome: {session?.data?.user?.name}</p>
                 <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
-                {userType == 0 ?
-                    <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link> :
+                {userType == 0 ?<>
+                    <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link>
+                    <Link href="/evento/criar" className={styles.dropdownLink}>Criar Evento</Link>
+                    </> :
                     <Link href="/certificados" className={styles.dropdownLink}>Meus Certificados</Link>
                 }
                 <Link href='#' className={styles.sair} onClick={handleSignOut}>Sair</Link>
@@ -41,7 +42,7 @@ export default function Navbar() {
                     <Link className={styles.navItem} href="/certificados">Certificados</Link>
             }
             <Link className={styles.navItem} href="/">Home</Link>    
-            <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt="Profile Image" width={50} height={50} />
+            <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt={`${session?.data?.user?.name || 'Perfil'}`} width={50} height={50} />
             <Dropdown />
         </nav>
     )

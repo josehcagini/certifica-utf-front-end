@@ -74,8 +74,8 @@ export default function DadosEvento( { setIsValidData, eventObject } ){
                     id='cargaHoraria'
                     name='cargaHoraria'
                     title='Carga Horária'
-                    placeholder='xx'
                     onChange={ ( event ) => eventObject.workload = event.target.value }
+                    placeholder='hh'
                     type='text'/>
                 </div>
                 <div className={styles.inputGroupRight}>
