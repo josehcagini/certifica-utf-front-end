@@ -1,9 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from '../../pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
-import SessionProvider from '../components/sessionProvider/session'
+import SessionProvider from '../../pages/sessionProvider'
 import Login from './login/page'
 import Navbar from '@/components/navbar/navbar'
 
