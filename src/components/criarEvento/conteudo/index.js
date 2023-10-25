@@ -5,6 +5,7 @@ import DadosEvento from './dadosEvento'
 import Button from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
+import { fetchData } from '@/app/api/utils/apiUtils'
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -24,7 +25,7 @@ function Conteudo( {stepContent, updateStep } ){
             case StepsEnum.CRIAR_CERTIFICADO:
                 return <CriarCertificado setIsValidData={setIsValidData} eventObject={eventObject} />
             case StepsEnum.FINALIZAR:
-                return <Finalizar eventObject={eventObject} />
+                return <Finalizar setIsValidData={setIsValidData} eventObject={eventObject} />
             default:
                 return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject}/>
         }
@@ -34,8 +35,28 @@ function Conteudo( {stepContent, updateStep } ){
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
-            location.href = '/';
-            // TODO enviar para o backend
+
+            const response = async() => {
+                const response = await fetchData(
+                    `${API_BASE_URL}/eventos/novo`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(eventObject) 
+                    }
+                )
+            }
+            console.log(response.ok)
+            if(response.ok){
+                location.href = '/';                
+            } else {
+                return(
+                    alert("erro")
+                )
+            }
+
             return;
         }
 
