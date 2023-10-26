@@ -1,8 +1,8 @@
 .content{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 35% auto;
     justify-content: space-between;
-    width: 100%;
+    align-items: start;
     margin-top: 20px;
 }
 
@@ -23,27 +23,13 @@
 }
 
 
-.leftContent{
-    width: 40%;
-}
-
-.rightContent{
-    width: 50%;
-}
-
-@media (max-width: 768px){
+@media (max-width: 867px){
     .content{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .leftContent{
-        width: 100%;
+        display: grid;
+        grid-template-columns: 100%;
     }
 
     .rightContent{
-        width: 100%;
         margin-top: 1.5rem;
     }
 }
