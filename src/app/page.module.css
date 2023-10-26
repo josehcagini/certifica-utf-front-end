@@ -2,3 +2,10 @@
    background-color: var(--primary-background-color);
    height: 92vh;
 }
+
+.flexCenter{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 4px
+}
