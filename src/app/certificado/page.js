@@ -12,10 +12,11 @@ export default async function Certificado(){
     const searchParams = useSearchParams();
     const hash = searchParams.get('hash'); //passado como query param na url
     const response = await fetch(`${API_BASE_URL}/api/certificado/${hash}`);
-    const eventObject = await response.json();
+    const html = await response.text();
+    //const eventObject = await response.json();
 
-    const { name, dateStart, dateEnd, workload, informations, organizador, personalData, tipoCertificado } = eventObject;
-    const { local, instituicao, document, logo } = personalData;
+    //const { name, dateStart, dateEnd, workload, informations, organizador, personalData, tipoCertificado } = eventObject;
+    /*const { local, instituicao, document, logo } = personalData;
     console.log(personalData)
     html = gerarCertificado({
         modelo: tipoCertificado,
@@ -28,7 +29,7 @@ export default async function Certificado(){
         instituicao: instituicao,
         logo: logo,
         local: local || 'UTFPR'
-    }) 
+    }) /*/
 
-    return tipoCertificado === modelosCertificado.PERSONAL ? parse(document) : parse(html);
+    return parse(html);
 }
