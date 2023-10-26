@@ -3,9 +3,9 @@
    height: 92vh;
 }
 
-.flexCenter{
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   gap: 4px
+.centeredContent{
+   display: grid;
+   place-items: center;
+   height: 100%;
+   gap: 10px;
 }
