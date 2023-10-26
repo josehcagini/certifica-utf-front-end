@@ -34,6 +34,7 @@ function Conteudo( {stepContent, updateStep } ){
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
+            // TODO pegar o HTML gerado e enviar para o backend junto dos dados do evento
 
             const response = async() => {
                 const response = await fetchData(
