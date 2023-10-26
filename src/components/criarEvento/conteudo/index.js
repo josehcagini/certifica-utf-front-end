@@ -14,7 +14,6 @@ const StepsEnum = {
 };
 
 function Conteudo( {stepContent, updateStep } ){
-
     const [ isValidData, setIsValidData ] = useState( 1 );
     const [ eventObject, setEventObject ] = useState( Object.assign( {}, Event ) );
 
@@ -48,7 +47,6 @@ function Conteudo( {stepContent, updateStep } ){
                     }
                 )
             }
-            console.log(response.ok)
             if(response.ok){
                 location.href = '/';                
             } else {
