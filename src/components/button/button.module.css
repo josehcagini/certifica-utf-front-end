@@ -31,7 +31,7 @@
     color: #FFFFFF;
 }
 
-.disabled {
+.disabled{
     background-color: var( --default-disabled-color );
     color: #000000;
     border-color: transparent;

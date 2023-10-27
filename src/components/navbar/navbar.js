@@ -9,7 +9,9 @@ export default function Navbar() {
     
     const handleSignOut = (e) => {
         e.preventDefault();
-        signOut();
+        signOut().then(() => {
+            location.href = '/';
+        });        
     }
 
     const toggleDropdown = () => {

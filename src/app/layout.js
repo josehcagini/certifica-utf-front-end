@@ -33,8 +33,8 @@ export default async function RootLayout({ children }) {
               <Login />
             ) : (
               <>
-                <Navbar /> {/* exibir apenas após o login - não testado se aparece ok */}
-                <main>{children}</main>
+                <Navbar />
+                {children}
               </>
             )
           }

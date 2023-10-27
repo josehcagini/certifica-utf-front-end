@@ -1,7 +1,7 @@
 'use client';
 
 import Conteudo from '@/components/criarEvento/conteudo';
-import StepNavigation from '@/components/stepNavigation' // TODO Trocar para o valor absuluto no lugar do ../
+import StepNavigation from '@/components/stepNavigation' 
 import styles from './page.module.css'
 import { useState } from 'react'
 
