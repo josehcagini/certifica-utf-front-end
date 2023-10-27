@@ -1,12 +1,12 @@
-import styles from './criarCertificado.module.css'
+import styles from './criarCertificado.module.css';
+import stylesDadosEvento from '../dadosEvento/dados.module.css';
 import PreviaCertificado from '../../previaCertificado'
 import Input from '@/components/input'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-export default function CriarCertificado({ setIsValidData, eventObject }) {
+export default function CriarCertificado({ setIsValidData, eventObject, documentHTML }) {
     const [tipoCertificado, setTipoCertificado] = useState("1");
-    const [htmlDocument, setHtmlDocument] = useState('<div class="certificado"></div>');
     const [instituicao, setInstituicao] = useState('');
     const [local, setLocal] = useState('');
     const [logo, setLogo] = useState(false);
@@ -20,7 +20,6 @@ export default function CriarCertificado({ setIsValidData, eventObject }) {
                 instituicao: instituicao,
                 local: local,
                 backgroundImage: backgroundImage,
-                document: htmlDocument
             }
         }, { tipoCertificado: tipoCertificado }));
 
@@ -54,19 +53,18 @@ export default function CriarCertificado({ setIsValidData, eventObject }) {
 
 
     useEffect(() => {
-        setData(Object.assign({}, eventObject, {local: local}, { organizador: organizador },
+        setData(Object.assign({}, eventObject, { local: local }, { organizador: organizador },
             {
                 personalData: {
                     instituicao: instituicao,
-                    document: htmlDocument,
                     backgroundImage: backgroundImage,
                     logo: logo
                 }
             }, { tipoCertificado: tipoCertificado }));
-    }, [tipoCertificado, htmlDocument, instituicao, local, backgroundImage, logo]);
+    }, [tipoCertificado, instituicao, local, backgroundImage, logo]);
 
     useEffect(() => {
-        if (tipoCertificado !== '1'){
+        if (tipoCertificado !== '1') {
             setBackgroundImage(false);
             setLogo(false);
         }
@@ -92,14 +90,14 @@ export default function CriarCertificado({ setIsValidData, eventObject }) {
     </div>*/}
                 {
                     tipoCertificado === '1' &&
-                    <div>
+                    <>
                         <Input type="text" title="Instituição (opcional)" placeholder="Instituição" width="fit-content" onChange={e => setInstituicao(e.target.value)} />
                         <Input type="file" title="Logo da Instiuição ou evento" accept="image/*" width="fit-content" onChange={e => { handleUploadLogo(e) }} />
                         <Input type="text" title="Local" placeholder="Local do evento" width="fit-content" onChange={e => setLocal(e.target.value)} />
                         <Input type="file" title="Inserir imagem de fundo" width="fit-content" accept="image/*" onChange={e => {
                             handleUploadBG(e);
                         }} />
-                    </div>
+                    </>
                 }
                 {tipoCertificado === '3' &&
                     <Input type="file" disabled={tipoCertificado !== '3'} title="Importar XML" width="fit-content" accept=".xml" />
@@ -111,6 +109,6 @@ export default function CriarCertificado({ setIsValidData, eventObject }) {
                 <p>Prévia do Certificado</p>
                 <PreviaCertificado data={data} />
             </div>
-        </div>
+        </div >
     )
 }

@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import styles from "./finalizar.module.css";
 
-export default function Finalizar({ setIsValidData, eventObject }) {
+export default function Finalizar({ setIsValidData, eventObject}) {
     //Obter os dados das steps anteriores
     const { name, informations, dates, workload } = eventObject;
     const dateStart = new Date(eventObject.dateStart).toLocaleDateString();

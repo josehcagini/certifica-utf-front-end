@@ -3,7 +3,6 @@
     grid-template-columns: 35% auto;
     justify-content: space-between;
     align-items: start;
-    margin-top: 20px;
 }
 
 .inputGroup{
@@ -11,6 +10,12 @@
     flex-direction: row;
     width: 100%;
     margin-bottom: 0.5rem;
+}
+
+.leftContent{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem
 }
 
 .label{

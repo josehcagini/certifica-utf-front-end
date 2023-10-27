@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import styles from './conteudo.module.css'
 import DadosEvento from './dadosEvento'
-import Button from '@/components/button'
+import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
 import { fetchData } from '@/app/api/utils/apiUtils'
@@ -13,20 +13,21 @@ const StepsEnum = {
     FINALIZAR: 3,
 };
 
-function Conteudo( {stepContent, updateStep } ){
-    const [ isValidData, setIsValidData ] = useState( 1 );
-    const [ eventObject, setEventObject ] = useState( Object.assign( {}, Event ) );
+function Conteudo({ stepContent, updateStep }) {
+    const [isValidData, setIsValidData] = useState(1);
+    const [eventObject, setEventObject] = useState(Object.assign({}, Event));
+    const [documentHTML, setDocumentHTML] = useState('');
 
     function renderContent() {
         switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
                 return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject} />
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado setIsValidData={setIsValidData} eventObject={eventObject} />
+                return <CriarCertificado setIsValidData={setIsValidData} documentHTML={documentHTML} eventObject={eventObject} />
             case StepsEnum.FINALIZAR:
-                return <Finalizar setIsValidData={setIsValidData} eventObject={eventObject} />
+                return <Finalizar setIsValidData={setIsValidData} documentHTML={documentHTML} eventObject={eventObject} />
             default:
-                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject}/>
+                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject} />
         }
     }
 
@@ -34,9 +35,9 @@ function Conteudo( {stepContent, updateStep } ){
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
-            // TODO pegar o HTML gerado e enviar para o backend junto dos dados do evento
+            // TODO pegar o HTML gerado (documentHTML) e enviar para o backend junto dos dados do evento
 
-            const response = async() => {
+            const response = async () => {
                 const response = await fetchData(
                     `${API_BASE_URL}/eventos/novo`,
                     {
@@ -44,14 +45,14 @@ function Conteudo( {stepContent, updateStep } ){
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(eventObject) 
+                        body: JSON.stringify(eventObject)
                     }
                 )
             }
-            if(response.ok){
-                location.href = '/';                
+            if (response.ok) {
+                location.href = '/';
             } else {
-                return(
+                return (
                     alert("erro")
                 )
             }
@@ -68,17 +69,25 @@ function Conteudo( {stepContent, updateStep } ){
 
     }
 
-    function onPrevius() {
+    function onPrevious() {
         // TODO implementar
+        updateStep(--stepContent);
     }
 
     return (
         <div className={styles.content}>
             {renderContent()}
             <div className={styles.buttonContent}>
+                
                 <Button isEnabled={isValidData} onClick={() => onNext()}>
                     {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
                 </Button>
+                {stepContent != StepsEnum.DADOS_EVENTO &&
+                    <Button isEnabled={true} onClick={() => onPrevious()} type={ButtonType.OUTLINE}>
+                        Voltar
+                    </Button>
+                }
+
             </div>
         </div>
     )
