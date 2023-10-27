@@ -20,6 +20,10 @@
     border:none;
 }
 
+.input[aria-invalid="true"] {
+    border: 1px solid #ec5353;
+}
+
 .input::file-selector-button{
     border: none;
     background-color: var(--primary-color);

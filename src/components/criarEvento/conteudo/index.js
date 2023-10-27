@@ -1,10 +1,10 @@
 //Renderizar a página certa de acordo com o stepContent
-import { useState } from 'react'
 import styles from './conteudo.module.css'
 import DadosEvento from './dadosEvento'
-import Button from '@/components/button'
+import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
+import { useForm, FormProvider } from "react-hook-form"
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -14,19 +14,16 @@ const StepsEnum = {
 
 function Conteudo( {stepContent, updateStep } ){
 
-    const [ isValidData, setIsValidData ] = useState( 1 );
-    const [ eventObject, setEventObject ] = useState( Object.assign( {}, Event ) );
-
     function renderContent() {
         switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
-                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject} />
+                return <DadosEvento/>
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado setIsValidData={setIsValidData} eventObject={eventObject} />
+                return <CriarCertificado/>
             case StepsEnum.FINALIZAR:
-                return <Finalizar eventObject={eventObject} />
+                return <Finalizar/>
             default:
-                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject}/>
+                return <DadosEvento />
         }
     }
 
@@ -39,27 +36,41 @@ function Conteudo( {stepContent, updateStep } ){
             return;
         }
 
-        if (isValidData) {
-            updateStep(++stepContent);
-            return;
-        }
-
+        updateStep(++stepContent);
+        return;
+ 
         // TODO Apresentar erro 
 
     }
 
     function onPrevius() {
-        // TODO implementar
+        updateStep(--stepContent);
     }
+
+    function onSubmit( date ){
+        console.log(date)
+        onNext()
+    }
+
+    // TODO é possível passar os default values para o useForm, vai ser util no caso de edição do evento 
+    const methods = useForm()
 
     return (
         <div className={styles.content}>
-            {renderContent()}
-            <div className={styles.buttonContent}>
-                <Button isEnabled={isValidData} onClick={() => onNext()}>
-                    {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
-                </Button>
-            </div>
+            <FormProvider {...methods}>
+                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    {renderContent()}
+                    <div className={styles.buttonContent}>
+                        {
+                        stepContent !== StepsEnum.DADOS_EVENTO ? 
+                        <Button type="button" onClick={onPrevius} styleType={ ButtonType.OUTLINE }>Voltar</Button> : <></>
+                        }
+                        <Button type="submit" isEnabled={true}>
+                            {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
+                        </Button>
+                    </div>
+                </form>
+            </FormProvider>
         </div>
     )
 }

@@ -4,85 +4,86 @@ import Input from '@/components/input'
 import TextArea from '@/components/textarea';
 import Button, { ButtonType } from '@/components/button';
 
-import EventTime from '@/objects/event/eventTime';
-
 import { BiPlus } from 'react-icons/bi' ;   
-import { useState } from 'react'
+import { useFormContext, useFieldArray } from "react-hook-form"
 
+import EventTime from '@/objects/event/eventTime';
 import HorarioEvento from './components/horarioEvento';
+import EventSchema from '@/helper/validator/schema/EventSchema';
 
-export default function DadosEvento( { setIsValidData, eventObject } ){
+export default function DadosEvento(){
 
-    const dtMinInput = "2023-01-07T00:00";
-    const dtMaxInput = "2025-01-07T00:00";
+    const { control } = useFormContext()
 
-    const [ eventsTime, setEventsTime ] = useState( [] );
-
-    eventObject.dates = eventsTime;
-
-    setIsValidData( true ) // TODO Alterar para validar se os inputs são validos 
+    const { fields, append, remove } = useFieldArray( {
+        control,
+        name: "dates",
+    });
 
     function addDateEvent(){
 
         // TODO por enquanto vou deixar limitado a 3, isso para não ter que tratar o scroll 
-        if( eventsTime.length === 3 ){
+        if( fields.length === 3 ){
             return;
         }
 
-        const events = [...eventsTime]
-        events.push( Object.assign( {}, EventTime ) );
-        setEventsTime( events );
+        append( Object.assign( {}, EventTime ) )
     }
-
+    
     return(
         <div>
             <div className={styles.inputGroup}>
                 <div className={styles.inputLeftGroup}>
                     <Input
+                    params={EventSchema.name}
                     width='100%'
-                    id='nomeDoEvento'
-                    name='nomeDoEvento'
+                    name='name'
                     title='Nome'
                     placeholder='Nome do Evento'
-                    onChange={ ( event ) => eventObject.name = event.target.value }
                     type='text'/>
                     <div className={styles.contentDate}>
                         <Input
-                        id='dataDeInicio'
-                        name='dataDeInicio'
+                        params={EventSchema.dateStart}
+                        name='dateStart'
                         title='Data de inicio'
-                        min={dtMinInput}
-                        max={dtMaxInput}
-                        onChange={ ( event ) => eventObject.dateStart = event.target.value }
                         type='datetime-local'/>
                         <Input
-                        id='dataDeEncerramento'
-                        name='dataDeEncerramento'
+                        params={EventSchema.dateEnd}
+                        name='dateEnd'
                         title='Data de Encerramento'
-                        min={dtMinInput}
-                        max={dtMaxInput}
-                        onChange={ ( event ) => eventObject.dateEnd = event.target.value }
                         type='datetime-local'/>
                     </div>
                     <div className={styles.eventTimes}>
                         <label>Horários do evento</label>
-                        { eventsTime.map( ( item, index ) => <HorarioEvento key={index} item={item} dtStartEvent={dtMinInput} dtEndEvent={dtMaxInput}/> ) }
-                        <Button onClick={addDateEvent} type={ ButtonType.OUTLINE } icon={<BiPlus size={20}/> } >Adicionar horario</Button>
+                        { fields.map( ( item, index ) => 
+                            <HorarioEvento 
+                            arrayName="dates"
+                            key={index}
+                            index={index}
+                            item={item}/> 
+                        ) }
+                        <Button 
+                        onClick={addDateEvent}
+                        type="button"
+                        styleType={ButtonType.OUTLINE}
+                        icon={<BiPlus size={20} isEnable/> }>
+                        Adicionar horario
+                        </Button>
                     </div>
                     <Input
+                    params={EventSchema.workload}
                     width='20%'
-                    id='cargaHoraria'
-                    name='cargaHoraria'
+                    name='workload'
                     title='Carga Horária'
-                    onChange={ ( event ) => eventObject.workload = event.target.value }
                     placeholder='hh'
                     type='text'/>
                 </div>
                 <div className={styles.inputGroupRight}>
-                    <TextArea 
+                    <TextArea
+                    params={EventSchema.informations}
+                    name="informations"
                     placeholder='Informações do evento'
                     title='Informações'
-                    onChange={ ( event ) => eventObject.informations = event.target.value }
                     />
                 </div>
             </div>

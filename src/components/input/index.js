@@ -1,21 +1,33 @@
 import styles from './styles.module.css';
+import { ErrorMessage } from '@hookform/error-message';
+import { useFormContext  } from "react-hook-form"
 
-export default function Input(props) {
+export default function Input( props ) {
+
+    const { register, errors, getFieldState } = useFormContext()
+
+    const { error, params, name, title, ...rest } = props
 
     const content = {
         width:`${ props.width ?? '50%' }`,
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        gap: '2px'
     };
 
     return (
         <div style={content}>
-            <label className={styles.label}>{props.title}</label>
+            <label className={styles.label}>{title}</label>
             <input
-                onChange={props.onChange ?? null}
-                className={styles.input}
-                {...props}            
-                />
+            {...register( name, params )}
+            className={styles.input}
+            aria-invalid={ getFieldState(name).invalid ? "true" : "false"}
+            {...rest}/>
+            <ErrorMessage
+            errors={errors}
+            name={name}
+            render={({ message }) => <p style={{fontSize:13, color:"#ec5353"}}>{message}</p> }
+            />
         </div>
     )
 }
