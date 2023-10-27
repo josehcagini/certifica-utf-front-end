@@ -1,4 +1,4 @@
-import DateHelper from "@/helper/date/dateHelper";
+import DateHelper from "@/helper/date/DateHelper";
 import MessageHelper from "../message/MessageHelper";
 
 const validateDateTimeMin = ( dsDateActual, dsDateBase ) => {

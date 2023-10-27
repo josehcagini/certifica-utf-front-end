@@ -5,19 +5,21 @@ export const ButtonType = {
     OUTLINE: 2,
 }
 
-function ClassByType( type, isEnabled ){
+function ClassByType( styleType, isEnabled ){
 
     if( !isEnabled ){
         return styles.disabled;
     }
 
-    switch( type ){
+    switch( styleType ){
         case ButtonType.OUTLINE:
             return styles.outline;
         default:
             return styles.default;
     }
 }
+
+// TODO permitir personalizar a cor, criar um Botão de confirmação e um de voltar, com cores padrão 
 
 export default function Button( props ) {
 
@@ -26,8 +28,7 @@ export default function Button( props ) {
     return (
         <button 
             onClick={props.onClick}
-            disabled={ !isEnabled }
-            className={`${styles.content} ${ ClassByType( props.type, isEnabled ?? true ) }`} 
+            className={`${styles.content} ${ ClassByType( props.styleType, isEnabled ?? true ) }`} 
             {...rest}>
             { props.icon ?? <></> }
             { props.children }

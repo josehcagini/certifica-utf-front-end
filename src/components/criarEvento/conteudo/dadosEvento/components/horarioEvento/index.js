@@ -2,44 +2,50 @@ import styles from './horario.evento.module.css'
 
 import Input from '@/components/input'
 
-import EventTimeSchema from '@/helper/validator/schema/EventTimeSchema'
 import DateValidator from '@/helper/validator/date/DateValidator'
 import MessageHelper from '@/helper/validator/message/MessageHelper'
-import DateHelper from '@/helper/date/dateHelper'
+import DateHelper from '@/helper/date/DateHelper'
 
 export default function HorarioEvento( { item, index, arrayName }) {
 
     const EventTimeSchema = {
         date: {
             validate: ( value, formValues ) => {
+
                 if( index === 0 ){
                     return DateValidator.validateDateInterval( formValues.dateStart, value, formValues.dateEnd )
                 }
+
                 return DateValidator.validateDateInterval( formValues.dates[index-1].date, value, formValues.dateEnd )
             }
         },
         startTime: {
             validate: ( value, formValues ) => {
 
-                if( index === 0 ) {
-                    if( DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateStart ) ){
-                        return DateValidator.validateHourMin( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateStart ) ) );
-                    }
+                if( index === 0 && DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateStart ) ) {
+                    return DateValidator.validateHourMin( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateStart ) ) );
                 }
 
-                // return DateValidator.validateHourMax( value, formValues.dates[index].endTime );
+                if( index !== 0 && DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dates[index-1].date ) ){
+                    return DateValidator.validateHourMin( value, formValues.dates[index-1].endTime );
+                }
+
+                return DateValidator.validateHourMax( value, formValues.dates[index].endTime );
 
             }
         },
         endTime: {
             validate: ( value, formValues ) => {
 
-               if( index === 0 ){
-                    if( DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateEnd ) ){
-                        return DateValidator.validateHourMax( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateEnd ) ) );
-                    }
-               }
+                if( !value ){
+                    return MessageHelper.required
+                }
 
+                if( DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateEnd ) ){
+                    return DateValidator.validateHourMax( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateEnd ) ) );
+                }
+
+                return true
             }
         }
     }
