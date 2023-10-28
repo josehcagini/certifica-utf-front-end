@@ -5,6 +5,7 @@ import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
 import { useForm, FormProvider } from "react-hook-form"
+import { fetchData } from '@/app/api/utils/apiUtils'
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -12,18 +13,21 @@ const StepsEnum = {
     FINALIZAR: 3,
 };
 
-function Conteudo( {stepContent, updateStep } ){
+function Conteudo({ stepContent, updateStep }) {
+    const [isValidData, setIsValidData] = useState(1);
+    const [eventObject, setEventObject] = useState(Object.assign({}, Event));
+    const [documentHTML, setDocumentHTML] = useState('');
 
     function renderContent() {
         switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
                 return <DadosEvento/>
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado/>
+                return <CriarCertificado setIsValidData={setIsValidData} documentHTML={documentHTML} eventObject={eventObject} />
             case StepsEnum.FINALIZAR:
-                return <Finalizar/>
+                return <Finalizar setIsValidData={setIsValidData} documentHTML={documentHTML} eventObject={eventObject} />
             default:
-                return <DadosEvento />
+                return <DadosEvento setIsValidData={setIsValidData} eventObject={eventObject} />
         }
     }
 
@@ -31,8 +35,28 @@ function Conteudo( {stepContent, updateStep } ){
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
-            location.href = '/';
-            // TODO enviar para o backend
+            // TODO pegar o HTML gerado (documentHTML) e enviar para o backend junto dos dados do evento
+
+            const response = async () => {
+                const response = await fetchData(
+                    `${API_BASE_URL}/eventos/novo`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(eventObject)
+                    }
+                )
+            }
+            if (response.ok) {
+                location.href = '/';
+            } else {
+                return (
+                    alert("erro")
+                )
+            }
+
             return;
         }
 
@@ -43,7 +67,8 @@ function Conteudo( {stepContent, updateStep } ){
 
     }
 
-    function onPrevius() {
+    function onPrevious() {
+        // TODO implementar
         updateStep(--stepContent);
     }
 
@@ -57,20 +82,19 @@ function Conteudo( {stepContent, updateStep } ){
 
     return (
         <div className={styles.content}>
-            <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    {renderContent()}
-                    <div className={styles.buttonContent}>
-                        {
-                        stepContent !== StepsEnum.DADOS_EVENTO ? 
-                        <Button type="button" onClick={onPrevius} styleType={ ButtonType.OUTLINE }>Voltar</Button> : <></>
-                        }
-                        <Button type="submit" isEnabled={true}>
-                            {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
-                        </Button>
-                    </div>
-                </form>
-            </FormProvider>
+            {renderContent()}
+            <div className={styles.buttonContent}>
+                
+                <Button isEnabled={isValidData} onClick={() => onNext()}>
+                    {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
+                </Button>
+                {stepContent != StepsEnum.DADOS_EVENTO &&
+                    <Button isEnabled={true} onClick={() => onPrevious()} type={ButtonType.OUTLINE}>
+                        Voltar
+                    </Button>
+                }
+
+            </div>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 .content {
     width: 100vw;
-    height: 92vh;
+    height: 100%;
     display: flex;
     background-color: var(--primary-background-color);
     justify-content: center;
@@ -10,7 +10,7 @@
     width: inherit;
     display: flex;
     justify-content:center;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
 }
 
 .contentAlign {

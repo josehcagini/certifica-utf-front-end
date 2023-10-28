@@ -1,12 +1,18 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    height: 75%;
+    height: 80%;
+    display: grid;
+    align-content: space-between;
     position: relative;
 }
 
 .buttonContent{
     position: absolute;
-    bottom: 0;
-    right: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    justify-content: center;
+    align-content: center;
+    bottom: 15vh;
+    left: 0;
+
 }
