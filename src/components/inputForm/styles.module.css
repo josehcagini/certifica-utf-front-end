@@ -9,6 +9,7 @@
     font-family: var(--font-default)
 }
 
+
 .input:focus{
     border-color: var(--primary-color);
 }
@@ -17,6 +18,10 @@
     padding: 0;
     background: none;
     border:none;
+}
+
+.input[aria-invalid="true"] {
+    border: 1px solid #ec5353;
 }
 
 .input::file-selector-button{

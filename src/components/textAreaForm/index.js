@@ -2,9 +2,9 @@ import styles from './textarea.module.css'
 import { ErrorMessage } from '@hookform/error-message';
 import { useFormContext  } from "react-hook-form"
 
-export default function TextArea( props ) {
+export default function TextAreaForm( props ) {
 
-    const { register, errors, getFieldState } = useFormContext()
+    const { register, formState : { errors }, getFieldState } = useFormContext()
 
     const {  params, name, title, ...rest } = props
 

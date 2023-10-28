@@ -1,7 +1,7 @@
 import styles from './dados.module.css'
 
-import Input from '@/components/input'
-import TextArea from '@/components/textarea';
+import InputForm from '@/components/inputForm';
+import TextAreaForm from '@/components/textAreaForm';
 import Button, { ButtonType } from '@/components/button';
 
 import { BiPlus } from 'react-icons/bi' ;   
@@ -15,6 +15,7 @@ export default function DadosEvento(){
 
     const { control } = useFormContext()
 
+    // TODO adicionar botão para remover data 
     const { fields, append, remove } = useFieldArray( {
         control,
         name: "dates",
@@ -27,14 +28,14 @@ export default function DadosEvento(){
             return;
         }
 
-        append( Object.assign( {}, EventTime ) )
+        append( Object.assign( {}, EventTimeObject ) )
     }
     
     return(
         <div>
             <div className={styles.inputGroup}>
                 <div className={styles.inputLeftGroup}>
-                    <Input
+                    <InputForm
                     params={EventSchema.name}
                     width='100%'
                     name='name'
@@ -42,12 +43,12 @@ export default function DadosEvento(){
                     placeholder='Nome do Evento'
                     type='text'/>
                     <div className={styles.contentDate}>
-                        <Input
+                        <InputForm
                         params={EventSchema.dateStart}
                         name='dateStart'
                         title='Data de inicio'
                         type='datetime-local'/>
-                        <Input
+                        <InputForm
                         params={EventSchema.dateEnd}
                         name='dateEnd'
                         title='Data de Encerramento'
@@ -70,7 +71,7 @@ export default function DadosEvento(){
                         Adicionar horario
                         </Button>
                     </div>
-                    <Input
+                    <InputForm
                     params={EventSchema.workload}
                     width='20%'
                     name='workload'
@@ -79,7 +80,7 @@ export default function DadosEvento(){
                     type='text'/>
                 </div>
                 <div className={styles.inputGroupRight}>
-                    <TextArea
+                    <TextAreaForm
                     params={EventSchema.informations}
                     name="informations"
                     placeholder='Informações do evento'

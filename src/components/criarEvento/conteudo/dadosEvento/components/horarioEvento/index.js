@@ -1,6 +1,6 @@
 import styles from './horario.evento.module.css'
 
-import Input from '@/components/input'
+import InputForm from '@/components/inputForm'
 
 import DateValidator from '@/helper/validator/date/DateValidator'
 import MessageHelper from '@/helper/validator/message/MessageHelper'
@@ -52,19 +52,19 @@ export default function HorarioEvento( { item, index, arrayName }) {
 
     return(
         <div className={styles.content}>
-            <Input
+            <InputForm
             params={EventTimeSchema.date}
             id='date'
             name={`${arrayName}.${index}.date`}
             title='Dia'
             type='date'/>
-            <Input
+            <InputForm
             params={EventTimeSchema.startTime}
             id='horarioDeInicio'
             name={`${arrayName}.${index}.startTime`}
             title='Horário de início'
             type='time'/>
-            <Input
+            <InputForm
             params={EventTimeSchema.endTime}
             id='horarioDeEncerramento'
             name={`${arrayName}.${index}.endTime`}
