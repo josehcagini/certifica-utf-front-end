@@ -5,7 +5,7 @@ import Input from '@/components/input'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-export default function CriarCertificado({ setIsValidData, eventObject, documentHTML }) {
+export default function CriarCertificado({ eventObject, documentHTML }) {
     const [tipoCertificado, setTipoCertificado] = useState("1");
     const [instituicao, setInstituicao] = useState('');
     const [local, setLocal] = useState('');

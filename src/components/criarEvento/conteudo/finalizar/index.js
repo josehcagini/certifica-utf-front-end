@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import styles from "./finalizar.module.css";
 
-export default function Finalizar({ setIsValidData, eventObject}) {
+export default function Finalizar({ eventObject}) {
     //Obter os dados das steps anteriores
     const { name, informations, dates, workload } = eventObject;
     const dateStart = new Date(eventObject.dateStart).toLocaleDateString();
@@ -20,8 +20,6 @@ export default function Finalizar({ setIsValidData, eventObject}) {
         let p = document.querySelector(`.${styles.copied}`);
         p.style.display = "block";
     }
-
-    const { getValues } = useFormContext()
 
     return (
         <div className={styles.content}>
