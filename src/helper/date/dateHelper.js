@@ -20,10 +20,14 @@ const isTimeLowerFromString = ( first, second ) => {
     }
 }
 
+const toValidFormat = ( dsDate ) => {
+    return dsDate.replace(/-/g, '\/').replace(/T.+/, '')
+}
+
 const isEqualsDateFromString = ( first, second ) => {
 
-    let dtFirst = new Date( this.toValidFormat( first ) );
-    let dtSecond = new Date( this.toValidFormat( second ) );
+    let dtFirst = new Date( toValidFormat( first ) );
+    let dtSecond = new Date( toValidFormat( second ) );
     
     dtFirst.setHours(  0, 0, 0, 0 );
     dtSecond.setHours( 0, 0, 0, 0 );
@@ -31,13 +35,21 @@ const isEqualsDateFromString = ( first, second ) => {
     return dtFirst.getTime() === dtSecond.getTime();
 }
 
+const toDefaultFormat = ( date ) => {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}
+
+const toDefaultFormatTime = ( date ) => {
+    return `${toDefaultFormat(date)} ${date.getHours()}:${date.getMinutes()}`;
+}
+
 const DateHelper = {
 
     toDefaultFormat: ( date ) => {
-        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        return toDefaultFormat( date );
     },
     toDefaultFormatTime: ( date ) => {
-        return `${this.toDefaultFormat(date)} ${date.getHours()}:${date.getMinutes()}`;
+        return toDefaultFormatTime( date );
     },
     isLargestDate: ( first, second ) => {
         return first.getTime() > second.getTime();
@@ -46,7 +58,7 @@ const DateHelper = {
         return first.getTime() >= second.getTime(); 
     },
     toValidFormat: ( dsDate ) => {
-        return dsDate.replace(/-/g, '\/').replace(/T.+/, '');
+        return toValidFormat( dsDate );
     },
     isEqualsDateFromString: ( first, second ) => {
         return isEqualsDateFromString( first, second );
