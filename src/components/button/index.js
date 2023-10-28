@@ -28,6 +28,7 @@ export default function Button( props ) {
     return (
         <button 
             onClick={props.onClick}
+            disabled={ !isEnabled }
             className={`${styles.content} ${ ClassByType( props.styleType, isEnabled ?? true ) }`} 
             {...rest}>
             { props.icon ?? <></> }

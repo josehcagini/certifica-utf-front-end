@@ -21,10 +21,12 @@ export default function DadosEvento(){
         name: "dates",
     });
 
+    const nrLimitDatesEvent = 3;
+
     function addDateEvent(){
 
         // TODO por enquanto vou deixar limitado a 3, isso para não ter que tratar o scroll 
-        if( fields.length === 3 ){
+        if( fields.length === nrLimitDatesEvent ){
             return;
         }
 
@@ -67,6 +69,7 @@ export default function DadosEvento(){
                         onClick={addDateEvent}
                         type="button"
                         styleType={ButtonType.OUTLINE}
+                        isEnabled={fields.length < nrLimitDatesEvent}
                         icon={<BiPlus size={20} isEnable/> }>
                         Adicionar horario
                         </Button>
