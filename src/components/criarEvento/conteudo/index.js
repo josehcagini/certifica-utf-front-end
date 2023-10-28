@@ -89,7 +89,7 @@ function Conteudo({ stepContent, updateStep }) {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     {renderContent()}
                     <div className={styles.buttonContent}>
-                        <Button type="submit">
+                        <Button type="submit" isEnabled={true}>
                             {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
                         </Button>
                         {stepContent != StepsEnum.DADOS_EVENTO &&

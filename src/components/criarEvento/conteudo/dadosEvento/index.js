@@ -61,6 +61,7 @@ export default function DadosEvento(){
                         { fields.map( ( item, index ) => 
                             <HorarioEvento 
                             arrayName="dates"
+                            remove={remove}
                             key={index}
                             index={index}
                             item={item}/> 

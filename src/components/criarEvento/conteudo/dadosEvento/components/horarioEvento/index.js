@@ -5,8 +5,11 @@ import InputForm from '@/components/inputForm'
 import DateValidator from '@/helper/validator/date/DateValidator'
 import MessageHelper from '@/helper/validator/message/MessageHelper'
 import DateHelper from '@/helper/date/DateHelper'
+import ButtonRemove from './components/button/remove'
 
-export default function HorarioEvento( { item, index, arrayName }) {
+import { PiTrash } from 'react-icons/pi'
+
+export default function HorarioEvento( { item, index, arrayName, remove }) {
 
     const EventTimeSchema = {
         date: {
@@ -70,6 +73,13 @@ export default function HorarioEvento( { item, index, arrayName }) {
             name={`${arrayName}.${index}.endTime`}
             title='Horário de Encerramento'
             type='time'/>
+            <div className={styles.buttonRemove}>
+                <ButtonRemove 
+                type="button"
+                onClick={remove}>
+                    <PiTrash size={20} color={"#FFFFFF"} />
+                </ButtonRemove>
+            </div>
         </div>
     )
 }
