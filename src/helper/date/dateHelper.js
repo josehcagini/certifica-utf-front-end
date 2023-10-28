@@ -36,11 +36,24 @@ const isEqualsDateFromString = ( first, second ) => {
 }
 
 const toDefaultFormat = ( date ) => {
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+    const dsDate = date.getDate().toString().padStart( 2, '0' );
+    const dsMonth = ( date.getMonth() + 1 ).toString().padStart( 2, '0' );
+
+    return `${dsDate}/${dsMonth}/${date.getFullYear()}`;
 }
 
 const toDefaultFormatTime = ( date ) => {
-    return `${toDefaultFormat(date)} ${date.getHours()}:${date.getMinutes()}`;
+
+    const dsHour = date.getHours().toString().padStart( 2, '0 ');
+    const dsMinutes = date.getMinutes().toString().padStart( 2, '0 ');
+
+    return `${toDefaultFormat(date)} ${dsHour}:${dsMinutes}`;
+}
+
+const fillHourAndMinutes = ( time, character = '0') => {
+    const timeDecompose = time.split(":");
+    return `${timeDecompose[0].padStart( 2, character )}:${timeDecompose[1].padStart( 2, character )}`
 }
 
 const DateHelper = {
@@ -69,6 +82,9 @@ const DateHelper = {
     isTimeLowerFromString: ( first, second ) => {
         return isTimeLowerFromString( first, second );
     },
+    fillHourAndMinutes: ( time, character = '0' ) => {
+        return fillHourAndMinutes( time, character );
+    }
 }
 
 export default DateHelper;

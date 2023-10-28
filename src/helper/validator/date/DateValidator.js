@@ -79,7 +79,7 @@ const validateHourMin = ( dsHourActual, dsHourBase ) => {
     }
 
     if( DateHelper.isTimeLowerFromString( dsHourActual, dsHourBase ) ){
-        return MessageHelper.timeMin.replace( "%1", dsHourBase );
+        return MessageHelper.timeMin.replace( "%1", DateHelper.fillHourAndMinutes( dsHourBase ) );
     }
 
     return true;

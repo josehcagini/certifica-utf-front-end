@@ -9,13 +9,21 @@
 
 :root {
 
+  --border-radius-default: 6px;
+  --font-default: 'Poppins', sans-serif;
+
+  /* Colors */
+
   --primary-color: #3498db;
+  --invalid-color: #ec5353;
+  --primary-background-color: #F1F1F1;
+  --default-disabled-color: #d3d3d3;
+
+  /* Text Colors */
+
   --text-color: rgb(70, 68, 68);
   --text-color-secundary: #FFFFFF;
-  --border-radius-default: 6px;
-  --default-disabled-color: #d3d3d3;
-  --primary-background-color: #F1F1F1;
-  --font-default: 'Poppins', sans-serif;
+
 }
 
 html,
