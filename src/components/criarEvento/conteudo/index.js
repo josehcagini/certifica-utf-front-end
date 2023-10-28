@@ -4,6 +4,7 @@ import DadosEvento from './dadosEvento'
 import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
+import EventObject from '@/objects/event/EventObject'
 import { useForm, FormProvider } from "react-hook-form"
 import { fetchData } from '@/app/api/utils/apiUtils'
 

@@ -7,7 +7,7 @@ import Button, { ButtonType } from '@/components/button';
 import { BiPlus } from 'react-icons/bi' ;   
 import { useFormContext, useFieldArray } from "react-hook-form"
 
-import EventTime from '@/objects/event/eventTime';
+import EventTimeObject from '@/objects/event/EventTimeObject';
 import HorarioEvento from './components/horarioEvento';
 import EventSchema from '@/helper/validator/schema/EventSchema';
 

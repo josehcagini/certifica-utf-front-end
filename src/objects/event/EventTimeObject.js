@@ -1,7 +1,7 @@
-const EventTime = {
+const EventTimeObject = {
     date: null,
     startTime: null,
     endTime: null,
 };
 
-export default EventTime;
+export default EventTimeObject;
