@@ -3,6 +3,7 @@ import styles from './button.module.css'
 export const ButtonType = {
     DEFAULT: 1,
     OUTLINE: 2,
+    SECONDARY: 3,
 }
 
 function ClassByType( styleType, isEnabled ){
@@ -14,6 +15,8 @@ function ClassByType( styleType, isEnabled ){
     switch( styleType ){
         case ButtonType.OUTLINE:
             return styles.outline;
+        case 3:
+            return styles.secondary;
         default:
             return styles.default;
     }

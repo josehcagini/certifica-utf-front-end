@@ -6,13 +6,8 @@
 }
 
 .buttonContent{
-    position: absolute;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: flex-start;
     gap: 1em;
-    justify-content: center;
-    align-content: center;
-    bottom: 15vh;
-    left: 0;
-
+    margin-top: 1em;
 }

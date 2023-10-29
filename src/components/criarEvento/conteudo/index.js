@@ -93,7 +93,7 @@ function Conteudo({ stepContent, updateStep }) {
                             {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
                         </Button>
                         {stepContent != StepsEnum.DADOS_EVENTO &&
-                            <Button type="button" isEnabled={true} onClick={() => onPrevious()} styleType={ButtonType.OUTLINE}>
+                            <Button type="button" isEnabled={true} onClick={() => onPrevious()} styletype={ButtonType.SECONDARY}>
                                 Voltar
                             </Button>
                         }
