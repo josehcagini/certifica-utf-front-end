@@ -5,7 +5,7 @@ import Input from '@/components/input'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-export default function CriarCertificado({ setIsValidData, eventObject, documentHTML }) {
+export default function CriarCertificado({ eventObject, documentHTML }) {
     const [tipoCertificado, setTipoCertificado] = useState("1");
     const [instituicao, setInstituicao] = useState('');
     const [local, setLocal] = useState('');
@@ -74,7 +74,7 @@ export default function CriarCertificado({ setIsValidData, eventObject, document
     return (
         <div className={styles.content}>
             <div className={styles.leftContent}>
-                <Input type="hidden" title="Modelo do Certificado" /> {/* Alterar para label estilizado */}
+                <Input name="modeloCertificado" type="hidden" title="Modelo do Certificado" /> {/* Alterar para label estilizado */}
                 <div className={styles.inputGroup}>
                     <input type="radio" className={styles.radio} name="tipoCertificado" id="tipo1" value="1" onChange={e => setTipoCertificado(e.target.value)} defaultChecked />
                     <label htmlFor='tipo1' className={styles.label}>Modelo 1 (personalizável)</label>

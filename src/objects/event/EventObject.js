@@ -1,4 +1,4 @@
-const Event = {
+const EventObject = {
     name: null,
     dateEnd: null,
     dateStart: null,
@@ -7,6 +7,6 @@ const Event = {
     dates: [],
 };
 
-export default Event;
+export default EventObject;
 
 // TODO Adicionar demais campos dos outros steps
