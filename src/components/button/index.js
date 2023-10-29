@@ -24,12 +24,12 @@ function ClassByType( styleType, isEnabled ){
 export default function Button( props ) {
 
     const { isEnabled, ...rest } = props
-
+    /* Propriedade styleType causa erro no console, por isso usar styletype em lower case */
     return (
         <button 
             onClick={props.onClick}
             disabled={ !isEnabled }
-            className={`${styles.content} ${ ClassByType( props.styleType, isEnabled ?? true ) }`} 
+            className={`${styles.content} ${ ClassByType( props.styletype, isEnabled ?? true ) }`} 
             {...rest}>
             { props.icon ?? <></> }
             { props.children }

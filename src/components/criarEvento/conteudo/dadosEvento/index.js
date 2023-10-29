@@ -69,9 +69,9 @@ export default function DadosEvento(){
                         <Button 
                         onClick={addDateEvent}
                         type="button"
-                        styleType={ButtonType.OUTLINE}
+                        styletype={ButtonType.OUTLINE}
                         isEnabled={fields.length < nrLimitDatesEvent}
-                        icon={<BiPlus size={20} isEnable/> }>
+                        icon={<BiPlus size={20} /> }>
                         Adicionar horario
                         </Button>
                     </div>
