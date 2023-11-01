@@ -12,6 +12,13 @@
   --border-radius-default: 6px;
   --font-default: 'Poppins', sans-serif;
 
+  /* Breakpoints */
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-mdl: 867px;
+  --breakpoint-lg: 992px;
+
   /* Colors */
 
   --primary-color: #3498db;

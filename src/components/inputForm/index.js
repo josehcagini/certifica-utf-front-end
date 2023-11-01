@@ -2,7 +2,8 @@ import styles from './styles.module.css';
 import { ErrorMessage } from '@hookform/error-message';
 import { useFormContext  } from "react-hook-form"
 
-export default function InputForm( props ) {
+export default function 
+InputForm( props ) {
 
     const { register, formState: { errors }, getFieldState } = useFormContext()
 

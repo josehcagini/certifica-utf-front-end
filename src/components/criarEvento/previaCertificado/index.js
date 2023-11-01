@@ -4,12 +4,17 @@ import gerarCertificado from '@/services/certificado/geradorDeCertificado';
 //Exibir uma imagem gerada dinamicamente para evitar 
 //alterar os estilos do certificado para caber na tela
 export default function PreviaCertificado({ data }) {
+  console.log(data)
   // Salvar o nome do organizador no eventObject 
   //passar por props por enquanto
-  const {tipoCertificado, name, dateStart, dateEnd, workload, organizador, personalData, local } = data;
-  const { document } = personalData;
+  const {eventObject, certificateObject, organizador} = data;
+  const { tipoCertificado, personalData } = certificateObject;
+  if (tipoCertificado === '3'){
+    return parse('<div>Modelo não reconhecido</div>')
+  }
+  const { name, dateStart, dateEnd, workload, local } = eventObject;
   const html = gerarCertificado({
-    modelo: tipoCertificado,
+    modelo: tipoCertificado || '1',
     name: name,
     dateStart: new Date(dateStart).toLocaleDateString(),
     dateEnd: new Date(dateEnd).toLocaleDateString(),
@@ -19,5 +24,5 @@ export default function PreviaCertificado({ data }) {
     personalData: personalData,
     preview: true
   })
-  return tipoCertificado === '3' ? parse(document) : parse(html);
+  return parse(html);
 }

@@ -5,6 +5,7 @@ import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
 import EventObject from '@/objects/event/EventObject'
+import CertificateObject from '@/objects/certificate/CertificateObject'
 
 import { useForm, FormProvider } from "react-hook-form"
 import { fetchData } from '@/app/api/utils/apiUtils'
@@ -18,26 +19,27 @@ const StepsEnum = {
 
 function Conteudo({ stepContent, updateStep }) {
     const [eventObject, setEventObject] = useState(Object.assign({}, EventObject));
-    const [documentHTML, setDocumentHTML] = useState('');
+    const [certificateObject, setCertificateObject] = useState(Object.assign({}, CertificateObject));
 
     function renderContent() {
         switch (stepContent) {
             case StepsEnum.DADOS_EVENTO:
-                return <DadosEvento/>
+                return <DadosEvento />
             case StepsEnum.CRIAR_CERTIFICADO:
-                return <CriarCertificado documentHTML={documentHTML} eventObject={eventObject} />
+                return <CriarCertificado certificateObject={certificateObject} eventObject={eventObject} />
             case StepsEnum.FINALIZAR:
-                return <Finalizar documentHTML={documentHTML} eventObject={eventObject} />
+                return <Finalizar certificateObject={certificateObject} eventObject={eventObject} />
             default:
                 return <DadosEvento eventObject={eventObject} />
         }
     }
 
-    function onNext() {
+    async function onNext() {
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
-            // TODO pegar o HTML gerado (documentHTML) e enviar para o backend junto dos dados do evento
+            // TODO enviar o certificateObject e o eventObject para o backend
+            //definir o formato do JSON 
 
             const response = async () => {
                 const response = await fetchData(
@@ -64,7 +66,7 @@ function Conteudo({ stepContent, updateStep }) {
 
         updateStep(++stepContent);
         return;
- 
+
         // TODO Apresentar erro 
 
     }
@@ -74,9 +76,9 @@ function Conteudo({ stepContent, updateStep }) {
         updateStep(--stepContent);
     }
 
-    function onSubmit( date ){
+    function onSubmit(date) {
         console.log(date)
-        setEventObject( date )
+        setEventObject(date)
         onNext()
     }
 

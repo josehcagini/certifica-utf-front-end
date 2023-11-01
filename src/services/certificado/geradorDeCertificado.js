@@ -3,6 +3,7 @@ export default function gerarCertificado(props){
     const emitidoEm = props.emitidoEm || new Date().toLocaleDateString();
     const hash = props.hash || 'codigoValidacao';
     const appName = props.appName || 'http://localhost:3000/';
+    const nomeAluno = props.nomeAluno || 'Nome do Aluno';
     var dateText = '';
     if (dateStart === dateEnd) {
         dateText = 'no dia <span class="bold">' + dateStart+'</span>';
@@ -32,7 +33,7 @@ export default function gerarCertificado(props){
                 <h1 id="titulo">Certificado</h1>
                 <div id="content">
                     <p id="descricao">
-                        Certificamos que <span class="bold">Nome do Aluno</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
+                        Certificamos que <span id="nome-aluno" class="bold">${nomeAluno}</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
                     </p>
                     <p id="local" class="bold">
                         ${local}, ${emitidoEm}
@@ -75,7 +76,7 @@ export default function gerarCertificado(props){
                     <h1>DECLARAÇÃO</h1>
                     <div class="content">
                         <p>
-                            Declaramos para os devidos fins que Nome do Aluno,
+                            Declaramos para os devidos fins que <span id="nome-aluno">${nomeAluno}</span>,
                             atuou como participante no evento ${name},
                             com ${workload} horas de atividades realizadas ${dateText}
                         </p>
