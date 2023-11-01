@@ -70,8 +70,8 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
     return (
         <div className={styles.content}>
             <div className={styles.leftContent}>
-                <InputForm params={CertificateSchema.modelo} name="modeloCertificado" control={control} />
                 <Input name="modeloCertificado" type="hidden" title="Modelo do Certificado" /> {/* Alterar para label estilizado */}
+                <InputForm type="radio"  name="tipoCertificado" title="Modelo 1 (personalizável)" id="tipo1" value="1" width="100%" control={control} params={CertificateSchema.modelo} />
                 <div className={styles.inputGroup}>
                     <input type="radio" className={styles.radio} name="tipoCertificado" id="tipo1" value="1" onChange={e => setTipoCertificado(e.target.value)} defaultChecked />
                     <label htmlFor='tipo1' className={styles.label}>Modelo 1 (personalizável)</label>

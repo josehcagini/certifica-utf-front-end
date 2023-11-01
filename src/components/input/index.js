@@ -2,12 +2,22 @@ import styles from './styles.module.css';
 
 export default function Input( props ) {
 
-    const { title, width, onChange, ...rest } = props
+    const { params, name, title, type, ...rest} = props
+
+    const isCheckOrRadio = (type) => {
+        if (type === 'checkbox' || type === 'radio') {
+            return true;
+        }
+        return false;
+    }
+
+
 
     const content = {
-        width:`${ width ?? '50%' }`,
+        width:`${ props.width ?? '50%' }`,
         display: 'flex',
-        flexDirection: 'column',
+        justifyContent: `${ isCheckOrRadio(type) ? 'flex-end' : 'normal' }`,
+        flexDirection: `${ isCheckOrRadio(type) ? 'row-reverse' : 'column' }`,
         gap: '2px'
     };
 

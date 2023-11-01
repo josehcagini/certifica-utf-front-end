@@ -9,6 +9,13 @@
     font-family: var(--font-default)
 }
 
+.inputCheck{
+    height: calc(10px + 0.25rem);
+    width: calc(10px + 0.25rem);
+    accent-color: var(--primary-color);
+    margin-right: 0.2rem;
+}
+
 .input:focus{
     border-color: var(--primary-color);
 }

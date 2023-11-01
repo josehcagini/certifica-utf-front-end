@@ -4,7 +4,6 @@ import gerarCertificado from '@/services/certificado/geradorDeCertificado';
 //Exibir uma imagem gerada dinamicamente para evitar 
 //alterar os estilos do certificado para caber na tela
 export default function PreviaCertificado({ data }) {
-  console.log(data)
   // Salvar o nome do organizador no eventObject 
   //passar por props por enquanto
   const {eventObject, certificateObject, organizador} = data;
