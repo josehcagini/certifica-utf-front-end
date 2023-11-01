@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 export default function Input( props ) {
 
-    const { params, name, title, type, ...rest} = props
+    const { params, name, onChange, title, type, ...rest} = props
 
     const isCheckOrRadio = (type) => {
         if (type === 'checkbox' || type === 'radio') {
@@ -27,6 +27,7 @@ export default function Input( props ) {
             <input
             onChange={onChange ?? null}            
             className={styles.input}
+            type={type ?? 'text'}
             {...rest}/>
         </div>
     )
