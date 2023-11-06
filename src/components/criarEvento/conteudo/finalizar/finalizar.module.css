@@ -37,3 +37,9 @@
     display: flex;
     flex-direction: row;
 }
+
+.previaCertificado{
+    text-align: center;
+    max-width: 80vw;
+    overflow: auto;
+}

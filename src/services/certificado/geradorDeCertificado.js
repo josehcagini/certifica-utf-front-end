@@ -1,19 +1,29 @@
 export default function gerarCertificado(props){
-    const {modelo, preview, name, dateStart, dateEnd, workload, organizador,local, personalData } = props;
+    const {eventObject, certificateObject, organizador, preview } = props;
     const emitidoEm = props.emitidoEm || new Date().toLocaleDateString();
+    const { modelo } = certificateObject;
+    if (modelo !== '1' && modelo !== '2') return ('<pre>Modelo de certificado não reconhecido</pre>')
+    const { name, dateStart, dateEnd, workload } = eventObject;
+    const { local } = certificateObject.personalData ?? 'Curitiba - PR';
+    const dsFormat = new Date(dateStart).toLocaleDateString();
+    const deFormat = new Date(dateEnd).toLocaleDateString();
+
     const hash = props.hash || 'codigoValidacao';
     const appName = props.appName || 'http://localhost:3000/';
     const nomeAluno = props.nomeAluno || 'Nome do Aluno';
     var dateText = '';
-    if (dateStart === dateEnd) {
-        dateText = 'no dia <span class="bold">' + dateStart+'</span>';
+    
+    if (dsFormat === deFormat) {
+        dateText = 'no dia <span class="bold">' + dsFormat+'</span>';
     }
     else {
-        dateText = 'entre os dias <span class="bold">' + dateStart + '</span> e <span class="bold">' + dateEnd + '</span>';
+        dateText = 'entre os dias <span class="bold">' + dsFormat + '</span> e <span class="bold">' + deFormat + '</span>';
     }
-
-    if (modelo === '1') {
-        const {instituicao, logo, backgroundImage} = personalData;
+    //////////////////////
+        //corrigir para padronizar o tipo para string
+    if (modelo == '1') {
+        const { personalData } = certificateObject;
+        const {instituicao, logo, local, backgroundImage} = personalData;
         const html = `
         <link rel="stylesheet" href="../stylesCertificado/modelo1.css">
         ${preview ? '<link rel="stylesheet" href="../stylesCertificado/preview.css">': ''}
@@ -95,10 +105,5 @@ export default function gerarCertificado(props){
             </div>
         </div>`;
         return html;      
-    }
-    else {
-        return ('<pre>Modelo de certificado não reconhecido</pre>')
-    }
-    
-
+    }   
 }

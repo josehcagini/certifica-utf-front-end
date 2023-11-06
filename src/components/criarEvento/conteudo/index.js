@@ -34,10 +34,60 @@ function Conteudo({ stepContent, updateStep }) {
         }
     }
 
+
+    function onPrevious() {
+        // TODO implementar
+        updateStep(--stepContent);
+    }
+
+    function setObjectsByStepContent(date, stepContent) {
+        // Separar do código principal do onSubmit
+        // para melhor visualização do código
+        // Essa função evita a sobreposição dos dados
+        // já que o date é um objeto com todos os dados das steps
+        switch (stepContent) {
+            case StepsEnum.DADOS_EVENTO:
+                setEventObject(
+                    Object.assign({}, {
+                        name: date.name,
+                        dateStart: date.dateStart,
+                        dateEnd: date.dateEnd,
+                        dates: date.dates,
+                        workload: date.workload,
+                        informations: date.informations,
+                    })
+                ); // É necessário utilizar o Object.assign porque,
+                // caso o usuário retorne para a step de dados do evento
+                // o  objeto date incluirá os dados das outras steps.
+                break;
+            case StepsEnum.CRIAR_CERTIFICADO:
+                setCertificateObject(
+                    Object.assign({}, {
+                        modelo: date.tipoCertificado,
+                        personalData: {
+                            instituicao: date.instituicao,
+                            logo: date.logo[0],
+                            local: date.local,
+                            backgroundImage: date.backgroundImage[0]
+                        }
+                    })
+                );
+                break;
+            default:
+                break;
+        }
+        return date; // Caso seja necessário pra debug
+    }
+
     async function onNext() {
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
+            const obj = { // Melhorar a estrutura do objeto
+                eventObject: eventObject,
+                certificateObject: certificateObject,
+            }
+            console.log(obj)
             // TODO enviar o certificateObject e o eventObject para o backend
             //definir o formato do JSON 
 
@@ -49,7 +99,7 @@ function Conteudo({ stepContent, updateStep }) {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(eventObject)
+                        body: JSON.stringify(obj)
                     }
                 )
             }
@@ -68,17 +118,10 @@ function Conteudo({ stepContent, updateStep }) {
         return;
 
         // TODO Apresentar erro 
-
-    }
-
-    function onPrevious() {
-        // TODO implementar
-        updateStep(--stepContent);
     }
 
     function onSubmit(date) {
-        console.log(date)
-        setEventObject(date)
+        setObjectsByStepContent(date, stepContent);
         onNext()
     }
 
