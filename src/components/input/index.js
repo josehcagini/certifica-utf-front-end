@@ -23,7 +23,7 @@ export default function Input( props ) {
 
     return (
         <div style={content}>
-            <label className={styles.label}>{title}</label>
+            <label className={styles.label} htmlFor={props.id}>{title}</label>
             <input
             onChange={onChange ?? null}            
             className={styles.input}

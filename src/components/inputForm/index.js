@@ -28,7 +28,7 @@ InputForm( props ) {
 
     return (
         <div style={content}>
-            <label className={styles.label}>{title}</label>
+            <label className={styles.label} htmlFor={props.id}>{title}</label>
             <input
             {...register( name, params )}
             className={`${styles.input} ${isCheckOrRadio(type) ? styles.inputCheck : ''}`}

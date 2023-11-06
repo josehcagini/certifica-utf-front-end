@@ -45,11 +45,11 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
         reader.onload = () => {
             setLogo(reader.result);
         }
-        
+
     }
 
     useEffect(() => {
-        if (!local){
+        if (!local) {
             setLocal('Dois Vizinhos- PR');
         }
         setData(Object.assign({},
@@ -63,7 +63,7 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
                         logo: logo,
                         local: local,
                         backgroundImage: backgroundImage
-                    }                
+                    }
                 }
             }
         ));
@@ -74,7 +74,29 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
             setBackgroundImage(false);
             setLogo(false);
         }
-    }, [tipoCertificado])
+    }, [tipoCertificado]);
+
+    const highlightArea = (e) => {
+        const id = e.target.id;
+        const focusId = id.split('_')[0];
+        try {
+            const element = document.getElementById(focusId);
+            element.style.border = '2px solid var(--primary-color)';
+        } catch (e) {
+            console.warn(e);
+        }
+    }
+
+    const removeHighlightArea = (e) => {
+        const id = e.target.id;
+        const focusId = id.split('_')[0];
+        try {
+            const element = document.getElementById(focusId);
+            element.style.border = 'none';
+        } catch (e) {
+            console.warn(e);
+        }
+    }
 
     return (
         <div className={styles.content}>
@@ -119,38 +141,48 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
                     <>
 
                         <InputForm
+                            params={CertificateSchema.instituicao}
                             type="text"
                             name="instituicao"
                             title="Instituição (opcional)"
                             placeholder="Instituição"
+                            id="instituicao_form"
                             width="80%"
-                            params={CertificateSchema.instituicao}
-                            onChange={e => setInstituicao(e.target.value)} />
+                            onChange={e => setInstituicao(e.target.value)}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }}
+                        />
                         <InputForm
                             type="file"
                             name="logo"
-                            title="Logo da Instiuição ou evento"
+                            id="logo_form"
+                            title="Logo da Instituição ou evento"
                             accept="image/*"
                             width="80%"
-                            params={CertificateSchema.logo}
-                            onChange={e => { handleUploadLogo(e) }} />
+                            onChange={e => { handleUploadLogo(e) }}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
                         <InputForm
                             type="text"
                             name="local"
+                            id="local_form"
                             title="Cidade e Estado"
                             placeholder="Ex: Dois Vizinhos - PR"
                             width="80%"
-                            params={CertificateSchema.local}
-                            onChange={e => setLocal(e.target.value)} />
+                            onChange={e => setLocal(e.target.value)}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
                         <InputForm type="file"
                             name="backgroundImage"
+                            id="certificado_form"
                             title="Inserir imagem de fundo"
                             width="80%"
                             accept="image/*"
-                            params={CertificateSchema.backgroundImage}
                             onChange={e => {
                                 handleUploadBG(e);
-                            }} />
+                            }}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
                     </>
                 }
                 {tipoCertificado === '3' && //Não utilizar por enquanto

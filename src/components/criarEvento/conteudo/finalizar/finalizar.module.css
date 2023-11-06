@@ -1,9 +1,3 @@
-.content{
-    display: grid;
-    grid-template-columns: 45% 45%;
-    justify-content: space-between;
-}
-
 .input{
     width: 70%;
     height: 35px;
@@ -38,8 +32,6 @@
     flex-direction: row;
 }
 
-.previaCertificado{
-    text-align: center;
-    max-width: 80vw;
-    overflow: auto;
+.subItem{
+    font-size: calc(12px + 0.15rem);
 }

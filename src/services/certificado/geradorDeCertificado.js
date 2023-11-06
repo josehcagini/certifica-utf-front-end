@@ -29,7 +29,7 @@ export default function gerarCertificado(props){
         ${preview ? '<link rel="stylesheet" href="../stylesCertificado/preview.css">': ''}
         ${logo ? `<style>#logo{background-image: url(${logo})}</style>` : ''}
         ${backgroundImage ? `<style>.certificado{background-image: url(${backgroundImage})}</style>` : ''}
-        <div class="certificado${backgroundImage ? ' custom-bg' : ''}" >
+        <div id="certificado" class="certificado${backgroundImage ? ' custom-bg' : ''}" >
             <div id="header">
                 <div id="logo" >
                 </div>

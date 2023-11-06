@@ -8,18 +8,17 @@ export default function Finalizar({ eventObject, certificateObject }) {
     const timeStart = new Date(eventObject.dateStart).toLocaleTimeString();
     const dateEnd = new Date(eventObject.dateEnd).toLocaleDateString();
     const timeEnd = new Date(eventObject.dateEnd).toLocaleTimeString();
-    const eventHash = 123456789; //Gerar um hash para o evento no backend
 
     const session = useSession();
     const organizador = session?.data?.user?.name;
-    const handleClick = (e) => {
+    /*const handleClick = (e) => {
         e.preventDefault();
         let el = document.getElementById("link");
         el.select();
         navigator.clipboard.writeText(el.value);
         let p = document.querySelector(`.${styles.copied}`);
         p.style.display = "block";
-    }
+    }*/
 
     return (
         <div className={styles.content}>
@@ -29,15 +28,17 @@ export default function Finalizar({ eventObject, certificateObject }) {
                 <p>Descrição: {informations}</p>
                 <p>Organizador: {organizador}</p>
                 <p>Data: {dateStart} - {timeStart} até {dateEnd} - {timeEnd}</p>
+                <p>Horários do evento:</p>
+                {
+                    dates.length > 0 ?
+                    dates.map((date, index) => {
+                        return (
+                            <p key={index} className="subItem">{date.date}: {date.startTime} até {date.endTime}</p>
+                        )
+                    })
+                    : <p className={styles.subItem}>Não informado</p>
+                }
                 <p>Carga Horária: {workload}h</p>
-            </div>
-            <div className={styles.rightContent}>
-                <label htmlFor="link">Link do evento</label>
-                <div className={styles.input_group}>
-                    <input className={styles.input} type="text" disabled={true} value={eventHash} id="link" placeholder="Link do evento" />
-                    <button className={styles.buttonLink} onClick={handleClick} >Copiar link</button>
-                </div>
-                <p className={styles.copied}>Link copiado!</p>
             </div>
         </div>
     )
