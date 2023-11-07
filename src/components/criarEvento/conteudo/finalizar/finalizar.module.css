@@ -34,4 +34,9 @@
 
 .subItem{
     font-size: calc(12px + 0.15rem);
+    margin: .15rem .15rem .15rem 0;
+}
+
+.subItem::before{
+    content: "• ";
 }

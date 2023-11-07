@@ -21,14 +21,14 @@ export default function DadosEvento(){
         name: "dates",
     });
 
-    const nrLimitDatesEvent = 3;
+    //const nrLimitDatesEvent = 3;
 
     function addDateEvent(){
 
         // TODO por enquanto vou deixar limitado a 3, isso para não ter que tratar o scroll 
-        if( fields.length === nrLimitDatesEvent ){
+        /*if( fields.length === nrLimitDatesEvent ){
             return;
-        }
+        }*/
 
         append( Object.assign( {}, EventTimeObject ) )
     }
@@ -56,8 +56,8 @@ export default function DadosEvento(){
                         title='Data de Encerramento'
                         type='datetime-local'/>
                     </div>
+                    <label>Horários do evento</label>
                     <div className={styles.eventTimes}>
-                        <label>Horários do evento</label>
                         { fields.map( ( item, index ) => 
                             <HorarioEvento 
                             arrayName="dates"
@@ -70,7 +70,7 @@ export default function DadosEvento(){
                         onClick={addDateEvent}
                         type="button"
                         styletype={ButtonType.OUTLINE}
-                        isEnabled={fields.length < nrLimitDatesEvent}
+                        isEnabled={true /*fields.length < nrLimitDatesEvent*/}
                         icon={<BiPlus size={20} /> }>
                         Adicionar horario
                         </Button>

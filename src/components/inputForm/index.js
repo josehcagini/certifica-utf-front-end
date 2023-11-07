@@ -29,17 +29,18 @@ InputForm( props ) {
     return (
         <div style={content}>
             <label className={styles.label} htmlFor={props.id}>{title}</label>
+            <ErrorMessage
+            errors={errors}
+            name={name}
+            render={({ message }) => <p style={{fontSize:13, color:"#ec5353"}}>{message}</p> }
+            />
             <input
             {...register( name, params )}
             className={`${styles.input} ${isCheckOrRadio(type) ? styles.inputCheck : ''}`}
             aria-invalid={ getFieldState(name).invalid ? "true" : "false"}
             type={type}
             {...rest}/>
-            <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => <p style={{fontSize:13, color:"#ec5353"}}>{message}</p> }
-            />
+            
         </div>
     )
 }

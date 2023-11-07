@@ -11,7 +11,7 @@ export default function Finalizar({ eventObject, certificateObject }) {
 
     const session = useSession();
     const organizador = session?.data?.user?.name;
-    /*const handleClick = (e) => {
+    /*const handleClick = (e) => {  Utilizar em outra tela, após o retorno 201 da api
         e.preventDefault();
         let el = document.getElementById("link");
         el.select();
@@ -32,11 +32,12 @@ export default function Finalizar({ eventObject, certificateObject }) {
                 {
                     dates.length > 0 ?
                     dates.map((date, index) => {
+                        const dateFormat = new Date(date.date).toLocaleDateString();
                         return (
-                            <p key={index} className="subItem">{date.date}: {date.startTime} até {date.endTime}</p>
+                            <p key={index} className={styles.subItem}>{dateFormat} - {date.startTime}h até {date.endTime}h</p>
                         )
                     })
-                    : <p className={styles.subItem}>Não informado</p>
+                    :<p className={styles.subItem}>Não informado</p>
                 }
                 <p>Carga Horária: {workload}h</p>
             </div>

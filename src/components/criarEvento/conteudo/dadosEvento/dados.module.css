@@ -17,7 +17,9 @@
 }
 
 .eventTimes {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1rem;
+    height: 50%;
+    padding-right: 0.5rem;
+    overflow: auto;
 }
