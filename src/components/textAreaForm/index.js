@@ -8,14 +8,15 @@ export default function TextAreaForm( props ) {
 
     const {  params, name, title, ...rest } = props
 
-    const content = {
+    const content = { //não funciona, mas também não afeta o estilo
+        // verificar se precisa adicionar ao css
         width:`${ props.width ?? '50%' }`,
         display: 'flex',
         flexDirection: 'column'
     };
 
     return (
-        <div className={content}>
+        <div >
             <label className={styles.label}>{title}</label>
             <textarea 
             {...register( name, params ) }

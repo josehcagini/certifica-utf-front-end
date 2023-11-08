@@ -9,6 +9,13 @@
     font-family: var(--font-default)
 }
 
+.inputCheck{
+    height: calc(10px + 0.25rem);
+    width: calc(10px + 0.25rem);
+    accent-color: var(--primary-color);
+    margin-right: 0.2rem;
+}
+
 
 .input:focus{
     border-color: var(--primary-color);
@@ -19,6 +26,7 @@
     background: none;
     border:none;
 }
+
 
 .input[aria-invalid="true"] {
     border: 1px solid #ec5353;
@@ -45,7 +53,10 @@
 }
 
 @media (max-width: 768px){
-    .input{
+    .input:not(:matches(
+        [type="checkbox"],
+        [type="radio"],
+    )){
         width: 100%;
     }
 }

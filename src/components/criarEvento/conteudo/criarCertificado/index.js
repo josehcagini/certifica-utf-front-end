@@ -1,12 +1,13 @@
 import styles from './criarCertificado.module.css';
-import stylesDadosEvento from '../dadosEvento/dados.module.css';
 import PreviaCertificado from '../../previaCertificado'
 import Input from '@/components/input'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import InputForm from '@/components/inputForm';
+import CertificateSchema from '@/helper/validator/schema/CertificateSchema';
 
-export default function CriarCertificado({ eventObject, documentHTML }) {
-    const [tipoCertificado, setTipoCertificado] = useState("1");
+export default function CriarCertificado({ eventObject, certificateObject }) {
+    const [tipoCertificado, setTipoCertificado] = useState('1');
     const [instituicao, setInstituicao] = useState('');
     const [local, setLocal] = useState('');
     const [logo, setLogo] = useState(false);
@@ -14,16 +15,11 @@ export default function CriarCertificado({ eventObject, documentHTML }) {
 
     const session = useSession();
     const organizador = session?.data?.user?.name;
-    const [data, setData] = useState(Object.assign({}, eventObject, { organizador: organizador },
-        {
-            personalData: {
-                instituicao: instituicao,
-                local: local,
-                backgroundImage: backgroundImage,
-            }
-        }, { tipoCertificado: tipoCertificado }));
-
-
+    const [data, setData] = useState(Object.assign({},
+        { eventObject: eventObject },
+        { organizador: organizador },
+        { certificateObject: certificateObject }
+    ));
 
     const handleUploadBG = (e) => {
         const reader = new FileReader();
@@ -49,18 +45,28 @@ export default function CriarCertificado({ eventObject, documentHTML }) {
         reader.onload = () => {
             setLogo(reader.result);
         }
+
     }
 
-
     useEffect(() => {
-        setData(Object.assign({}, eventObject, { local: local }, { organizador: organizador },
+        if (!local) {
+            setLocal('Dois Vizinhos- PR');
+        }
+        setData(Object.assign({},
+            { eventObject: eventObject },
+            { organizador: organizador },
             {
-                personalData: {
-                    instituicao: instituicao,
-                    backgroundImage: backgroundImage,
-                    logo: logo
+                certificateObject: {
+                    modelo: tipoCertificado,
+                    personalData: {
+                        instituicao: instituicao,
+                        logo: logo,
+                        local: local,
+                        backgroundImage: backgroundImage
+                    }
                 }
-            }, { tipoCertificado: tipoCertificado }));
+            }
+        ));
     }, [tipoCertificado, instituicao, local, backgroundImage, logo]);
 
     useEffect(() => {
@@ -68,14 +74,56 @@ export default function CriarCertificado({ eventObject, documentHTML }) {
             setBackgroundImage(false);
             setLogo(false);
         }
-    }, [tipoCertificado])
+    }, [tipoCertificado]);
 
+    const highlightArea = (e) => {
+        const id = e.target.id;
+        const focusId = id.split('_')[0];
+        try {
+            const element = document.getElementById(focusId);
+            element.style.border = '2px solid var(--primary-color)';
+        } catch (e) {
+            console.warn(e);
+        }
+    }
+
+    const removeHighlightArea = (e) => {
+        const id = e.target.id;
+        const focusId = id.split('_')[0];
+        try {
+            const element = document.getElementById(focusId);
+            element.style.border = 'none';
+        } catch (e) {
+            console.warn(e);
+        }
+    }
 
     return (
         <div className={styles.content}>
             <div className={styles.leftContent}>
                 <Input name="modeloCertificado" type="hidden" title="Modelo do Certificado" /> {/* Alterar para label estilizado */}
-                <div className={styles.inputGroup}>
+                <InputForm
+                    type="radio"
+                    name="tipoCertificado"
+                    title="Modelo 1 (personalizável)"
+                    id="tipo1" value='1'
+                    width="100%"
+                    defaultChecked={true}
+                    params={CertificateSchema.modelo}
+                    onChange={e => setTipoCertificado(e.target.value)}
+                //continuar utilizando para alterar a prévia
+
+                />
+                <InputForm
+                    type="radio"
+                    name="tipoCertificado"
+                    title="Modelo 2 (padrão UTFPR)"
+                    id="tipo2" value='2'
+                    width="100%"
+                    params={CertificateSchema.modelo}
+                    onChange={e => setTipoCertificado(e.target.value)}
+                />
+                {/*<div className={styles.inputGroup}>
                     <input type="radio" className={styles.radio} name="tipoCertificado" id="tipo1" value="1" onChange={e => setTipoCertificado(e.target.value)} defaultChecked />
                     <label htmlFor='tipo1' className={styles.label}>Modelo 1 (personalizável)</label>
                 </div>
@@ -91,16 +139,54 @@ export default function CriarCertificado({ eventObject, documentHTML }) {
                 {
                     tipoCertificado === '1' &&
                     <>
-                        <Input type="text" title="Instituição (opcional)" placeholder="Instituição" width="fit-content" onChange={e => setInstituicao(e.target.value)} />
-                        <Input type="file" title="Logo da Instiuição ou evento" accept="image/*" width="fit-content" onChange={e => { handleUploadLogo(e) }} />
-                        <Input type="text" title="Local" placeholder="Local do evento" width="fit-content" onChange={e => setLocal(e.target.value)} />
-                        <Input type="file" title="Inserir imagem de fundo" width="fit-content" accept="image/*" onChange={e => {
-                            handleUploadBG(e);
-                        }} />
+
+                        <InputForm
+                            params={CertificateSchema.instituicao}
+                            type="text"
+                            name="instituicao"
+                            title="Instituição (opcional)"
+                            placeholder="Instituição"
+                            id="instituicao_form"
+                            width="80%"
+                            onChange={e => setInstituicao(e.target.value)}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }}
+                        />
+                        <InputForm
+                            type="file"
+                            name="logo"
+                            id="logo_form"
+                            title="Logo da Instituição ou evento"
+                            accept="image/*"
+                            width="80%"
+                            onChange={e => { handleUploadLogo(e) }}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
+                        <InputForm
+                            type="text"
+                            name="local"
+                            id="local_form"
+                            title="Cidade e Estado"
+                            placeholder="Ex: Dois Vizinhos - PR"
+                            width="80%"
+                            onChange={e => setLocal(e.target.value)}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
+                        <InputForm type="file"
+                            name="backgroundImage"
+                            id="certificado_form"
+                            title="Inserir imagem de fundo"
+                            width="80%"
+                            accept="image/*"
+                            onChange={e => {
+                                handleUploadBG(e);
+                            }}
+                            onMouseEnter={e => highlightArea(e)}
+                            onMouseLeave={e => { removeHighlightArea(e) }} />
                     </>
                 }
-                {tipoCertificado === '3' &&
-                    <Input type="file" disabled={tipoCertificado !== '3'} title="Importar XML" width="fit-content" accept=".xml" />
+                {tipoCertificado === '3' && //Não utilizar por enquanto
+                    <Input type="file" disabled={tipoCertificado !== 3} title="Importar XML" width="fit-content" accept=".xml" />
                 }
 
 

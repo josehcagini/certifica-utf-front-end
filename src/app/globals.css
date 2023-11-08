@@ -8,9 +8,16 @@
 }
 
 :root {
-
   --border-radius-default: 6px;
   --font-default: 'Poppins', sans-serif;
+  --height-full: calc(100vh - 3.5rem); /* 3.5rem - (height of navbar) */
+
+  /* Breakpoints */
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-mdl: 867px;
+  --breakpoint-lg: 992px;
 
   /* Colors */
 
@@ -32,6 +39,10 @@ body {
   height: 100vh;
   overflow-x: hidden;
   background-color: var(--primary-background-color);
+}
+
+body > div:not(#login) {
+  padding-top: 3.5rem;
 }
 
 .container{
