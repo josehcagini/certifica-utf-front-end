@@ -9,7 +9,10 @@ import CertificateObject from '@/objects/certificate/CertificateObject'
 
 import { useForm, FormProvider } from "react-hook-form"
 import { fetchData } from '@/app/api/utils/apiUtils'
-import { useState } from 'react'
+import { useState } from 'react';
+import gerarCertificado from '@/services/certificado/geradorDeCertificado';
+import { useSession } from 'next-auth/react'
+import { modelosCertificado } from '@/app/certificado/page'
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -20,6 +23,7 @@ const StepsEnum = {
 function Conteudo({ stepContent, updateStep }) {
     const [eventObject, setEventObject] = useState(Object.assign({}, EventObject));
     const [certificateObject, setCertificateObject] = useState(Object.assign({}, CertificateObject));
+    const session = useSession();
 
     function renderContent() {
         switch (stepContent) {
@@ -83,34 +87,62 @@ function Conteudo({ stepContent, updateStep }) {
 
         if (stepContent == StepsEnum.FINALIZAR) {
             console.log('enviar para o backend');
-            const obj = { // Melhorar a estrutura do objeto
+            const template = gerarCertificado({
                 eventObject: eventObject,
                 certificateObject: certificateObject,
-            }
-            console.log(obj)
-            // TODO enviar o certificateObject e o eventObject para o backend
-            //definir o formato do JSON 
+                organizador: session?.data?.user?.name
+            })
 
-            const response = async () => {
-                const response = await fetchData(
-                    `${API_BASE_URL}/eventos/novo`,
+            const body = {
+                event: {
+                    name: eventObject.name,
+                    dateStart: eventObject.dateStart,
+                    dateEnd: eventObject.dateEnd,
+                    dates: eventObject.dates,
+                    workload: eventObject.workload,
+                    informations: eventObject.informations,
+                    nomeEmissor: session?.data?.user?.name,
+                    certificate:
                     {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(obj)
+                        htmlModel: template,
+                        modelo: certificateObject.modelo,
+                        personalData:
+                            certificateObject.modelo === modelosCertificado.UTFPR ? null :
+                                {
+                                    instituicao: certificateObject.personalData.instituicao,
+                                    local: certificateObject.personalData.local,
+                                    logo: certificateObject.personalData.logo, // object File  
+                                    backgroundImage: certificateObject.personalData.backgroundImage // object File
+                                }
                     }
-                )
+                }
             }
-            if (response.ok) {
-                location.href = '/';
+
+            console.log(body)
+
+            const API_BASE_URL = 'http://localhost:8080/api'; //definir a url certa e adicionar ao .env
+            /*const response = await fetchData( //endpoint ainda não implementado
+                `${API_BASE_URL}/eventos/novo`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        
+                    },
+                    body: JSON.stringify(body)
+                }
+            )
+            if (response.status === 201) {
+                const json = await response.json();
+                console.log(json);
+                const { id } = json;
+                location.href = `/evento/${id}`;
             } else {
                 return (
                     alert("erro")
                 )
-            }
-
+            }*/
+            console.log('aguardando resposta do backend')
             return;
         }
 

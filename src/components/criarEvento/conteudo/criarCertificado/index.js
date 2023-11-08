@@ -45,7 +45,6 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
         reader.onload = () => {
             setLogo(reader.result);
         }
-
     }
 
     useEffect(() => {
@@ -79,6 +78,7 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
     const highlightArea = (e) => {
         const id = e.target.id;
         const focusId = id.split('_')[0];
+        if (tipoCertificado !== '1') return;
         try {
             const element = document.getElementById(focusId);
             element.style.border = '2px solid var(--primary-color)';
@@ -139,7 +139,6 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
                 {
                     tipoCertificado === '1' &&
                     <>
-
                         <InputForm
                             params={CertificateSchema.instituicao}
                             type="text"
