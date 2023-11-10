@@ -1,0 +1,5 @@
+.stepWrapper {
+    display: flex;
+    width: 80vw;
+    height: inherit;
+}

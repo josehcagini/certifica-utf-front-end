@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import { getAcessTokenAPI } from '../auth/AuthVerification'
+import { getAcessTokenAPI, toAccount } from './AuthService'
 
 export const authOptions = {
   providers: [
@@ -12,12 +12,14 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, account }) {
       if ( account ) {
+        token.roles = account.roles;
         token.access_token = account.access_token;
         token.access_token_api = account.access_token_api;
       }
       return token
     },
     async session({ session, token, user }) {
+      session.user.roles = token.roles;
       session.access_token = {
         api: token.access_token_api,
         provider: token.access_token
@@ -25,9 +27,10 @@ export const authOptions = {
       return session
     },
     async signIn({ user, account, profile, email, credentials }) {
+
       try {
-        const acessTokenApi = await getAcessTokenAPI( account ); 
-        account.access_token_api = acessTokenApi;
+        const response = await getAcessTokenAPI( account ); 
+        account = toAccount( account, response );
         return true;
       } catch (error) {
         console.log( error )
@@ -36,4 +39,7 @@ export const authOptions = {
     },
   }
 }
-export default NextAuth(authOptions)
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST}
+

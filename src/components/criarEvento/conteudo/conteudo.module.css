@@ -1,0 +1,19 @@
+.content {
+    height: 80%;
+    display: grid;
+    align-content: space-between;
+    position: relative;
+}
+
+.buttonContent{
+    display: flex;
+    justify-content: flex-start;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+@media (max-width: 867px){
+    .content{
+        height: 100%;
+    }
+}

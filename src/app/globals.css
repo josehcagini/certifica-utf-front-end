@@ -8,19 +8,64 @@
 }
 
 :root {
+  --border-radius-default: 6px;
+  --font-default: 'Poppins', sans-serif;
+  --height-full: calc(100vh - 3.5rem); /* 3.5rem - (height of navbar) */
+
+  /* Breakpoints */
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-mdl: 867px;
+  --breakpoint-lg: 992px;
+
+  /* Colors */
 
   --primary-color: #3498db;
+  --invalid-color: #ec5353;
+  --primary-background-color: #F1F1F1;
+  --default-disabled-color: #d3d3d3;
+
+  /* Text Colors */
+
   --text-color: rgb(70, 68, 68);
-  --border-radius-default: 6px;
+  --text-color-secundary: #FFFFFF;
+
 }
 
 html,
 body {
-  max-width: 100vw;
+  width: 100vw;
+  height: 100vh;
   overflow-x: hidden;
+  background-color: var(--primary-background-color);
+}
+
+body > div:not(#login) {
+  padding-top: 3.5rem;
+}
+
+.container{
+  width: 100%;
+  height: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.inputGroup{
+  margin-bottom: 1rem;
+}
+
+label{
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+button:not(:disabled), input[type="submit"]:not(:disabled), input[type="reset"]:not(:disabled), input[type="button"]:not(:disabled){
+  cursor: pointer;
 }

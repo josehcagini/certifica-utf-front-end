@@ -1,19 +1,20 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 
-import { authOptions } from '../../pages/api/auth/[...nextauth]'
+import { authOptions } from './api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
-import SessionProvider from '../../pages/sessionProvider'
+import SessionProvider from '../components/sessionProvider/session'
 import Login from './login/page'
+import Navbar from '@/components/navbar/navbar'
 
 //Modificar fontes e estilos globais nesse arquivo
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title:{
-    template: '%s | Fabrica 2023-2',
-    default: 'Fabrica 2023-2',
+  title: {
+    template: '%s | CertificaUTF',
+    default: 'CertificaUTF',
   },
   description: 'Sistema de Emissão de Certificados',
 }
@@ -21,21 +22,23 @@ export const metadata = {
 //Não alterar o código abaixo
 
 export default async function RootLayout({ children }) {
-
-  const session = await getServerSession( authOptions );
+  const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body className={inter.className}>
-       <SessionProvider session={session}>
-        {
-          !session ? (
-            <Login/>
-          ) : (
-            <main>{children}</main>
-          )
-        }
-       </SessionProvider>
+        <SessionProvider session={session}>
+          {
+            !session ? (
+              <Login />
+            ) : (
+              <>
+                <Navbar />
+                {children}
+              </>
+            )
+          }
+        </SessionProvider>
       </body>
     </html>
   )
