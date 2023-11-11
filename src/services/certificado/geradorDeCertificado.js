@@ -19,9 +19,7 @@ export default function gerarCertificado(props){
     else {
         dateText = 'entre os dias <span class="bold">' + dsFormat + '</span> e <span class="bold">' + deFormat + '</span>';
     }
-    //////////////////////
-        //corrigir para padronizar o tipo para string
-    if (modelo == '1') {
+    if (modelo === '1') {
         const { personalData } = certificateObject;
         const {instituicao, logo, local, backgroundImage} = personalData;
         const html = `
@@ -63,7 +61,7 @@ export default function gerarCertificado(props){
                         <p>Para verificar a autenticidade desse certificado, acesse: </p>
                     </div>
                     <div id="validacao-codigo">
-                        <a href="#">${appName}validar/${hash}</a>
+                        <a href="#" id="hash">${appName}validar/${hash}</a>
                     </div>
                 </div>
             </div>
@@ -98,7 +96,7 @@ export default function gerarCertificado(props){
             <div class="footer">
             <p id="validacao-texto">
                 A autenticidade deste documento pode ser verificada através da URL:
-                <a href="${appName}validar/${hash}">
+                <a href="#" id="hash">
                     ${appName}validar/${hash}
                 </a>
                 </p>
