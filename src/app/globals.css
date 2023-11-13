@@ -50,6 +50,18 @@ body > div:not(#login) {
   height: 100%;
 }
 
+h1, .h1{
+  font-size: 1.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+h2, .h2{
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;

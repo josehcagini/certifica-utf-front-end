@@ -32,7 +32,7 @@ export default function Button( props ) {
         <button 
             onClick={props.onClick}
             disabled={ !isEnabled }
-            className={`${styles.content} ${ ClassByType( props.styletype, isEnabled ?? true ) }`} 
+            className={`${styles.content} ${ ClassByType( props.styletype || 1, isEnabled ?? true ) }`} 
             {...rest}>
             { props.icon ?? <></> }
             { props.children }
