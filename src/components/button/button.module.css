@@ -43,6 +43,17 @@
     color: #FFFFFF;
 }
 
+.danger {
+    background-color: #FFFFFF;
+    border-color: var(--invalid-color);
+    color: var(--invalid-color);
+}
+
+.danger:hover{
+    background-color: var(--invalid-color);
+    color: #FFFFFF;
+}
+
 
 
 .disabled{

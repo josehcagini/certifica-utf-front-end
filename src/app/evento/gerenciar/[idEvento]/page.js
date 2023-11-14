@@ -7,7 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import style from '../styles.module.css'
 import eventStyle from './styles.module.css'
 import EventMemberSchema from "@/helper/validator/schema/EventMemberSchema";
-import Button from "@/components/button";
+import Button, { ButtonType } from "@/components/button";
 
 const db = [
     {
@@ -177,7 +177,7 @@ export default function Index(props) {
                                 title={participante.dsNome}
                                 subtitle={participante.dsEmail}
                                 buttonTitle="Remover"
-                                buttonStyletype="danger"
+                                buttonStyletype={ButtonType.DANGER}
                                 onClick={() => { removeMember(participante.nrUuidParticipante) }}
                             />
                         )
