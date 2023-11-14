@@ -5,7 +5,9 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import style from '../styles.module.css'
+import eventStyle from './styles.module.css'
 import EventMemberSchema from "@/helper/validator/schema/EventMemberSchema";
+import Button from "@/components/button";
 
 const db = [
     {
@@ -133,19 +135,19 @@ export default function Index(props) {
 
 
     return (
-        <div role="main">
+        <div className="main">
             <h1>Evento</h1>
-            <p>{evento.dsNome}</p>
-            <p>{evento.dhInicio}</p>
-            <p>{evento.dhFim}</p>
-            <p>{evento.nrCargaHoraria}</p>
-            <p>{evento.dsInformacoes}</p>
-            <p>{evento.nrUuidResponsavel}</p>
-            <p>{evento.idLocal}</p>
+            <p><b>Nome:</b> {evento.dsNome}</p>
+            <p><b>Data de Início:</b> {new Date(evento.dhInicio).toLocaleDateString()}</p>
+            <p><b>Data de Encerramento: </b>{new Date(evento.dhFim).toLocaleDateString()}</p>
+            <p><b>Carga Horária:</b> {evento.nrCargaHoraria}</p>
+            <p><b>Informações: </b>{evento.dsInformacoes}</p>
+            <p><b>Organizador do Evento: </b>{evento.nrUuidResponsavel}</p>
+            <p><b>Local: </b>{evento.idLocal}</p>
             <hr style={{ width: '100%' }} />
             <FormProvider {...methods}>
                 <h2>Adicionar Participantes</h2>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                <form className={eventStyle.inputGroup} onSubmit={methods.handleSubmit(onSubmit)}>
                     <InputForm
                         params={EventMemberSchema.email}
                         type="email"
@@ -153,7 +155,7 @@ export default function Index(props) {
                         name="email"
                         placeholder="Digite o email"
                     />
-                    <button type="button"
+                    <Button type="button"
                         onClick={ ()=>{
                             const id = Math.random()*120;
                             setParticipantes([...participantes, {
@@ -163,7 +165,7 @@ export default function Index(props) {
                                 nrUuid: id
                             }])
                         } }
-                    >Adicionar</button>
+                    >Adicionar</Button>
                 </form>
             </FormProvider>
             <div className={style.grid}>
@@ -171,11 +173,12 @@ export default function Index(props) {
                     participantes.map(participante => {
                         return (
                             <ItemList
-                                key={participante.idParticipante}
+                                key={participante.nrUuidParticipante}
                                 title={participante.dsNome}
                                 subtitle={participante.dsEmail}
                                 buttonTitle="Remover"
-                                onClick={() => { removeMember(1) }}
+                                buttonStyletype="danger"
+                                onClick={() => { removeMember(participante.nrUuidParticipante) }}
                             />
                         )
                     })

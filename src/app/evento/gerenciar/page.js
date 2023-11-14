@@ -63,7 +63,7 @@ export default function GerenciarEventos() {
     }, [])
     
     return (
-        <div>
+        <div className='main'> 
             <h1>GERENCIAR EVENTOS</h1>
             <div className={style.grid}>
             {eventos.map((evento, index) => {

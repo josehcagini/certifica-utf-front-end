@@ -1,7 +1,7 @@
-import Button from '../button';
+import Button, { ButtonType } from '../button';
 import styles from './styles.module.css';
 export default function ItemList(props) {
-    const { title, subtitle, onClick, buttonTitle } = props;
+    const { title, subtitle, onClick, buttonTitle, buttonStyletype } = props;
     return (
         <div className={styles.itemList}>
             <div className={styles.itemListContent}>
@@ -16,6 +16,7 @@ export default function ItemList(props) {
                 <Button
                     onClick={onClick}
                     isEnabled={true}
+                    styletype={buttonStyletype}
                 >
                     {buttonTitle}
                 </Button>
