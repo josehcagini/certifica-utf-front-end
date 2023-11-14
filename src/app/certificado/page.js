@@ -1,33 +1,36 @@
 'use client'
-import gerarCertificado from "@/services/certificado/geradorDeCertificado";
 import { useSearchParams } from "next/navigation";
 import parse from 'html-react-parser'
 import { useEffect, useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Button from "@/components/button";
-
-export const modelosCertificado = {
-    DEFAULT: '1',
-    UTFPR: '2',
-    PERSONAL: '3'
-}
+import { fetchData } from "../api/utils/apiUtils";
 
 export default function Certificado() {
     const searchParams = useSearchParams();
     const [html, setHtml] = useState('');
+    const [jsx, setJsx] = useState([]);
     const hash = searchParams.get('hash'); //passado como query param na url
-    /*const getHTML = async () => {
-        const response = await fetch(`${API_BASE_URL}/api/certificado/${hash}`)
+    if (!hash) return (<div>Não encontrado - verifique se já o emitiu em <a href="certificados">Meus Certificados</a></div>)
+    const getHTML = async () => {
+        const response = await fetchData(`http://localhost:8080/api/certificado/${hash}`)
+        if (!response.ok) return (<div>Não encontrado - verifique se já o emitiu em <a href="certificados">Meus Certificados</a></div>)
         const html = await response.text();
         return html;
-    }*/
+    }
+
+    const targetRef = useRef();
     useEffect(() => {
-        /*getHTML().then(html => setHtml(html));*/
-        const html = gerarCertificado({
+        getHTML()
+            .then(html => setHtml(html))
+            .then(() => {
+                setJsx(parse(html));
+            })
+        /*var html = gerarCertificado({
             eventObject: {
                 name: 'Nome do Evento',
-                dateStart: new Date().toLocaleDateString(),
-                dateEnd: new Date().toLocaleDateString(),
+                dateStart: new Date('2023-11-14'),
+                dateEnd: new Date('2023-11-15'),
                 workload: 10,
                 informations: 'Informações do evento',
             },
@@ -35,48 +38,52 @@ export default function Certificado() {
                 modelo: modelosCertificado.DEFAULT,
                 personalData: {
                     instituicao: 'UTFPR',
-                    logo: 'https://www.utfpr.edu.br/curitiba/estrutura-universitaria/diretorias/dirppg/imagens/logo-utfpr.png',
+                    logo: '../images/logoUtfpr.png',
                     local: 'Curitiba - PR',
-                    backgroundImage: 'https://www.utfpr.edu.br/curitiba/estrutura-universitaria/diretorias/dirppg/imagens/logo-utfpr.png'
+                    backgroundImage: '../images/computer_peopple.png'
                 }
             },
-            organizador: 'Organizador do evento'
+            organizador: 'Organizador do evento',
         })
-        setHtml(html);
+        const data = emitirCertificado({
+            nomeAluno: 'Nome Aluno',
+            hash: hash,
+            emitidoEm: new Date('2023-11-16'),
+            html: html,
+        })        */
+
     }, [])
-    //const eventObject = await response.json();
 
-    //const { name, dateStart, dateEnd, workload, informations, organizador, personalData, tipoCertificado } = eventObject;
-    /*const { local, instituicao, document, logo } = personalData;
-    console.log(personalData)
-    html = gerarCertificado({
-        modelo: tipoCertificado,
-        name: name,
-        dateStart: new Date(dateStart).toLocaleDateString(),
-        dateEnd: new Date(dateEnd).toLocaleDateString(),
-        workload: workload,
-        informations:  informations,
-        organizador: organizador,
-        instituicao: instituicao,
-        logo: logo,
-        local: local || 'UTFPR'
-    }) /*/
+    useEffect(() => {
+        if (!jsx || jsx.length === 0) {
+            console.log(jsx);
+            return
+        }
+        const nomeAlunoElement = document.getElementById('nome-aluno');
+        const emitidoEmElement = document.getElementById('emitido-em');
+        const hashElement = document.getElementById('hash');
 
-    const targetRef  = useRef();
+        nomeAlunoElement.innerHTML = 'Nome Aluno';
+        emitidoEmElement.innerHTML = new Date('2023-11-16').toLocaleDateString();
+        hashElement.setAttribute('href', 'http://localhost:3000/validar/' + hash);
+        hashElement.innerHTML = 'http://localhost:3000/validar/' + hash;
+    }, [jsx])
 
     return (
         <div id="certificadoDisplay" style={{ paddingTop: '4rem' }}>
-            <button onClick={() =>
-                generatePDF(targetRef,{
-                    filename:'certificado.pdf',
-                    page:{
+            <Button onClick={() =>
+                generatePDF(targetRef, {
+                    filename: 'certificado.pdf',
+                    method: 'save',
+                    resolution: 5,
+                    page: {
                         orientation: 'landscape',
-                        size: 'A4'
+                        format: 'letter'
                     }
                 })
-            }>Imprimir</button>
+            }>Imprimir</Button>
             <div ref={targetRef}>
-                {parse(html)}
+                {jsx}
             </div>
         </div>
     )

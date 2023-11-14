@@ -8,49 +8,7 @@ import style from '../styles.module.css'
 import eventStyle from './styles.module.css'
 import EventMemberSchema from "@/helper/validator/schema/EventMemberSchema";
 import Button, { ButtonType } from "@/components/button";
-
-const db = [
-    {
-        idEvento: 1,
-        dsNome: 'Evento 1',
-        dhInicio: "2023-11-08T20:00",
-        dhFim: "2023-11-09T18:00",
-        nrCargaHoraria: 10,
-        dsInformacoes: 'Informações do evento 1',
-        nrUuidResponsavel: 1,
-        idLocal: 1
-    },
-    {
-        idEvento: 2,
-        dsNome: 'Evento 2',
-        dhInicio: "2023-11-08T20:00",
-        dhFim: "2023-11-09T18:00",
-        nrCargaHoraria: 10,
-        dsInformacoes: 'Informações do evento 2',
-        nrUuidResponsavel: 1,
-        idLocal: 1
-    },
-    {
-        idEvento: 3,
-        dsNome: 'Evento 3',
-        dhInicio: "2023-11-08T20:00",
-        dhFim: "2023-11-09T18:00",
-        nrCargaHoraria: 10,
-        dsInformacoes: 'Informações do evento 3',
-        nrUuidResponsavel: 1,
-        idLocal: 1
-    },
-    {
-        idEvento: 4,
-        dsNome: 'Evento 4',
-        dhInicio: "2023-11-08T20:00",
-        dhFim: "2023-11-09T18:00",
-        nrCargaHoraria: 10,
-        dsInformacoes: 'Informações do evento 4',
-        nrUuidResponsavel: 1,
-        idLocal: 1
-    }
-]
+import { fetchData } from "@/app/api/utils/apiUtils";
 
 export default function Index(props) {
     const [evento, setEvento] = useState({});
@@ -69,27 +27,8 @@ export default function Index(props) {
         setParticipantes(participantes_);
     }
 
-
-
-
     useEffect(() => {
-        /*syncData()*/
-        const evento_ = db.filter(evento => evento.idEvento == idEvento)
-        setEvento(evento_[0])
-        setParticipantes([
-            {
-                idParticipante: 1,
-                dsNome: 'Participante 1',
-                dsEmail: 'participante@gmail.com',
-                nrUuid: 1
-            },
-            {
-                idParticipante: 2,
-                dsNome: 'Participante 2',
-                dsEmail: 'participante2@gmail.com',
-                nrUuid: 2,
-            }])
-        console.log(evento)
+        syncData();
     }, []);
 
     const methods = useForm();
@@ -155,16 +94,9 @@ export default function Index(props) {
                         name="email"
                         placeholder="Digite o email"
                     />
-                    <Button type="button"
-                        onClick={ ()=>{
-                            const id = Math.random()*120;
-                            setParticipantes([...participantes, {
-                                idParticipante: id,
-                                dsNome: 'Participante '+id,
-                                dsEmail: 'newparticipant' + id + '@gmail.com',
-                                nrUuid: id
-                            }])
-                        } }
+                    <Button
+                        onClick={methods.handleSubmit(onSubmit)}
+                        disabled={false}
                     >Adicionar</Button>
                 </form>
             </FormProvider>
@@ -184,7 +116,6 @@ export default function Index(props) {
                     })
                 }
             </div>
-
         </div>
     )
 }

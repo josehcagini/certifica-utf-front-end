@@ -44,9 +44,7 @@ body {
 body > div:not(#login) {
   padding-top: 3.5rem;
 }
-#certificadoDisplay + .navbar{
-  display:none;
-}
+
 
 .container{
   width: 100%;
