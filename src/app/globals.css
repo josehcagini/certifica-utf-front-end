@@ -45,9 +45,27 @@ body > div:not(#login) {
   padding-top: 3.5rem;
 }
 
+
 .container{
   width: 100%;
   height: 100%;
+}
+
+.main, main{
+  width: 85%;
+  margin:auto;
+}
+
+h1, .h1{
+  font-size: 1.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+h2, .h2{
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
 a {

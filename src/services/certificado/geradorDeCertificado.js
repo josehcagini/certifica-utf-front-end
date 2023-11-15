@@ -41,10 +41,10 @@ export default function gerarCertificado(props){
                 <h1 id="titulo">Certificado</h1>
                 <div id="content">
                     <p id="descricao">
-                        Certificamos que <span id="nome-aluno" class="bold">${nomeAluno}</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
+                        Certificamos que <span id="nome-aluno" class="bold">__________________</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
                     </p>
                     <p id="local" class="bold">
-                        ${local}, ${emitidoEm}
+                        ${local}, <span id="emitido-em">${emitidoEm}</span>
                     </p>
                 </div>
                 <div id="assinatura">
@@ -89,7 +89,7 @@ export default function gerarCertificado(props){
                             com ${workload} horas de atividades realizadas ${dateText}
                         </p>
                         <p class='local'>
-                            ${local}, ${emitidoEm}
+                            ${local}, <span id="emitido-em">${emitidoEm}</span>
                         </p>
                     </div>
             </div>
