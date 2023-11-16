@@ -19,9 +19,7 @@ export default function gerarCertificado(props){
     else {
         dateText = 'entre os dias <span class="bold">' + dsFormat + '</span> e <span class="bold">' + deFormat + '</span>';
     }
-    //////////////////////
-        //corrigir para padronizar o tipo para string
-    if (modelo == '1') {
+    if (modelo === '1') {
         const { personalData } = certificateObject;
         const {instituicao, logo, local, backgroundImage} = personalData;
         const html = `
@@ -43,10 +41,10 @@ export default function gerarCertificado(props){
                 <h1 id="titulo">Certificado</h1>
                 <div id="content">
                     <p id="descricao">
-                        Certificamos que <span id="nome-aluno" class="bold">${nomeAluno}</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
+                        Certificamos que <span id="nome-aluno" class="bold">__________________</span> participou do evento <span class="bold">${name}</span> realizado ${dateText} com carga horária de <span class="bold">${workload}</span> horas.
                     </p>
                     <p id="local" class="bold">
-                        ${local}, ${emitidoEm}
+                        ${local}, <span id="emitido-em">${emitidoEm}</span>
                     </p>
                 </div>
                 <div id="assinatura">
@@ -63,7 +61,7 @@ export default function gerarCertificado(props){
                         <p>Para verificar a autenticidade desse certificado, acesse: </p>
                     </div>
                     <div id="validacao-codigo">
-                        <a href="#">${appName}validar/${hash}</a>
+                        <a href="#" id="hash">${appName}validar/${hash}</a>
                     </div>
                 </div>
             </div>
@@ -91,14 +89,14 @@ export default function gerarCertificado(props){
                             com ${workload} horas de atividades realizadas ${dateText}
                         </p>
                         <p class='local'>
-                            ${local}, ${emitidoEm}
+                            ${local}, <span id="emitido-em">${emitidoEm}</span>
                         </p>
                     </div>
             </div>
             <div class="footer">
             <p id="validacao-texto">
                 A autenticidade deste documento pode ser verificada através da URL:
-                <a href="${appName}validar/${hash}">
+                <a href="#" id="hash">
                     ${appName}validar/${hash}
                 </a>
                 </p>

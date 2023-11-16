@@ -4,6 +4,7 @@ export const ButtonType = {
     DEFAULT: 1,
     OUTLINE: 2,
     SECONDARY: 3,
+    DANGER: 4,
 }
 
 function ClassByType( styleType, isEnabled ){
@@ -15,8 +16,10 @@ function ClassByType( styleType, isEnabled ){
     switch( styleType ){
         case ButtonType.OUTLINE:
             return styles.outline;
-        case 3:
+        case ButtonType.SECONDARY:
             return styles.secondary;
+        case ButtonType.DANGER:
+            return styles.danger;
         default:
             return styles.default;
     }
@@ -32,7 +35,7 @@ export default function Button( props ) {
         <button 
             onClick={props.onClick}
             disabled={ !isEnabled }
-            className={`${styles.content} ${ ClassByType( props.styletype, isEnabled ?? true ) }`} 
+            className={`${styles.content} ${ ClassByType( props.styletype || 1, isEnabled ?? true ) }`} 
             {...rest}>
             { props.icon ?? <></> }
             { props.children }

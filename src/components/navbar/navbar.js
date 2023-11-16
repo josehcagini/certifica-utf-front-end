@@ -5,7 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 
 export default function Navbar() {
     const session = useSession();
-    const userType = 0; //obter tipo de usuário do bd
+    const userType = 0 /*session?.data?.user?.roles[0]*/
     
     const handleSignOut = (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ export default function Navbar() {
                 <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
                 {userType == 0 ?<>
-                    <Link href="/gerenciareventos" className={styles.dropdownLink}>Gerenciar Eventos</Link>
+                    <Link href="/evento/gerenciar" className={styles.dropdownLink}>Gerenciar Eventos</Link>
                     <Link href="/evento/criar" className={styles.dropdownLink}>Criar Evento</Link>
                     </> :
                     <Link href="/certificados" className={styles.dropdownLink}>Meus Certificados</Link>
@@ -40,7 +40,7 @@ export default function Navbar() {
         <nav className={styles.navbar}>
             {
                 userType == 0 ?
-                    <Link className={styles.navItem} href="/gerenciareventos">Gerenciar Eventos</Link> :
+                    <Link className={styles.navItem} href="/evento/gerenciar">Gerenciar Eventos</Link> :
                     <Link className={styles.navItem} href="/certificados">Certificados</Link>
             }
             <Link className={styles.navItem} href="/">Home</Link>    
