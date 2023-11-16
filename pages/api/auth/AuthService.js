@@ -12,7 +12,7 @@ export async function getAcessTokenAPI( account ) {
         idToken: idToken,
         typeProvider: dsProvider,
     }
-
+    
     const response = await fetch(
         API_URL, {
             method: "POST",
