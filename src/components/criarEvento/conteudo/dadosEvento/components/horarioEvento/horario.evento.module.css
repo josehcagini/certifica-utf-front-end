@@ -1,4 +1,10 @@
 .content {
     display: flex;
     gap: 1rem;
+    align-items: flex-end;
+}
+
+.buttonRemove{
+    display: flex;
+    margin-top: 25px; 
 }

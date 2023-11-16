@@ -1,0 +1,14 @@
+.certificado{
+    width: calc((100vw)/2.5);
+    height: calc((100vw * 0.707)/2.5);
+    border: 1px solid black;
+}
+
+@media (max-width: 768px){
+    .certificado{
+        display: block;
+        width: calc(100vw/1.5);
+        height: auto;
+        margin: auto;
+    }
+}

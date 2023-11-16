@@ -17,3 +17,7 @@
 .label {
     font-family: var(--font-default)
 }
+
+.textarea[aria-invalid="true"] {
+    border: 1px solid #ec5353;
+}

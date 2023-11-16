@@ -4,7 +4,7 @@ import ButtonLogin from './button';
 
 export default function Login() {
     return(
-      <div className={styles.main}>
+      <div className={styles.main} id='login'>
         <div className={styles.content}>
             <div className={styles.leftContent}>
               <div className={styles.informations}>

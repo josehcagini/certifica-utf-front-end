@@ -1,32 +1,85 @@
 import styles from './horario.evento.module.css'
 
-import Input from '@/components/input'
+import InputForm from '@/components/inputForm'
 
-export default function HorarioEvento({dtStartEvent, dtEndEvent, item }) {
+import DateValidator from '@/helper/validator/date/DateValidator'
+import MessageHelper from '@/helper/validator/message/MessageHelper'
+import DateHelper from '@/helper/date/DateHelper'
+import ButtonRemove from './components/button/remove'
+
+import { PiTrash } from 'react-icons/pi'
+
+export default function HorarioEvento( { item, index, arrayName, remove }) {
+
+    const EventTimeSchema = {
+        date: {
+            validate: ( value, formValues ) => {
+
+                if( index === 0 ){
+                    return DateValidator.validateDateInterval( formValues.dateStart, value, formValues.dateEnd )
+                }
+
+                return DateValidator.validateDateInterval( formValues.dates[index-1].date, value, formValues.dateEnd )
+            }
+        },
+        startTime: {
+            validate: ( value, formValues ) => {
+
+                if( index === 0 && DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateStart ) ) {
+                    return DateValidator.validateHourMin( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateStart ) ) );
+                }
+
+                if( index !== 0 && DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dates[index-1].date ) ){
+                    return DateValidator.validateHourMin( value, formValues.dates[index-1].endTime );
+                }
+
+                return DateValidator.validateHourMax( value, formValues.dates[index].endTime );
+
+            }
+        },
+        endTime: {
+            validate: ( value, formValues ) => {
+
+                if( !value ){
+                    return MessageHelper.required
+                }
+
+                if( DateHelper.isEqualsDateFromString( formValues.dates[index].date, formValues.dateEnd ) ){
+                    return DateValidator.validateHourMax( value, DateHelper.timeFromDateTimeAsString( new Date( formValues.dateEnd ) ) );
+                }
+
+                return true
+            }
+        }
+    }
 
     return(
         <div className={styles.content}>
-            <Input
+            <InputForm
+            params={EventTimeSchema.date}
             id='date'
-            name='date'
+            name={`${arrayName}.${index}.date`}
             title='Dia'
-            min={dtStartEvent}
-            max={dtEndEvent}
-            onChange={ ( event ) => item.date = event.target.value }
             type='date'/>
-            <Input
+            <InputForm
+            params={EventTimeSchema.startTime}
             id='horarioDeInicio'
-            name='horarioDeInicio'
+            name={`${arrayName}.${index}.startTime`}
             title='Horário de início'
-            onChange={ ( event ) => item.startTime = event.target.value }
             type='time'/>
-            <Input
+            <InputForm
+            params={EventTimeSchema.endTime}
             id='horarioDeEncerramento'
-            name='horarioDeEncerramento'
+            name={`${arrayName}.${index}.endTime`}
             title='Horário de Encerramento'
-            min={item.startTime} // TODO não esta funcionando 
-            onChange={ ( event ) => item.endTime = event.target.value }
             type='time'/>
+            <div className={styles.buttonRemove}>
+                <ButtonRemove 
+                type="button"
+                onClick={remove}>
+                    <PiTrash size={20} color={"#FFFFFF"} />
+                </ButtonRemove>
+            </div>
         </div>
     )
 }

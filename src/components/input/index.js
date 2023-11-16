@@ -1,21 +1,34 @@
 import styles from './styles.module.css';
 
-export default function Input(props) {
+export default function Input( props ) {
+
+    const { params, name, onChange, title, type, ...rest} = props
+
+    const isCheckOrRadio = (type) => {
+        if (type === 'checkbox' || type === 'radio') {
+            return true;
+        }
+        return false;
+    }
+
+
 
     const content = {
         width:`${ props.width ?? '50%' }`,
         display: 'flex',
-        flexDirection: 'column'
+        justifyContent: `${ isCheckOrRadio(type) ? 'flex-end' : 'normal' }`,
+        flexDirection: `${ isCheckOrRadio(type) ? 'row-reverse' : 'column' }`,
+        gap: '2px'
     };
 
     return (
         <div style={content}>
-            <label className={styles.label}>{props.title}</label>
+            <label className={styles.label} htmlFor={props.id}>{title}</label>
             <input
-                onChange={props.onChange ?? null}
-                className={styles.input}
-                {...props}            
-                />
+            onChange={onChange ?? null}            
+            className={styles.input}
+            type={type ?? 'text'}
+            {...rest}/>
         </div>
     )
 }

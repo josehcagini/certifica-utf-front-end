@@ -1,9 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 
-import { authOptions } from '../../pages/api/auth/[...nextauth]'
+import { authOptions } from './api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
-import SessionProvider from '../../pages/sessionProvider'
+import SessionProvider from '../components/sessionProvider/session'
 import Login from './login/page'
 import Navbar from '@/components/navbar/navbar'
 
@@ -33,8 +33,8 @@ export default async function RootLayout({ children }) {
               <Login />
             ) : (
               <>
-                <Navbar /> {/* exibir apenas após o login - não testado se aparece ok */}
-                <main>{children}</main>
+                <Navbar />
+                {children}
               </>
             )
           }

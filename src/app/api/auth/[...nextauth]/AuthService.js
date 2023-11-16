@@ -1,4 +1,5 @@
 import { toRoleEnum } from '@/services/user/userService'
+import { fetchData } from '@/app/api/utils/apiUtils';
 
 export async function getAcessTokenAPI( account ) {
 
@@ -12,8 +13,8 @@ export async function getAcessTokenAPI( account ) {
         idToken: idToken,
         typeProvider: dsProvider,
     }
-    
-    const response = await fetch(
+
+    const response = await fetchData(
         API_URL, {
             method: "POST",
             body: JSON.stringify( request ) 

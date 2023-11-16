@@ -1,12 +1,19 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    height: 75%;
+    height: 80%;
+    display: grid;
+    align-content: space-between;
     position: relative;
 }
 
 .buttonContent{
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+@media (max-width: 867px){
+    .content{
+        height: 100%;
+    }
 }
