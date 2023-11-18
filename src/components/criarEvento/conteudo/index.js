@@ -120,7 +120,7 @@ function Conteudo({ stepContent, updateStep }) {
 
             console.log(body)
 
-            const API_BASE_URL = 'http://localhost:8080/api'; //definir a url certa e adicionar ao .env
+            const API_BASE_URL = process.env.API_BASE_URL;
             /*const response = await fetchData( //endpoint ainda não implementado
                 `${API_BASE_URL}/eventos/novo`,
                 {

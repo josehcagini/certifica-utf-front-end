@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import InputForm from '@/components/inputForm';
 import CertificateSchema from '@/helper/validator/schema/CertificateSchema';
+import { certificateModel } from '@/objects/certificate/CertificateObject';
 
 export default function CriarCertificado({ eventObject, certificateObject }) {
     const [tipoCertificado, setTipoCertificado] = useState('1');
@@ -69,7 +70,7 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
     }, [tipoCertificado, instituicao, local, backgroundImage, logo]);
 
     useEffect(() => {
-        if (tipoCertificado !== '1') {
+        if (tipoCertificado !== certificateModel.DEFAULT) {
             setBackgroundImage(false);
             setLogo(false);
         }
@@ -78,7 +79,7 @@ export default function CriarCertificado({ eventObject, certificateObject }) {
     const highlightArea = (e) => {
         const id = e.target.id;
         const focusId = id.split('_')[0];
-        if (tipoCertificado !== '1') return;
+        if (tipoCertificado !== certificateModel.DEFAULT) return;
         try {
             const element = document.getElementById(focusId);
             element.style.border = '2px solid var(--primary-color)';

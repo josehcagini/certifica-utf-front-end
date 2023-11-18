@@ -1,9 +1,14 @@
 //Objeto que será salvo no banco, para ser usado como template para 
 //gerar o certificado, junto do eventObject
 
-import { modelosCertificado } from "@/app/certificado/page"
+const certificateModel = {
+    DEFAULT: '1',
+    UTFPR: '2',
+    CUSTOM: '3' //ainda não utilizado, mas manter para o futuro
+}
+
 const CertificateObject = {
-    modelo: modelosCertificado.DEFAULT,
+    modelo: certificateModel.DEFAULT,
     personalData: {
         instituicao: null,
         local: null,
@@ -12,4 +17,4 @@ const CertificateObject = {
     }
 }
 
-export default CertificateObject;
+export { CertificateObject, certificateModel };
