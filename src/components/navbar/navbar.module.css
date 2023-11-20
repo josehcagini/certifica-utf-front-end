@@ -83,10 +83,10 @@
 
 @media (max-width: 768px){
     .navbar{
-        justify-content: flex-end;
-        padding-right: 4em;
+        justify-content: space-between;
+        padding: 0 3rem;
     }
-    .navItem{
+    .navItem:not(.navLinkHome){
         display: none;
     }
 

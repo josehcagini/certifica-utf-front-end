@@ -2,10 +2,11 @@
 import styles from './navbar.module.css';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import { isAdmin } from '@/services/user/userService';
 
 export default function Navbar() {
     const session = useSession();
-    const userType = 0 /*session?.data?.user?.roles[0]*/
+    const isAdminUser = isAdmin(session?.data?.user?.roles || []);
     
     const handleSignOut = (e) => {
         e.preventDefault();
@@ -25,7 +26,7 @@ export default function Navbar() {
                 <p className={styles.dropdownItem}>Nome: {session?.data?.user?.name}</p>
                 <p className={styles.dropdownItem}>E-mail: {session?.data?.user?.email}</p>
                 <hr className={styles.hr} />
-                {userType == 0 ?<>
+                {isAdminUser ?<>
                     <Link href="/evento/gerenciar" className={styles.dropdownLink}>Gerenciar Eventos</Link>
                     <Link href="/evento/criar" className={styles.dropdownLink}>Criar Evento</Link>
                     </> :
@@ -39,11 +40,11 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             {
-                userType == 0 ?
+                isAdminUser ?
                     <Link className={styles.navItem} href="/evento/gerenciar">Gerenciar Eventos</Link> :
                     <Link className={styles.navItem} href="/certificados">Certificados</Link>
             }
-            <Link className={styles.navItem} href="/">Home</Link>    
+            <Link className={styles.navItem + ' ' + styles.navLinkHome} href="/">Home</Link>    
             <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt={`${session?.data?.user?.name || 'Perfil'}`} width={50} height={50} />
             <Dropdown />
         </nav>
