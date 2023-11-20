@@ -1,7 +1,29 @@
 .content {
    background-color: var(--primary-background-color);
-   height: 92vh;
+   height: 100%;
 }
+.container {
+   margin: 0;
+   box-sizing: border-box;
+   font-family: Arial, Helvetica, sans-serif;
+   width: 92%;
+   padding: 3vh;
+   display: flex;
+   flex-wrap: wrap;
+}
+.containerTitle {
+   padding: 3vh 6vh 0 6vh;
+   color: #444;
+   display: flex;
+}
+@media (max-width:600px) {
+   .container {
+      flex-direction: column;
+      align-items: center;
+   }
+
+}
+
 
 .flexCenter{
    display: flex;
