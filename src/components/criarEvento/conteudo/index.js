@@ -86,7 +86,6 @@ function Conteudo({ stepContent, updateStep }) {
     async function onNext() {
 
         if (stepContent == StepsEnum.FINALIZAR) {
-            console.log('enviar para o backend');
             const template = gerarCertificado({
                 eventObject: eventObject,
                 certificateObject: certificateObject,

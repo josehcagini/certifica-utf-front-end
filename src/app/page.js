@@ -1,7 +1,6 @@
 'use client';
-
 import styles from './page.module.css'
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { BiPlus, BiLocationPlus } from 'react-icons/bi' ;
 import { PiNotebookDuotone } from 'react-icons/pi' ;
 import { AiOutlineImport } from 'react-icons/ai' ;
@@ -25,9 +24,9 @@ export default function Home() {
             <h1>Certificados</h1>
           </div>
           <div className={styles.container}>
-            <Card title="Emitir Certificado" icon={<BiPlus size={35}/>} link="/evento/criar"/>
-            <Card title="Visualizar Certificado" icon={<PiNotebookDuotone size={35}/>} link=""/>
-            <Card title="Importar Certificado" icon={<AiOutlineImport size={35}/>} link=""/>
+            <Card title="Emitir Certificado" icon={<BiPlus size={35}/>} link="/certificado/emitir"/>
+            <Card title="Visualizar Certificado" icon={<PiNotebookDuotone size={35}/>} link="/certificado/emitir"/>
+            <Card title="Importar Certificado" icon={<AiOutlineImport size={35}/>} link="/certificados"/>
           </div>
         </> : <></>
       }
@@ -36,15 +35,15 @@ export default function Home() {
       </div>
       { !isAdmin( session?.data?.user?.roles ?? [] ) ? 
         <div className={styles.container}>
-          <Card title="Eventos Disponíveis" icon={<LuCalendarSearch size={35}/>} link="/evento/criar"/>
-          <Card title="Inscrições" icon={<FaWpforms size={35}/>} link=""/>
-          <Card title="Fazer Check-in" icon={<BiLocationPlus size={35}/>} link=""/>
+          <Card title="Eventos Disponíveis" icon={<LuCalendarSearch size={35}/>} link="/evento/listar"/>
+          <Card title="Inscrições" icon={<FaWpforms size={35}/>} link="/evento/inscritos"/>
+          <Card title="Fazer Check-in" icon={<BiLocationPlus size={35}/>} link="/checkin"/>
         </div> 
         : 
         <div className={styles.container}>
           <Card title="Ver Eventos" icon={<LuCalendarSearch size={35}/>} link="/evento/criar"/>
-          <Card title="Gerenciar Eventos" icon={<LuCalendar size={35}/>} link=""/>
-          <Card title="Criar Eventos" icon={<LuCalendarPlus size={35}/>} link=""/>
+          <Card title="Gerenciar Eventos" icon={<LuCalendar size={35}/>} link="/evento/gerenciar"/>
+          <Card title="Criar Eventos" icon={<LuCalendarPlus size={35}/>} link="/evento/criar"/>
         </div>
       } 
     </div>

@@ -1,7 +1,6 @@
 'use client'
 import ItemList from "@/components/itemList"
 import { useEffect, useState } from "react";
-import gridStyle from '../../evento/gerenciar/styles.module.css'
 import Button, { ButtonType } from "@/components/button";
 import styles from './styles.module.css';
 import { fetchData } from "@/app/api/utils/apiUtils";
@@ -23,7 +22,7 @@ export default function EmitirCertificado() {
     }
     
     const emitir = async () => {
-        const response = await fetchData(`${process.env.API_BASE_URL}/certificado/emitir`, {
+        const response = await fetchData(`https://emissorcertificadosbackend.onrender.com/certificado/emitir`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +56,7 @@ export default function EmitirCertificado() {
     return (
         <div className="main">
             <h1>Certificados Disponíveis</h1>
-            <div className={gridStyle.grid}>
+            <div className='defaultGrid'>
                 { certificados.length !==0 ?
                     certificados.map((certificado) => {
                         return (

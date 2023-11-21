@@ -1,0 +1,6 @@
+.modalFooter{
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    gap: 0.5rem;
+}
