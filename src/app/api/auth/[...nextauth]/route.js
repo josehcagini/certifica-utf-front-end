@@ -29,8 +29,10 @@ export const authOptions = {
     async signIn({ user, account, profile, email, credentials }) {
 
       try {
+        console.log(account);
         const response = await getAcessTokenAPI( account ); 
         account = toAccount( account, response );
+        console.log(account)
         return true;
       } catch (error) {
         console.log( error )
