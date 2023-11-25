@@ -9,6 +9,12 @@
     border-bottom: 1px solid #000;
 }
 
+.before{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .itemList:hover{
     background-color: rgb(52,152,219,0.5);
     transition: ease-in 0.15s;

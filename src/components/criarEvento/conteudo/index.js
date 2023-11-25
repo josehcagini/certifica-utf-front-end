@@ -5,14 +5,14 @@ import Button, { ButtonType } from '@/components/button'
 import CriarCertificado from './criarCertificado'
 import Finalizar from './finalizar'
 import EventObject from '@/objects/event/EventObject'
-import CertificateObject from '@/objects/certificate/CertificateObject'
+import { CertificateObject } from '@/objects/certificate/CertificateObject'
 
 import { useForm, FormProvider } from "react-hook-form"
 import { fetchData } from '@/app/api/utils/apiUtils'
 import { useState } from 'react';
 import gerarCertificado from '@/services/certificado/geradorDeCertificado';
 import { useSession } from 'next-auth/react'
-import { modelosCertificado } from '@/app/certificado/page'
+import { certificateModel } from '@/objects/certificate/CertificateObject';
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -86,7 +86,6 @@ function Conteudo({ stepContent, updateStep }) {
     async function onNext() {
 
         if (stepContent == StepsEnum.FINALIZAR) {
-            console.log('enviar para o backend');
             const template = gerarCertificado({
                 eventObject: eventObject,
                 certificateObject: certificateObject,
@@ -107,7 +106,7 @@ function Conteudo({ stepContent, updateStep }) {
                         htmlModel: template,
                         modelo: certificateObject.modelo,
                         personalData:
-                            certificateObject.modelo === modelosCertificado.UTFPR ? null :
+                            certificateObject.modelo === certificateModel.UTFPR ? null :
                                 {
                                     instituicao: certificateObject.personalData.instituicao,
                                     local: certificateObject.personalData.local,
@@ -119,15 +118,15 @@ function Conteudo({ stepContent, updateStep }) {
             }
 
             console.log(body)
-
-            const API_BASE_URL = 'http://localhost:8080/api'; //definir a url certa e adicionar ao .env
-            /*const response = await fetchData( //endpoint ainda não implementado
+        
+            const API_BASE_URL = 'https://emissorcertificadosbackend.onrender.com/api'
+            const response = await fetchData( 
                 `${API_BASE_URL}/eventos/novo`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        
+                    
                     },
                     body: JSON.stringify(body)
                 }
@@ -141,7 +140,7 @@ function Conteudo({ stepContent, updateStep }) {
                 return (
                     alert("erro")
                 )
-            }*/
+            }
             console.log('aguardando resposta do backend')
             return;
         }

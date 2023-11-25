@@ -42,7 +42,7 @@ body {
 }
 
 body > div:not(#login) {
-  padding-top: 3.5rem;
+  padding-top: 4rem;
 }
 
 
@@ -54,6 +54,12 @@ body > div:not(#login) {
 .main, main{
   width: 85%;
   margin:auto;
+}
+
+.defaultGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
 }
 
 h1, .h1{
@@ -86,4 +92,10 @@ label{
 
 button:not(:disabled), input[type="submit"]:not(:disabled), input[type="reset"]:not(:disabled), input[type="button"]:not(:disabled){
   cursor: pointer;
+}
+
+@media(max-width: 992px){
+  .defaultGrid{
+      grid-template-columns: 1fr;
+  }
 }

@@ -3,7 +3,6 @@ import { fetchData } from "@/app/api/utils/apiUtils"
 import Button from "@/components/button"
 import ItemList from "@/components/itemList"
 import { useEffect, useState } from "react";
-import style from "./styles.module.css"
 
 const db = [
     {
@@ -65,7 +64,7 @@ export default function GerenciarEventos() {
     return (
         <div className='main'> 
             <h1>GERENCIAR EVENTOS</h1>
-            <div className={style.grid}>
+            <div className='defaultGrid'>
             {eventos.map((evento, index) => {
                 const subtitle_format = `${new Date(evento.dhInicio).toLocaleDateString()} - 
                         ${new Date(evento.dhFim).toLocaleDateString()}`
