@@ -38,7 +38,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className={styles.navbar}>
+        <nav id="navbar" className={styles.navbar}>
             {
                 isAdminUser ?
                     <Link className={styles.navItem} href="/evento/gerenciar">Gerenciar Eventos</Link> :

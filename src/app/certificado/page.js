@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Button from "@/components/button";
 import { fetchData } from "../api/utils/apiUtils";
+import gerarCertificado from "@/services/certificado/geradorDeCertificado";
+import { certificateModel } from "@/objects/certificate/CertificateObject";
 
 export default function Certificado() {
     const searchParams = useSearchParams();
@@ -21,12 +23,13 @@ export default function Certificado() {
 
     const targetRef = useRef();
     useEffect(() => {
-        getHTML()
+        /*getHTML()
             .then(html => setHtml(html))
             .then(() => {
                 setJsx(parse(html));
-            })
-        /*var html = gerarCertificado({
+            })*/
+
+        var html = gerarCertificado({
             eventObject: {
                 name: 'Nome do Evento',
                 dateStart: new Date('2023-11-14'),
@@ -35,22 +38,18 @@ export default function Certificado() {
                 informations: 'Informações do evento',
             },
             certificateObject: {
-                modelo: modelosCertificado.DEFAULT,
+                modelo: certificateModel.DEFAULT,
                 personalData: {
-                    instituicao: 'UTFPR',
+                    instituicao: 'Universidade Tecnológica Federal do Paraná',
                     logo: '../images/logoUtfpr.png',
                     local: 'Curitiba - PR',
-                    backgroundImage: '../images/computer_peopple.png'
+                    backgroundImage: '../images/google.png'
                 }
             },
             organizador: 'Organizador do evento',
         })
-        const data = emitirCertificado({
-            nomeAluno: 'Nome Aluno',
-            hash: hash,
-            emitidoEm: new Date('2023-11-16'),
-            html: html,
-        })        */
+        setHtml(html);
+        setJsx(parse(html));
 
     }, [])
 
@@ -69,19 +68,36 @@ export default function Certificado() {
         hashElement.innerHTML = 'http://localhost:3000/validar/' + hash;
     }, [jsx])
 
+    const handlePrint = async () => {
+        alert('Para garantir que o certificado seja impresso corretamente, verifique se a posição da impressão está em paisagem, e a margem é zero ou nenhum.\n As configurações podem ser alteradas em "Mais configurações" > "Margens" > "Nenhum"')
+        window.print();
+    }
+
+    const style = {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '1rem',
+    }
+
     return (
-        <div id="certificadoDisplay" style={{ paddingTop: '4rem' }}>
-            <Button onClick={() =>
-                generatePDF(targetRef, {
-                    filename: 'certificado.pdf',
-                    method: 'save',
-                    resolution: 5,
-                    page: {
-                        orientation: 'landscape',
-                        format: 'letter'
-                    }
-                })
-            }>Imprimir</Button>
+        <div id="certificadoDisplay">
+            <aside className="no-print" style={style}>
+            <Button isEnabled={true}
+                onClick={() =>
+                    generatePDF(targetRef, {
+                        filename: 'certificado.pdf',
+                        method: 'open',
+                        resolution: 5,
+                        page: {
+                            orientation: 'landscape',
+                        }
+                    })
+                }>Visualizar</Button>
+            <Button
+                isEnabled={true}
+                onClick={handlePrint}
+            >Imprimir</Button>
+            </aside>
             <div ref={targetRef}>
                 {jsx}
             </div>

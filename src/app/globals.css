@@ -10,7 +10,9 @@
 :root {
   --border-radius-default: 6px;
   --font-default: 'Poppins', sans-serif;
-  --height-full: calc(100vh - 3.5rem); /* 3.5rem - (height of navbar) */
+  --width-default: 1122px;
+  --height-full: calc(100vh - 3.5rem);
+  /* 3.5rem - (height of navbar) */
 
   /* Breakpoints */
 
@@ -41,34 +43,36 @@ body {
   background-color: var(--primary-background-color);
 }
 
-body > div:not(#login) {
+body>div:not(#login) {
   padding-top: 4rem;
 }
 
-
-.container{
+.container {
   width: 100%;
   height: 100%;
 }
 
-.main, main{
+.main,
+main {
   width: 85%;
-  margin:auto;
+  margin: auto;
 }
 
-.defaultGrid{
-  display:grid;
+.defaultGrid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
 }
 
-h1, .h1{
+h1,
+.h1 {
   font-size: 1.85rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-h2, .h2{
+h2,
+.h2 {
   font-size: 1.7rem;
   font-weight: 500;
   margin-bottom: 1rem;
@@ -79,23 +83,26 @@ a {
   text-decoration: none;
 }
 
-.inputGroup{
+.inputGroup {
   margin-bottom: 1rem;
 }
 
-label{
+label {
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 0.3rem;
   display: block;
 }
 
-button:not(:disabled), input[type="submit"]:not(:disabled), input[type="reset"]:not(:disabled), input[type="button"]:not(:disabled){
+button:not(:disabled),
+input[type="submit"]:not(:disabled),
+input[type="reset"]:not(:disabled),
+input[type="button"]:not(:disabled) {
   cursor: pointer;
 }
 
-@media(max-width: 992px){
-  .defaultGrid{
-      grid-template-columns: 1fr;
+@media(max-width: 992px) {
+  .defaultGrid {
+    grid-template-columns: 1fr;
   }
 }
