@@ -29,7 +29,7 @@ export default function Home() {
           </div>
           <div className={styles.container}>
             <Card title="Emitir Certificado" icon={<BiPlus size={35} />} link="/certificado/emitir" />
-            <Card title="Visualizar Certificado" icon={<PiNotebookDuotone size={35} />} link="/certificado/emitir" />
+            <Card title="Visualizar Certificado" icon={<PiNotebookDuotone size={35} />} link="/certificado/listar" />
             <Card title="Importar Certificado" icon={<AiOutlineImport size={35} />} link="/certificados" />
           </div>
         </> : <></>

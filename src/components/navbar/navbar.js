@@ -30,7 +30,7 @@ export default function Navbar() {
                     <Link href="/evento/gerenciar" className={styles.dropdownLink}>Gerenciar Eventos</Link>
                     <Link href="/evento/criar" className={styles.dropdownLink}>Criar Evento</Link>
                     </> :
-                    <Link href="/certificados" className={styles.dropdownLink}>Meus Certificados</Link>
+                    <Link href="/certificado/listar" className={styles.dropdownLink}>Meus Certificados</Link>
                 }
                 <Link href='#' className={styles.sair} onClick={handleSignOut}>Sair</Link>
             </div>
@@ -42,7 +42,7 @@ export default function Navbar() {
             {
                 isAdminUser ?
                     <Link className={styles.navItem} href="/evento/gerenciar">Gerenciar Eventos</Link> :
-                    <Link className={styles.navItem} href="/certificados">Certificados</Link>
+                    <Link className={styles.navItem} href="/certificado/listar">Certificados</Link>
             }
             <Link className={styles.navItem + ' ' + styles.navLinkHome} href="/">Home</Link>    
             <img className={styles.profileImage} src={`${session?.data?.user?.image}`} onClick={toggleDropdown} alt={`${session?.data?.user?.name || 'Perfil'}`} width={50} height={50} />
