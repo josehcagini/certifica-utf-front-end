@@ -3,11 +3,14 @@ import ItemList from "@/components/itemList";
 import Modal from "@/components/modal/index";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/app/api/utils/apiUtils";
+import { useSearchParams } from "next/navigation";
 
 export default function ListarEventos() {
     const [eventos, setEventos] = useState([]);
     const [eventoModal, setEventoModal] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const eventId = useSearchParams().get('eventId');
+    const inscricao = useSearchParams().get('inscricao');
 
     const getEventos = async () => {
         const response = await fetchData(`${process.env.API_BASE_URL}/eventos`)
@@ -50,6 +53,12 @@ export default function ListarEventos() {
         /**/
     }, []);
 
+    useEffect(() => {
+        if (eventId && eventos.length > 0 && inscricao==='true') {
+            showModal(eventos.find(evento => evento.id == eventId))
+        }
+    }, [eventId, eventos.length]);
+
     const showModal = (evento) => {
         setEventoModal(evento);
         setIsModalVisible(true);
@@ -74,6 +83,7 @@ export default function ListarEventos() {
                         eventos.map((evento) => {
                             return (
                                 <ItemList
+                                    id={evento.id}
                                     key={evento.id}
                                     title={evento.nome}
                                     subtitle={evento.descricao}

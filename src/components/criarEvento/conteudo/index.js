@@ -13,6 +13,7 @@ import { useState } from 'react';
 import gerarCertificado from '@/services/certificado/geradorDeCertificado';
 import { useSession } from 'next-auth/react'
 import { certificateModel } from '@/objects/certificate/CertificateObject';
+import EventLink from '@/components/eventLink'
 
 const StepsEnum = {
     DADOS_EVENTO: 1,
@@ -23,6 +24,8 @@ const StepsEnum = {
 function Conteudo({ stepContent, updateStep }) {
     const [eventObject, setEventObject] = useState(Object.assign({}, EventObject));
     const [certificateObject, setCertificateObject] = useState(Object.assign({}, CertificateObject));
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [eventId, setEventId] = useState('');
     const session = useSession();
 
     function renderContent() {
@@ -118,15 +121,17 @@ function Conteudo({ stepContent, updateStep }) {
             }
 
             console.log(body)
-        
+            setEventId('3')
+            setIsModalVisible(true)
+
             const API_BASE_URL = 'https://emissorcertificadosbackend.onrender.com/api'
-            const response = await fetchData( 
+            const response = await fetchData(
                 `${API_BASE_URL}/eventos/novo`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                    
+
                     },
                     body: JSON.stringify(body)
                 }
@@ -135,13 +140,15 @@ function Conteudo({ stepContent, updateStep }) {
                 const json = await response.json();
                 console.log(json);
                 const { id } = json;
-                location.href = `/evento/${id}`;
+                setEventId(id);
+                setIsModalVisible(true);
             } else {
                 return (
                     alert("erro")
                 )
             }
             console.log('aguardando resposta do backend')
+
             return;
         }
 
@@ -160,23 +167,29 @@ function Conteudo({ stepContent, updateStep }) {
     const methods = useForm()
 
     return (
-        <div className={styles.content}>
-            <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    {renderContent()}
-                    <div className={styles.buttonContent}>
-                        <Button type="submit" isEnabled={true}>
-                            {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
-                        </Button>
-                        {stepContent != StepsEnum.DADOS_EVENTO &&
-                            <Button type="button" isEnabled={true} onClick={() => onPrevious()} styletype={ButtonType.SECONDARY}>
-                                Voltar
+        <>
+            <div className={styles.content}>
+
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        {renderContent()}
+                        <div className={styles.buttonContent}>
+                            <Button type="submit" isEnabled={true}>
+                                {stepContent == StepsEnum.FINALIZAR ? 'Finalizar' : 'Próximo'}
                             </Button>
-                        }
-                    </div>
-                </form>
-            </FormProvider>
-        </div>
+                            {stepContent != StepsEnum.DADOS_EVENTO &&
+                                <Button type="button" isEnabled={true} onClick={() => onPrevious()} styletype={ButtonType.SECONDARY}>
+                                    Voltar
+                                </Button>
+                            }
+                        </div>
+                    </form>
+                </FormProvider>
+            </div>
+            {isModalVisible &&
+                <EventLink
+                    eventId={eventId}
+                    dismiss={() => setIsModalVisible(false)} />}</>
     )
 }
 

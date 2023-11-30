@@ -1,10 +1,9 @@
 import Button from '../button';
 import styles from './styles.module.css';
 export default function ItemList(props) {
-    const { title, subtitle, onClick, buttonTitle, buttonStyletype } = props;
-    const { children } = props;
+    const { title, subtitle, onClick, buttonTitle, buttonStyletype,children,id } = props;
     return (
-        <div className={styles.itemList}>
+        <div className={styles.itemList} id={id}>
             <div className={styles.before}>
                 {children}
                 <div className={styles.itemListContent}>
