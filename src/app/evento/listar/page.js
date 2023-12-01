@@ -54,6 +54,10 @@ export default function ListarEventos() {
     }, []);
 
     useEffect(() => {
+        //Exibir modal de inscrição caso o evento seja passado por parâmetro
+        //Ação esperada quando o usuário acessa pelo link/qrcode gerado pelo organizador
+        //TODO: verificar se o usuário já está inscrito no evento, 
+        //pode ser verificada no Modal (HU 0.1), caso o usuário já esteja inscrito, exibir botão de cancelar inscrição 
         if (eventId && eventos.length > 0 && inscricao==='true') {
             showModal(eventos.find(evento => evento.id == eventId))
         }

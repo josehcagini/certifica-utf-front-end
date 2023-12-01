@@ -7,11 +7,6 @@ import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 
 export default function EventLink({ eventId, dismiss }) {
-    /*
-    TODO
-    Melhorar a experiência do usuário,
-    abrir a tela/modal de inscrição do evento ao clicar no link
-    */
     const url = window.location.origin + "/evento/listar?eventId=" + eventId+"&inscricao=true"
     const copyLink = (e) => {
         e.preventDefault();
