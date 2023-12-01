@@ -40,7 +40,7 @@ export default function EmitirCertificado() {
     }
 
     const getCertificados = async () => {
-        const response = await fetchData(`${process.env.API_BASE_URL}/certificados/emitir`)
+        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/certificados/emitir`)
         const data = await response.json()
         if (response.status === 200) {
             setCertificados(data);

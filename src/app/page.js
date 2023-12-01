@@ -9,6 +9,7 @@ import { FaWpforms } from 'react-icons/fa'
 import Card from '@/components/card';
 import { isAdmin } from '@/services/user/userService';
 import { useEffect, useState } from 'react';
+import { getUserRole } from '@/services/session/sessionService';
 
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
   const [isAdminUser, setIsAdminUser] = useState(false);
 
   useEffect(() => {
-    const adminUser = isAdmin(session?.data?.user?.roles ?? []);
+    const adminUser = isAdmin(getUserRole());
     setIsAdminUser(adminUser);
   }, [session])
 

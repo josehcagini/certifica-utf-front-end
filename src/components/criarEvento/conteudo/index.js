@@ -121,12 +121,13 @@ function Conteudo({ stepContent, updateStep }) {
             }
 
             console.log(body)
+            /*
             setEventId('3')
             setIsModalVisible(true)
+            */
 
-            const API_BASE_URL = 'https://emissorcertificadosbackend.onrender.com/api'
             const response = await fetchData(
-                `${API_BASE_URL}/eventos/novo`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/eventos/novo`,
                 {
                     method: "POST",
                     headers: {

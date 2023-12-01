@@ -13,7 +13,7 @@ export default function ListarEventos() {
     const inscricao = useSearchParams().get('inscricao');
 
     const getEventos = async () => {
-        const response = await fetchData(`${process.env.API_BASE_URL}/eventos`)
+        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/eventos`)
         const data = await response.json()
         if (response.status === 200) {
             setEventos(data);
