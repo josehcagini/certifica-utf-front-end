@@ -19,6 +19,7 @@ export const authOptions = {
       return token
     },
     async session({ session, token, user }) {
+      session.user.nrUuid = token.sub;
       session.user.roles = token.roles;
       session.access_token = {
         api: token.access_token_api,
@@ -29,10 +30,8 @@ export const authOptions = {
     async signIn({ user, account, profile, email, credentials }) {
 
       try {
-        console.log(account);
         const response = await getAcessTokenAPI( account ); 
         account = toAccount( account, response );
-        console.log(account)
         return true;
       } catch (error) {
         console.log( error )

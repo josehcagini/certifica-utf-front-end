@@ -3,14 +3,17 @@ import ItemList from "@/components/itemList";
 import Modal from "@/components/modal/index";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/app/api/utils/apiUtils";
+import { useSearchParams } from "next/navigation";
 
 export default function ListarEventos() {
     const [eventos, setEventos] = useState([]);
     const [eventoModal, setEventoModal] = useState({});
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const eventId = useSearchParams().get('eventId');
+    const inscricao = useSearchParams().get('inscricao');
 
     const getEventos = async () => {
-        const response = await fetchData(`${process.env.API_BASE_URL}/eventos`)
+        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/eventos`)
         const data = await response.json()
         if (response.status === 200) {
             setEventos(data);
@@ -50,6 +53,16 @@ export default function ListarEventos() {
         /**/
     }, []);
 
+    useEffect(() => {
+        //Exibir modal de inscrição caso o evento seja passado por parâmetro
+        //Ação esperada quando o usuário acessa pelo link/qrcode gerado pelo organizador
+        //TODO: verificar se o usuário já está inscrito no evento, 
+        //pode ser verificada no Modal (HU 0.1), caso o usuário já esteja inscrito, exibir botão de cancelar inscrição 
+        if (eventId && eventos.length > 0 && inscricao==='true') {
+            showModal(eventos.find(evento => evento.id == eventId))
+        }
+    }, [eventId, eventos.length]);
+
     const showModal = (evento) => {
         setEventoModal(evento);
         setIsModalVisible(true);
@@ -74,6 +87,7 @@ export default function ListarEventos() {
                         eventos.map((evento) => {
                             return (
                                 <ItemList
+                                    id={evento.id}
                                     key={evento.id}
                                     title={evento.nome}
                                     subtitle={evento.descricao}

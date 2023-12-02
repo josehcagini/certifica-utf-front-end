@@ -11,14 +11,6 @@ export default function Finalizar({ eventObject, certificateObject }) {
 
     const session = useSession();
     const organizador = session?.data?.user?.name;
-    /*const handleClick = (e) => {  Utilizar em outra tela, após o retorno 201 da api
-        e.preventDefault();
-        let el = document.getElementById("link");
-        el.select();
-        navigator.clipboard.writeText(el.value);
-        let p = document.querySelector(`.${styles.copied}`);
-        p.style.display = "block";
-    }*/
 
     return (
         <div className={styles.content}>

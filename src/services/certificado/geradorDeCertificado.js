@@ -24,6 +24,7 @@ export default function gerarCertificado(props){
         const {instituicao, logo, local, backgroundImage} = personalData;
         const html = `
         <link rel="stylesheet" href="../stylesCertificado/modelo1.css">
+        <link rel="stylesheet" href="../stylesCertificado/print.css">
         ${preview ? '<link rel="stylesheet" href="../stylesCertificado/preview.css">': ''}
         ${logo ? `<style>#logo{background-image: url(${logo})}</style>` : ''}
         ${backgroundImage ? `<style>.certificado{background-image: url(${backgroundImage})}</style>` : ''}
@@ -74,6 +75,7 @@ export default function gerarCertificado(props){
         const html =
         `
         <link rel="stylesheet" href="../stylesCertificado/modelo2.css">
+        <link rel="stylesheet" href="../stylesCertificado/print.css">
         ${preview ? '<link rel="stylesheet" href="../stylesCertificado/preview.css">' : ''}
         <div class='certificado'>
             <div class="barrautfpr">

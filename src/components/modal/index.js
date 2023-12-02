@@ -1,8 +1,8 @@
 import ModalFooter from './modalFooter';
 import ModalHeader from './modalHeader';
 import styles from './styles.module.css';
-export default function Modal(props) {
-    const { title, children, dismiss, buttonTitle, onClick } = props;
+import PropTypes from 'prop-types';
+export default function Modal({ title, children, dismiss, buttonTitle, onClick }) {
     //Modal Genérico
     /*
     Possui um título, corpo e 2 botões por padrão (ver ModalFooter)
@@ -30,4 +30,12 @@ export default function Modal(props) {
             </div>
         </div>
     )
+}
+
+Modal.propTypes = {
+    title: PropTypes.string,
+    children: PropTypes.node.isRequired,
+    dismiss: PropTypes.func.isRequired,
+    buttonTitle: PropTypes.string,
+    onClick: PropTypes.func
 }

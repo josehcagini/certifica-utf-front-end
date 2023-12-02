@@ -3,7 +3,7 @@ import { fetchData } from '@/app/api/utils/apiUtils';
 
 export async function getAcessTokenAPI( account ) {
 
-    const API_URL = `${process.env.API_BASE_URL}/api/auth/signIn`;
+    const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/signIn`;
 
     const idToken = account.id_token;
     const dhExpires = account.expires_at
