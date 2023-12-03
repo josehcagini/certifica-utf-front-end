@@ -11,15 +11,15 @@ import { isAdmin } from '@/services/user/userService';
 import { useEffect, useState } from 'react';
 import { getUserRole } from '@/services/session/sessionService';
 
-
 export default function Home() {
   const session = useSession();
   const [isAdminUser, setIsAdminUser] = useState(false);
 
   useEffect(() => {
-    const adminUser = isAdmin(getUserRole());
+    const adminUser = isAdmin(getUserRole( session ));
+    console.log( session )
     setIsAdminUser(adminUser);
-  }, [session])
+  }, [session && session?.status !== 'loading'])
 
   return (
     <div className={styles.content}>
