@@ -96,14 +96,13 @@ function Conteudo({ stepContent, updateStep }) {
             })
 
             const body = {
-                event: {
                     name: eventObject.name,
                     dateStart: eventObject.dateStart,
                     dateEnd: eventObject.dateEnd,
                     dates: eventObject.dates,
                     workload: eventObject.workload,
                     informations: eventObject.informations,
-                    nomeEmissor: session?.data?.user?.name,
+                    nrUuidAccountable: session?.data?.user?.nrUuid,
                     certificate:
                     {
                         htmlModel: template,
@@ -117,7 +116,6 @@ function Conteudo({ stepContent, updateStep }) {
                                     backgroundImage: certificateObject.personalData.backgroundImage // object File
                                 }
                     }
-                }
             }
 
             console.log(body)
@@ -127,11 +125,12 @@ function Conteudo({ stepContent, updateStep }) {
             */
 
             const response = await fetchData(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/eventos/novo`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento`,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": session?.data?.access_token?.api,
 
                     },
                     body: JSON.stringify(body)
@@ -140,8 +139,8 @@ function Conteudo({ stepContent, updateStep }) {
             if (response.status === 201) {
                 const json = await response.json();
                 console.log(json);
-                const { id } = json;
-                setEventId(id);
+                const { idEvent } = json;
+                setEventId(idEvent);
                 setIsModalVisible(true);
             } else {
                 return (

@@ -46,7 +46,7 @@ export default function Home() {
         </div>
         :
         <div className={styles.container}>
-          <Card title="Ver Eventos" icon={<LuCalendarSearch size={35} />} link="/evento/criar" />
+          <Card title="Ver Eventos" icon={<LuCalendarSearch size={35} />} link="/evento/listar" />
           <Card title="Gerenciar Eventos" icon={<LuCalendar size={35} />} link="/evento/gerenciar" />
           <Card title="Criar Eventos" icon={<LuCalendarPlus size={35} />} link="/evento/criar" />
         </div>

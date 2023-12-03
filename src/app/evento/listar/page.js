@@ -2,8 +2,9 @@
 import ItemList from "@/components/itemList";
 import Modal from "@/components/modal/index";
 import { useEffect, useState } from "react";
-import { fetchData } from "@/app/api/utils/apiUtils";
+import { fetchData, buildInit } from "@/app/api/utils/apiUtils";
 import { useSearchParams } from "next/navigation";
+import { useSession } from 'next-auth/react';
 
 export default function ListarEventos() {
     const [eventos, setEventos] = useState([]);
@@ -11,9 +12,16 @@ export default function ListarEventos() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const eventId = useSearchParams().get('eventId');
     const inscricao = useSearchParams().get('inscricao');
+    const session = useSession();
 
     const getEventos = async () => {
-        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/eventos`)
+
+        // TODO rever isso, esta sendo usando apenas porque o session estar com problema
+        if( session.status == 'loading' ){
+            return;
+        }
+
+        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/findAll`, buildInit( session ))
         const data = await response.json()
         if (response.status === 200) {
             setEventos(data);
@@ -23,35 +31,8 @@ export default function ListarEventos() {
     };
 
     useEffect(() => {
-        //getEventos();
-        /**/
-        setEventos([
-            {
-                nome: 'Evento 1',
-                descricao: 'Descrição 1',
-                dsDateStart: '01/01/2021',
-                dsTimeStart: '10:00',
-                dsDateEnd: '01/01/2021',
-                dsTimeEnd: '12:00',
-                local: 'Auditório Principal',
-                organizador: 'Organizador 1',
-                id:1
-            },
-            {
-                nome: 'Evento 2',
-                descricao: 'Descrição do evento',
-                dsDateStart: '11/12/2023',
-                dsTimeStart: '14:00',
-                dsDateEnd: '15/12/2023',
-                dsTimeEnd: '18:00',
-                local: 'Auditório Principal',
-                organizador: 'Organizador 1',
-                id:3
-            }
-
-        ])
-        /**/
-    }, []);
+        getEventos();
+    }, [session.status]);
 
     useEffect(() => {
         //Exibir modal de inscrição caso o evento seja passado por parâmetro
@@ -59,7 +40,7 @@ export default function ListarEventos() {
         //TODO: verificar se o usuário já está inscrito no evento, 
         //pode ser verificada no Modal (HU 0.1), caso o usuário já esteja inscrito, exibir botão de cancelar inscrição 
         if (eventId && eventos.length > 0 && inscricao==='true') {
-            showModal(eventos.find(evento => evento.id == eventId))
+            showModal(eventos.find(evento => evento.idEvent == eventId))
         }
     }, [eventId, eventos.length]);
 
@@ -87,10 +68,10 @@ export default function ListarEventos() {
                         eventos.map((evento) => {
                             return (
                                 <ItemList
-                                    id={evento.id}
-                                    key={evento.id}
-                                    title={evento.nome}
-                                    subtitle={evento.descricao}
+                                    id={evento.idEvent}
+                                    key={evento.idEvent}
+                                    title={evento.name}
+                                    subtitle={evento.informations}
                                     buttonTitle="Inscrever-se"
                                     onClick={() => showModal(evento)}
                                 />
@@ -102,7 +83,7 @@ export default function ListarEventos() {
             {
                 isModalVisible &&
                 <Modal
-                    title={eventoModal.nome}
+                    title={eventoModal.name}
                     dismiss={hideModal}
                     buttonTitle="Realizar Inscrição"
                     onClick={realizarInscricao}
