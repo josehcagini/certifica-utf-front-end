@@ -16,7 +16,7 @@ export default function ListarEventos() {
 
     const getEventos = async () => {
 
-        // TODO rever isso, esta sendo usando apenas porque o session estar com problema
+        // TODO rever isso, esta sendo usando apenas porque o session esta com problema
         if( session.status == 'loading' ){
             return;
         }
