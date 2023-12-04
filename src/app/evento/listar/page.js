@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchData, buildInit } from "@/app/api/utils/apiUtils";
 import { useSearchParams } from "next/navigation";
 import { useSession } from 'next-auth/react';
+import { LoadingListSkeleton } from "@/components/loading/loading";
 
 export default function ListarEventos() {
     const [eventos, setEventos] = useState([]);
@@ -16,12 +17,12 @@ export default function ListarEventos() {
 
     const getEventos = async () => {
 
-        // TODO rever isso, esta sendo usando apenas porque o session esta com problema
-        if( session.status == 'loading' ){
+        //TODO rever isso, esta sendo usando apenas porque o session E a tela de loading estão com problema
+        if (session.status == 'loading') {
             return;
         }
 
-        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/findAll`, buildInit( session ))
+        const response = await fetchData(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/findAll`, buildInit(session))
         const data = await response.json()
         if (response.status === 200) {
             setEventos(data);
@@ -39,7 +40,7 @@ export default function ListarEventos() {
         //Ação esperada quando o usuário acessa pelo link/qrcode gerado pelo organizador
         //TODO: verificar se o usuário já está inscrito no evento, 
         //pode ser verificada no Modal (HU 0.1), caso o usuário já esteja inscrito, exibir botão de cancelar inscrição 
-        if (eventId && eventos.length > 0 && inscricao==='true') {
+        if (eventId && eventos.length > 0 && inscricao === 'true') {
             showModal(eventos.find(evento => evento.idEvent == eventId))
         }
     }, [eventId, eventos.length]);
@@ -62,39 +63,42 @@ export default function ListarEventos() {
     return (
         <div className="main">
             <h1>Eventos Disponíveis</h1>
-            <div className="defaultGrid">
-                {
-                    eventos.length > 0 ?
-                        eventos.map((evento) => {
-                            return (
-                                <ItemList
-                                    id={evento.idEvent}
-                                    key={evento.idEvent}
-                                    title={evento.name}
-                                    subtitle={evento.informations}
-                                    buttonTitle="Inscrever-se"
-                                    onClick={() => showModal(evento)}
-                                />
-                            )
-                        }) :
-                        <h2>Nenhum evento próximo disponível</h2>
-                }
-            </div>
-            {
-                isModalVisible &&
-                <Modal
-                    title={eventoModal.name}
-                    dismiss={hideModal}
-                    buttonTitle="Realizar Inscrição"
-                    onClick={realizarInscricao}
-                >
+            {session?.status === 'loading' ? <LoadingListSkeleton /> : <>
+                <div className="defaultGrid">
                     {
-                        //Exibir as informações do evento
-                        /*
-                        HU 0.1
-                        */
+                        eventos.length > 0 ?
+                            eventos.map((evento) => {
+                                return (
+                                    <ItemList
+                                        id={evento.idEvent}
+                                        key={evento.idEvent}
+                                        title={evento.name}
+                                        subtitle={evento.informations}
+                                        buttonTitle="Inscrever-se"
+                                        onClick={() => showModal(evento)}
+                                    />
+                                )
+                            }) :
+                            <h2>Nenhum evento próximo disponível</h2>
                     }
-                </Modal>
+                </div>
+                {
+                    isModalVisible &&
+                    <Modal
+                        title={eventoModal.name}
+                        dismiss={hideModal}
+                        buttonTitle="Realizar Inscrição"
+                        onClick={realizarInscricao}
+                    >
+                        {
+                            //Exibir as informações do evento
+                            /*
+                            HU 0.1
+                            */
+                        }
+                    </Modal>
+                }
+            </>
             }
         </div>
     )
