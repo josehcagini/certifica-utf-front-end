@@ -6,7 +6,7 @@ export default function ItemList(props) {
         <div className={styles.itemList} id={id}>
             <div className={styles.before}>
                 {children}
-                <div className={styles.itemListContent}>
+                <div>
                     <p className={styles.title}>
                         {title}
                     </p>

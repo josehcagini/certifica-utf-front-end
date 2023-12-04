@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Raleway } from 'next/font/google'
 
 import { authOptions } from './api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
@@ -9,7 +9,7 @@ import Navbar from '@/components/navbar/navbar'
 
 //Modificar fontes e estilos globais nesse arquivo
 
-const inter = Inter({ subsets: ['latin'] })
+const raleway = Raleway({ subsets: ['latin'] })
 
 export const metadata = {
   title: {
@@ -19,14 +19,12 @@ export const metadata = {
   description: 'Sistema de Emissão de Certificados',
 }
 
-//Não alterar o código abaixo
-
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
 
   return (
     <html lang="pt-br">
-      <body className={inter.className}>
+      <body className={raleway.className}>
         <SessionProvider session={session}>
           {
             !session ? (
