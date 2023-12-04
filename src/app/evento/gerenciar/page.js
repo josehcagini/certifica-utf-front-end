@@ -24,7 +24,7 @@ export default function GerenciarEventos() {
         getData().then(data => {
             setEventos(data)
         })
-    }, [])
+    }, [session.status])
 
 
     return (
