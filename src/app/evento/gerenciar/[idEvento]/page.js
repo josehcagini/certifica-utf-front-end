@@ -8,48 +8,60 @@ import style from '../styles.module.css'
 import eventStyle from './styles.module.css'
 import EventMemberSchema from "@/helper/validator/schema/EventMemberSchema";
 import Button, { ButtonType } from "@/components/button";
-import { fetchData } from "@/app/api/utils/apiUtils";
+import { buildInit } from "@/app/api/utils/apiUtils";
+import { useSession } from "next-auth/react";
 
 export default function Index(props) {
+    
     const [evento, setEvento] = useState({});
     const [participantes, setParticipantes] = useState([]);
     const idEvento = useParams().idEvento;
+
+    const session = useSession();
+
     const syncData = async () => {
-        const res = await fetchData('http://localhost:8080/api/evento/' + idEvento);
-        if (res.status != 200) {
+
+       // TODO rever isso, esta sendo usando apenas porque o session estar com problema
+        if( session.status === 'loading' ){
+            return;
+        }
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/${idEvento}`, buildInit( session ) );
+
+        if ( res.status != 200 ) {
             alert('Erro ' + res.status + ': ' + res.statusText)
             return;
         }
+
         const data = await res.json();
-        const participantes_ = data.participantes;
-        const event = data.event;
+        const event = data;
+        const participantes = data.participants;
+
         setEvento(event);
-        setParticipantes(participantes_);
+        setParticipantes(participantes);
     }
 
     useEffect(() => {
         syncData();
-    }, []);
+    }, [session.status]);
 
     const methods = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data)
-        const res = await fetch('http://localhost:8080/api/participante', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+
+        const body = {
+            idEvent: idEvento,
+            email: data.email
+        };
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/participante`, buildInit( session, "POST", body ) );
+
         if (res.status == 201) {
             const data = await res.json();
             console.log(data)
             await syncData();
         }
         else if (res.status == 400) {
-            const data = await res.json();
-            console.log(data)
             alert('Usuário não encontrado');
         }
         else {
@@ -58,12 +70,8 @@ export default function Index(props) {
     }
 
     const removeMember = async (idParticipante) => {
-        const res = await fetch('http://localhost:8080/api/participante/' + idParticipante, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/evento/participante/${idEvento}/${idParticipante}`, buildInit( session, "DELETE" ) );
+        
         if (res.status == 200) {
             await syncData();
         } else {
@@ -76,12 +84,12 @@ export default function Index(props) {
     return (
         <div className="main">
             <h1>Evento</h1>
-            <p><b>Nome:</b> {evento.dsNome}</p>
-            <p><b>Data de Início:</b> {new Date(evento.dhInicio).toLocaleDateString()}</p>
-            <p><b>Data de Encerramento: </b>{new Date(evento.dhFim).toLocaleDateString()}</p>
-            <p><b>Carga Horária:</b> {evento.nrCargaHoraria}</p>
-            <p><b>Informações: </b>{evento.dsInformacoes}</p>
-            <p><b>Organizador do Evento: </b>{evento.nrUuidResponsavel}</p>
+            <p><b>Nome:</b> {evento.name}</p>
+            <p><b>Data de Início:</b> {new Date(evento.dateStart).toLocaleDateString()}</p>
+            <p><b>Data de Encerramento: </b>{new Date(evento.dateEnd).toLocaleDateString()}</p>
+            <p><b>Carga Horária:</b> {evento.workload}</p>
+            <p><b>Informações: </b>{evento.informations}</p>
+            <p><b>Organizador do Evento: </b>{evento.nrUuidAccountable}</p>
             <p><b>Local: </b>{evento.idLocal}</p>
             <hr style={{ width: '100%' }} />
             <FormProvider {...methods}>
@@ -105,12 +113,12 @@ export default function Index(props) {
                     participantes.map(participante => {
                         return (
                             <ItemList
-                                key={participante.nrUuidParticipante}
-                                title={participante.dsNome}
-                                subtitle={participante.dsEmail}
+                                key={participante.nrUuid}
+                                title={participante.name}
+                                subtitle={participante.email}
                                 buttonTitle="Remover"
                                 buttonStyletype={ButtonType.DANGER}
-                                onClick={() => { removeMember(participante.nrUuidParticipante) }}
+                                onClick={() => { removeMember(participante.nrUuid) }}
                             />
                         )
                     })

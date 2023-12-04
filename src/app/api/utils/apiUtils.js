@@ -16,3 +16,15 @@ export async function fetchData(input, init){
         }
     }
 }
+
+export function buildInit( session, typeRequest = "GET", bodyRequest = null ) {
+   return {
+        method: typeRequest,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": session?.data?.access_token?.api,
+
+        },
+        ...( bodyRequest && { body: JSON.stringify(bodyRequest) })
+    }
+}
