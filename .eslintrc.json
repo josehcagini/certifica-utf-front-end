@@ -52,6 +52,21 @@
     "react/no-unescaped-entities": "off",
     "prefer-const": 2,
     "@typescript-eslint/ban-ts-comment": "off",
-    "eslint no-delete-var": "off"
+    "eslint no-delete-var": "off",
+    
+    "import-helpers/order-imports": [
+      "error",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^react/",              
+          "module",               
+          "/^@/",               
+          ["parent", "sibling", "index"],
+          "/styles/"
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
   }
 }
