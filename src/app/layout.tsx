@@ -1,21 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | CertificaUTF",
-    default: "CertificaUTF",
+    template: '%s | CertificaUTF',
+    default: 'CertificaUTF',
   },
-  description: "Sistema de Emissão de Certificados",
-};
+  description: 'Sistema de Emissão de Certificados',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="pt-br">
       <body>{children}</body>
     </html>
-  );
+  )
 }
