@@ -46,8 +46,8 @@ export const googleProvider = Google({
 
 export const credentialProvider = Credentials({
   credentials: {
-    ra: { label: 'RA', type: 'text' },
-    password: { label: 'Senha', type: 'password' },
+    ra: {},
+    password: {},
   },
   name: 'UTFPR',
   async authorize(credentials) {
