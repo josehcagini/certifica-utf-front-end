@@ -9,7 +9,7 @@ export default function SessionShow() {
     <div>
       <h1>SessionShow</h1>
 
-      <p>{JSON.stringify(session)}</p>
+      <p>client session {JSON.stringify(session)}</p>
     </div>
   )
 }

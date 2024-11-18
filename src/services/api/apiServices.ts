@@ -7,87 +7,100 @@ import { defaultHeaders } from '@/services/fetch/headers'
 import logger from '@/services/winston/logger'
 import SomethingWentWrongError from '@/types/errors/SomethingWentWrongError'
 import UnauthorizedError from '@/types/errors/UnauthorizedError'
-import User from '@/types/User'
+import IResponseHandler from '@/types/IResponseHandler.'
+import IUserDto from '@/types/IUserDto'
 
-function parseResponseToUser(data: any): User {
+function parseResponseToUser(data: any): IUserDto {
   return {
     nrUuid: data.nrUuid,
     name: data.name,
     email: data.email,
     accessToken: data.accessToken,
     roles: data.roles,
-  } as User
+  } as IUserDto
 }
 
 export async function loginWithGoogle(
   typeProvider: authProviderEnum,
   idToken: string
-): Promise<User> {
-  logger.log({
-    level: 'debug',
-    message: '[loginUserGoogle]',
-  })
+): Promise<IResponseHandler<IUserDto, unknown>> {
+  try {
+    const response = await fetchServer(apiEndpointsEnum.LOGIN, {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify({
+        typeProvider: typeProvider.toUpperCase(),
+        idToken,
+      }),
+    })
 
-  const response = await fetchServer(apiEndpointsEnum.LOGIN, {
-    method: 'POST',
-    headers: defaultHeaders,
-    body: JSON.stringify({
-      typeProvider: typeProvider.toUpperCase(),
-      idToken,
-    }),
-  })
+    if (response.status === StatusCodes.OK) {
+      const data = await response.json()
+      const userLogin = parseResponseToUser(data)
 
-  if (response.status === StatusCodes.OK) {
-    const data = await response.json()
-    const userLogin = parseResponseToUser(data)
+      return { sucess: userLogin, error: null }
+    }
 
-    return userLogin
+    if (response.status === StatusCodes.UNAUTHORIZED) {
+      throw new UnauthorizedError(
+        'Você não tem permissão para realizar esta operação'
+      )
+    }
+
+    throw new SomethingWentWrongError('Algo deu errado')
+  } catch (error) {
+    logger.log({
+      level: 'error',
+      message: '[loginWithGoogle] error',
+      objects: {
+        error,
+      },
+    })
+    return { sucess: null, error: error }
   }
-
-  if (response.status === StatusCodes.UNAUTHORIZED) {
-    throw new UnauthorizedError(
-      'Você não tem permissão para realizar esta operação'
-    )
-  }
-
-  throw new SomethingWentWrongError('Algo deu errado')
 }
 
 export async function loginWithCredentials(
   typeProvider: authProviderEnum,
   ra: string,
   password: string
-): Promise<User> {
-  logger.log({
-    level: 'debug',
-    message: '[loginUserCredentials]',
-  })
+): Promise<IResponseHandler<IUserDto, unknown>> {
+  try {
+    const typeProviderUTFPR =
+      typeProvider === authProviderEnum.CREDENTIALS ? 'UTFPR' : 'CREDENTIALS'
 
-  const typeProviderUTFPR =
-    typeProvider === authProviderEnum.CREDENTIALS ? 'UTFPR' : 'CREDENTIALS'
+    const response = await fetchServer(apiEndpointsEnum.LOGIN, {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify({
+        typeProvider: typeProviderUTFPR,
+        login: ra,
+        password: password,
+      }),
+    })
 
-  const response = await fetchServer(apiEndpointsEnum.LOGIN, {
-    method: 'POST',
-    headers: defaultHeaders,
-    body: JSON.stringify({
-      typeProvider: typeProviderUTFPR,
-      login: ra,
-      password: password,
-    }),
-  })
+    if (response.status === StatusCodes.OK) {
+      const data = await response.json()
+      const userLogin = parseResponseToUser(data)
 
-  if (response.status === StatusCodes.OK) {
-    const data = await response.json()
-    const userLogin = parseResponseToUser(data)
+      return { sucess: userLogin, error: null }
+    }
 
-    return userLogin
+    if (response.status === StatusCodes.UNAUTHORIZED) {
+      throw new UnauthorizedError(
+        'Você não tem permissão para realizar esta operação'
+      )
+    }
+
+    throw new SomethingWentWrongError('Algo deu errado')
+  } catch (error) {
+    logger.log({
+      level: 'error',
+      message: '[loginWithGoogle] error',
+      objects: {
+        error,
+      },
+    })
+    return { sucess: null, error: error }
   }
-
-  if (response.status === StatusCodes.UNAUTHORIZED) {
-    throw new UnauthorizedError(
-      'Você não tem permissão para realizar esta operação'
-    )
-  }
-
-  throw new SomethingWentWrongError('Algo deu errado')
 }

@@ -38,3 +38,7 @@ export default function Login() {
     </div>
   )
 }
+
+Login.getLayout = function getLayout(page: React.ReactElement) {
+  return <>{page}</>
+}

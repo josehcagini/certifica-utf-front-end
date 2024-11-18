@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 
 import './globals.css'
+import AppMenubar from '@/components/app-menubar'
+import { AppSidebar } from '@/components/app-sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 import { SessionProvider } from '@/providers/SessionProvider'
 
 export const metadata: Metadata = {
@@ -19,7 +23,15 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <html lang="pt-br">
-        <body>{children}</body>
+        <body>
+          <SidebarProvider>
+            <AppSidebar />
+            <main className={cn('max-w-screen w-full')}>
+              <AppMenubar />
+              {children}
+            </main>
+          </SidebarProvider>
+        </body>
       </html>
     </SessionProvider>
   )
