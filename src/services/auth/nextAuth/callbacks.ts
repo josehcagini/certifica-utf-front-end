@@ -7,7 +7,8 @@ import { AdapterUser } from 'next-auth/adapters'
 import authProviderEnum from '@/enums/authProvidersEnum'
 import { loginWithGoogle } from '@/services/api/apiServices'
 import logger from '@/services/winston/logger'
-import User from '@/types/User'
+import IUserDto from '@/types/IUserDto'
+import { sessionUser } from '@/types/next-auth'
 
 type ISignInCallback = (
   user: UserNextAuth | AdapterUser,
@@ -21,16 +22,23 @@ const signInWithGoogle: ISignInCallback = async (
   try {
     if (!user || !account) return false
 
-    const userGoogle = await loginWithGoogle(
-      authProviderEnum.GOOGLE,
-      account.id_token!
-    )
+    if (!account.id_token) return false
 
-    user = {
-      id: userGoogle.nrUuid,
-      ...userGoogle,
+    const { sucess: userGoogle, error: errorLoginWithGoogle } =
+      await loginWithGoogle(authProviderEnum.GOOGLE, account.id_token)
+
+    if (!userGoogle) {
+      throw errorLoginWithGoogle
     }
-    account.user = { ...user }
+
+    account.user = {
+      id: userGoogle.nrUuid,
+      name: userGoogle.name,
+      email: userGoogle.email,
+      roles: userGoogle.roles,
+      image: null,
+      accessToken: userGoogle.accessToken,
+    }
 
     return true
   } catch (error) {
@@ -52,7 +60,14 @@ const signInWithCredentials: ISignInCallback = async (
 ): Promise<boolean> => {
   if (!user || !account) return false
 
-  account.user = { ...user }
+  account.user = {
+    id: user.id,
+    name: user.name!,
+    email: user.email!,
+    roles: user.roles,
+    image: null,
+    accessToken: user.accessToken,
+  }
 
   return true
 }
@@ -64,15 +79,9 @@ export const signInCallback: CallbacksOptions['signIn'] = async ({
   email,
   credentials,
 }) => {
-  logger.log({
-    level: 'debug',
-    message: '[signIn]',
-  })
-
   switch (account?.provider) {
     case authProviderEnum.GOOGLE: {
-      const result = await signInWithGoogle(user, account)
-      return result
+      return await signInWithGoogle(user, account)
     }
     case authProviderEnum.CREDENTIALS: {
       return await signInWithCredentials(user, account)
@@ -87,11 +96,6 @@ export const redirectCallback: CallbacksOptions['redirect'] = async ({
   url,
   baseUrl,
 }) => {
-  logger.log({
-    level: 'debug',
-    message: '[redirect]',
-  })
-
   if (url.startsWith('/')) return `${baseUrl}${url}`
   else if (new URL(url).origin === baseUrl) return url
   return baseUrl
@@ -106,12 +110,7 @@ export const jwtCallback: CallbacksOptions['jwt'] = async ({
   isNewUser,
   session,
 }) => {
-  logger.log({
-    level: 'debug',
-    message: '[jwt]',
-  })
-
-  const customUser = account?.user as User
+  const customUser = account?.user
 
   return {
     ...token,
@@ -124,15 +123,19 @@ export const sessionCallback: CallbacksOptions['session'] = async ({
   token,
   user,
 }) => {
-  logger.log({
-    level: 'debug',
-    message: '[session]',
-  })
+  const sessionUser: sessionUser = {
+    id: token.id as string,
+    email: token.email as string,
+    name: token.name as string,
+    image: token.image as string,
+    roles: token.roles as Array<string>,
+    accessToken: token.accessToken as string,
+  }
 
   return {
     ...session,
     user: {
-      ...token,
+      ...sessionUser,
     },
   }
 }
