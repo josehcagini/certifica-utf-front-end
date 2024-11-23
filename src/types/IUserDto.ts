@@ -1,9 +1,9 @@
 import userRolesEnum from '@/enums/userRoleEnum'
 
-export default interface User {
+export default interface IUserDto {
   nrUuid: string
   name: string
   email: string
   accessToken: string
-  roles: userRolesEnum
+  roles: Array<userRolesEnum>
 }

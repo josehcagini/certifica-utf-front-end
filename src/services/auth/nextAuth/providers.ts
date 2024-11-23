@@ -17,15 +17,24 @@ async function authorizeCredentials(
   }
 
   try {
-    const user = await loginWithCredentials(
-      authProviderEnum.CREDENTIALS,
-      userRa,
-      userPassword
-    )
+    const { sucess: user, error: errorLoginWithCredentials } =
+      await loginWithCredentials(
+        authProviderEnum.CREDENTIALS,
+        userRa,
+        userPassword
+      )
+
+    if (!user) {
+      throw errorLoginWithCredentials
+    }
 
     return {
       id: user.nrUuid,
-      ...user,
+      email: user.email,
+      name: user.name,
+      image: null,
+      roles: user.roles,
+      accessToken: user.accessToken,
     }
   } catch (error) {
     logger.log({
