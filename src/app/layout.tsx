@@ -31,7 +31,7 @@ export default function RootLayout({
                 <AppSidebar />
                 <div className={cn('max-w-screen flex w-full flex-1 flex-col')}>
                   <AppMenubar />
-                  <main>{children}</main>
+                  <main className="flex-1">{children}</main>
                 </div>
               </div>
             </div>
