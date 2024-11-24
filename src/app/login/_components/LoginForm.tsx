@@ -3,8 +3,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Loader2 } from 'lucide-react'
 import { signIn } from 'next-auth/react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
+import googleIcon from '@/assets/images/iconGoogle.svg'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -44,7 +46,9 @@ export default function LoginForm() {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-5 pl-28 pr-28">
+      <p className="text-center text-xl font-medium">Login com RA</p>
+
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="h-28">
@@ -80,41 +84,34 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className="py-6">
-            <Button
-              disabled={isSubmitting || loading}
-              type="submit"
-              className="w-full bg-[#bd1e59] text-white"
-            >
-              {isSubmitting || loading ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                <></>
-              )}
-              Acessar
-            </Button>
-          </div>
+          <Button
+            disabled={isSubmitting || loading}
+            type="submit"
+            className="bg-primaryPurple w-full text-white"
+          >
+            {isSubmitting || loading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <></>
+            )}
+            Acessar
+          </Button>
         </form>
       </Form>
 
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300" />
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-gray-500">OU ACESSAR COM</span>
-        </div>
-      </div>
+      <p className="text-center">
+        Ou faça login com sua conta <br /> Google
+      </p>
 
-      <div className="mt-2">
-        <Button
-          disabled={isSubmitting || loading}
-          className="w-full border border-gray-300 bg-white text-gray-700 shadow-sm"
-          onClick={() => signIn('google', { callbackUrl: '/' })}
-        >
-          Google
-        </Button>
-      </div>
-    </>
+      <Button
+        disabled={isSubmitting || loading}
+        className="h-16 w-full border border-gray-300 bg-white text-center text-xl font-medium text-black shadow-sm"
+        onClick={() => signIn('google', { callbackUrl: '/' })}
+        variant={'secondary'}
+      >
+        <Image src={googleIcon} alt="Google Icon" />
+        Entrar com Google
+      </Button>
+    </div>
   )
 }

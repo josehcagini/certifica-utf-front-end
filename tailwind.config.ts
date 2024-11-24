@@ -6,14 +6,42 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Cabin', 'Lato'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        primaryPurple: 'hsl(var(--primary-purple))',
         background: 'hsl(var(--background))',
+        backgroundGrey: 'hsl(var(--background-grey))',
+        backgroundBlack: 'hsl(var(--background-black))',
         foreground: 'hsl(var(--foreground))',
+        slate: {
+          50: 'hsl(var(--slate-50))',
+          100: 'hsl(var(--slate-100))',
+          200: 'hsl(var(--slate-200))',
+          300: 'hsl(var(--slate-300))',
+          400: 'hsl(var(--slate-400))',
+          500: 'hsl(var(--slate-500))',
+          600: 'hsl(var(--slate-600))',
+          700: 'hsl(var(--slate-700))',
+          800: 'hsl(var(--slate-800))',
+          900: 'hsl(var(--slate-900))',
+        },
+        grey: {
+          50: 'hsl(var(--grey-50))',
+          100: 'hsl(var(--grey-100))',
+          200: 'hsl(var(--grey-200))',
+          300: 'hsl(var(--grey-300))',
+          400: 'hsl(var(--grey-400))',
+          500: 'hsl(var(--grey-500))',
+          600: 'hsl(var(--grey-600))',
+          700: 'hsl(var(--grey-700))',
+        },
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',

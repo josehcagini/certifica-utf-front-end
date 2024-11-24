@@ -36,7 +36,7 @@ const signInWithGoogle: ISignInCallback = async (
       name: userGoogle.name,
       email: userGoogle.email,
       roles: userGoogle.roles,
-      image: null,
+      image: undefined,
       accessToken: userGoogle.accessToken,
     }
 
@@ -65,7 +65,7 @@ const signInWithCredentials: ISignInCallback = async (
     name: user.name!,
     email: user.email!,
     roles: user.roles,
-    image: null,
+    image: undefined,
     accessToken: user.accessToken,
   }
 
