@@ -43,6 +43,7 @@ export default function LoginForm() {
 
   if (success) {
     router.push('/')
+    router.refresh()
   }
 
   return (
@@ -87,7 +88,7 @@ export default function LoginForm() {
           <Button
             disabled={isSubmitting || loading}
             type="submit"
-            className="bg-primaryPurple w-full text-white"
+            className="w-full bg-primaryPurple text-white"
           >
             {isSubmitting || loading ? (
               <Loader2 className="animate-spin" />
